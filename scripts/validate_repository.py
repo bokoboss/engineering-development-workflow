@@ -11,9 +11,10 @@ REQUIRED_FILES = [
     'templates/PROJECT_PROFILE.md', 'templates/EXECUTION_CONTRACT.md',
     'templates/ACCEPTANCE_GATE.md', 'templates/EVIDENCE_PACKAGE.md',
     'templates/HANDOFF.md', 'templates/POSTMORTEM.md', 'templates/CODEX_PROMPT.md',
+    'templates/CHATGPT_PROJECT_INSTRUCTIONS.md',
     '.github/pull_request_template.md',
     'scripts/setup_project.py', 'docs/installation.md', 'docs/quick-start.md',
-    'tests/test_setup_project.py',
+    'docs/chatgpt-project-setup.md', 'tests/test_setup_project.py',
 ]
 
 REQUIRED_HEADINGS = {
@@ -25,8 +26,10 @@ REQUIRED_HEADINGS = {
         '## Current accepted baseline', '## Architecture / invariants',
         '## Protected behavior', '## Validation matrix', '## Current next objective'
     ],
+    'templates/CHATGPT_PROJECT_INSTRUCTIONS.md': ['## Control-plane role'],
     'MODEL_ROUTING_POLICY.md': ['## 3. Default routing', '## 5. Escalation', '## 8. Recommendation format'],
     'docs/installation.md': ['## 2. Inspect a target repository', '## 3. Install', '## 4. Validate', '## 5. Upgrade', '## 7. Ask Codex to install it'],
+    'docs/chatgpt-project-setup.md': ['## 1. The important distinction', '## 2. Create a ChatGPT Project', '## 3. Bootstrap the target repository', '## 4. Start work from ChatGPT', '## 5. Invoke Codex only when needed'],
 }
 
 errors = []

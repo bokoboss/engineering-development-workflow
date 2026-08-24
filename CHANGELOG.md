@@ -8,6 +8,19 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 - Select a public redistribution license.
 - Collect external feedback after real project adoption.
 
+## [1.3.0] - 2026-08-24
+
+### Added
+- ChatGPT Project control-plane onboarding guide.
+- Reusable `CHATGPT_PROJECT_INSTRUCTIONS.md` template.
+- Explicit two-sided onboarding model: ChatGPT Project control plane + target repository bootstrap.
+- Architecture documentation clarifying GitHub as shared state and Codex as execution plane.
+
+### Changed
+- Recommended onboarding now starts with ChatGPT Project setup before repository bootstrap.
+- Quick Start and README now state explicitly that installing the repository scaffold does not install anything into ChatGPT.
+- Workflow installer metadata now identifies the shared workflow as v1.3.0.
+
 ## [1.2.0] - 2026-08-24
 
 ### Added
@@ -20,7 +33,7 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 - CI gate for bootstrap installer tests.
 
 ### Changed
-- Installer-based adoption is now the recommended quick-start path while manual adoption remains supported.
+- Installer-based adoption became the recommended repository-bootstrap path while manual adoption remains supported.
 
 ## [1.1.0] - 2026-08-24
 

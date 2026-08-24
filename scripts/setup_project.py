@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Dict
 
 WORKFLOW_REPO = "https://github.com/bokoboss/engineering-development-workflow"
-WORKFLOW_VERSION = "1.2.0"
+WORKFLOW_VERSION = "1.3.0"
 MANIFEST_NAME = ".engineering-workflow.json"
 
 SOURCE_ROOT = Path(__file__).resolve().parents[1]
