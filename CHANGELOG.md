@@ -6,7 +6,21 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 
 ### Pending
 - Select a public redistribution license.
-- Collect external feedback after the first real project adoption.
+- Collect external feedback after real project adoption.
+
+## [1.2.0] - 2026-08-24
+
+### Added
+- Safe stdlib-only project bootstrap installer with `inspect`, `install`, `upgrade`, and `validate` commands.
+- Target-repository manifest with SHA-256 tracking for installer-managed files.
+- Project-owned file protection for `AGENTS.md` and `PROJECT_PROFILE.md`.
+- Conflict-safe upgrade behavior that refuses to overwrite locally modified managed files.
+- Automated installer tests for fresh install, idempotence, preservation, upgrade, conflict refusal, and drift detection.
+- Installation guide with Windows examples and a ready-to-use Codex adoption prompt.
+- CI gate for bootstrap installer tests.
+
+### Changed
+- Installer-based adoption is now the recommended quick-start path while manual adoption remains supported.
 
 ## [1.1.0] - 2026-08-24
 
