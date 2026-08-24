@@ -4,6 +4,8 @@ A reusable, evidence-first workflow for developing engineering software with hum
 
 Current workflow version: **v1.3.0 baseline**.
 
+License: **Apache-2.0**.
+
 ## Why this exists
 
 Engineering software fails in different ways from ordinary CRUD software: calculations must be auditable, assumptions must be visible, protected behavior must not drift, UX must reflect real engineering work, and completion must be supported by evidence rather than agent confidence.
@@ -113,6 +115,6 @@ Ask ChatGPT to inspect the shared workflow and project repository, verify the pr
 
 This repository is a shared workflow. Project-specific equations, client constraints, secrets, local paths, licensed references, and product facts belong in the project repository, not here. ChatGPT Project Instructions should stay concise and point back to the shared workflow rather than duplicating its full policy.
 
-## Status and licensing
+## License
 
-The repository is public, but a redistribution license has not yet been selected. Until a license is added, normal copyright rules apply. License selection is intentionally tracked separately before the first stable public release.
+Licensed under the **Apache License, Version 2.0** (`Apache-2.0`). You may use, modify, redistribute, and use this work commercially subject to the terms of the license. See [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).
