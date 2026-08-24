@@ -4,8 +4,15 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 
 ## [Unreleased]
 
+### Added
+- Apache License 2.0 (`Apache-2.0`) as the repository redistribution license.
+- `NOTICE` attribution file.
+
+### Changed
+- README now documents the public reuse and redistribution terms explicitly.
+- Repository validation now requires `LICENSE` and `NOTICE`.
+
 ### Pending
-- Select a public redistribution license.
 - Collect external feedback after real project adoption.
 
 ## [1.3.0] - 2026-08-24
