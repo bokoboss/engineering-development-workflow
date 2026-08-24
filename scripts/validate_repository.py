@@ -12,6 +12,8 @@ REQUIRED_FILES = [
     'templates/ACCEPTANCE_GATE.md', 'templates/EVIDENCE_PACKAGE.md',
     'templates/HANDOFF.md', 'templates/POSTMORTEM.md', 'templates/CODEX_PROMPT.md',
     '.github/pull_request_template.md',
+    'scripts/setup_project.py', 'docs/installation.md', 'docs/quick-start.md',
+    'tests/test_setup_project.py',
 ]
 
 REQUIRED_HEADINGS = {
@@ -24,6 +26,7 @@ REQUIRED_HEADINGS = {
         '## Protected behavior', '## Validation matrix', '## Current next objective'
     ],
     'MODEL_ROUTING_POLICY.md': ['## 3. Default routing', '## 5. Escalation', '## 8. Recommendation format'],
+    'docs/installation.md': ['## 2. Inspect a target repository', '## 3. Install', '## 4. Validate', '## 5. Upgrade', '## 7. Ask Codex to install it'],
 }
 
 errors = []
