@@ -12,10 +12,10 @@ import hashlib
 import json
 import sys
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Dict
 
 WORKFLOW_REPO = "https://github.com/bokoboss/engineering-development-workflow"
-WORKFLOW_VERSION = "1.1.0"
+WORKFLOW_VERSION = "1.2.0"
 MANIFEST_NAME = ".engineering-workflow.json"
 
 SOURCE_ROOT = Path(__file__).resolve().parents[1]
@@ -98,7 +98,10 @@ def inspect(target: Path) -> int:
     managed = desired_managed()
     owned = desired_project_owned()
     print(f"Target: {target}")
+    print(f"Source workflow version: {WORKFLOW_VERSION}")
     print(f"Manifest: {'present' if manifest else 'absent'}")
+    if manifest:
+        print(f"Installed workflow version: {manifest.get('workflow_version', 'unknown')}")
     for rel in owned:
         print(f"PROJECT-OWNED {rel}: {'present' if (target / rel).is_file() else 'missing'}")
     for rel, desired in managed.items():
