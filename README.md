@@ -2,7 +2,7 @@
 
 A reusable, evidence-first workflow for developing engineering software with humans, ChatGPT, coding agents, GitHub, explicit success gates, and cost-aware model routing.
 
-Current workflow version: **v1.1.0 baseline**.
+Current workflow version: **v1.2.0 baseline**.
 
 ## Why this exists
 
@@ -23,6 +23,22 @@ The default operating pattern is:
 5. Use parallel workers only for genuinely independent workstreams with explicit ownership and integration contracts.
 6. Treat tests, CI, real-data checks, browser/UAT evidence, engineering references, and human approval as gates appropriate to the change.
 
+## Install into another repository
+
+Clone this workflow repository, inspect the target, then install:
+
+```bash
+git clone https://github.com/bokoboss/engineering-development-workflow.git
+cd engineering-development-workflow
+python scripts/setup_project.py inspect /path/to/target-repo
+python scripts/setup_project.py install /path/to/target-repo
+python scripts/setup_project.py validate /path/to/target-repo
+```
+
+The installer is stdlib-only and performs no network access. It preserves project-owned `AGENTS.md` and `PROJECT_PROFILE.md`, tracks installer-managed files with SHA-256 hashes, and refuses to overwrite locally modified managed files during upgrades.
+
+For Windows, upgrade instructions, ownership rules, conflict behavior, and a ready-to-use Codex installation prompt, see **[`docs/installation.md`](docs/installation.md)**.
+
 ## Repository map
 
 - `ENGINEERING_DEV_WORKFLOW.md` — normative end-to-end workflow.
@@ -35,18 +51,20 @@ The default operating pattern is:
 - `SECURITY_AND_GOVERNANCE.md` — protected changes, secrets, licensed material, and approvals.
 - `AGENTS.md` — concise repository instructions for coding agents.
 - `SKILL.md` — router for using this workflow as a reusable skill.
+- `scripts/setup_project.py` — safe bootstrap/upgrade/validation installer for target repositories.
 - `templates/` — reusable project and execution contracts.
-- `docs/` — philosophy, quick start, and examples.
+- `docs/` — philosophy, installation, quick start, and examples.
 
 ## Quick start
 
-1. Read `docs/quick-start.md`.
-2. Copy `templates/PROJECT_PROFILE.md` into the target project and fill it from the actual repository.
-3. Add project-specific `AGENTS.md` instructions.
-4. Turn the next change into an Issue or `templates/EXECUTION_CONTRACT.md` packet.
-5. Define success gates before implementation.
-6. Choose model + effort using `MODEL_ROUTING_POLICY.md`.
-7. Execute, validate, review, and attach evidence.
+1. Read `docs/installation.md` and `docs/quick-start.md`.
+2. Use `scripts/setup_project.py inspect` before adoption.
+3. Install the shared workflow scaffold without overwriting project-owned files.
+4. Inspect the actual target repository and fill `PROJECT_PROFILE.md` only from verified facts.
+5. Add project-specific permanent instructions to `AGENTS.md`.
+6. Turn the next change into an Issue or execution contract with explicit success gates.
+7. Choose model + effort using `MODEL_ROUTING_POLICY.md`.
+8. Execute, validate, review, and attach evidence.
 
 ## Important distinction
 
