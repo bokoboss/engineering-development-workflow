@@ -4,7 +4,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 
 REQUIRED_FILES = [
-    'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'AGENTS.md', 'SKILL.md',
+    'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'LICENSE', 'NOTICE', 'AGENTS.md', 'SKILL.md',
     'ENGINEERING_DEV_WORKFLOW.md', 'MODEL_ROUTING_POLICY.md', 'UX_UI_WORKFLOW.md',
     'DEBUGGING_PROTOCOL.md', 'REVIEW_AND_SCRUTINY.md', 'PARALLEL_EXECUTION.md',
     'ACCEPTANCE_AND_EVIDENCE.md', 'SECURITY_AND_GOVERNANCE.md', 'VERSIONING.md',
@@ -32,6 +32,12 @@ REQUIRED_HEADINGS = {
     'docs/chatgpt-project-setup.md': ['## 1. The important distinction', '## 2. Create a ChatGPT Project', '## 3. Bootstrap the target repository', '## 4. Start work from ChatGPT', '## 5. Invoke Codex only when needed'],
 }
 
+REQUIRED_TEXT = {
+    'README.md': ['License: **Apache-2.0**.', 'Apache License, Version 2.0'],
+    'LICENSE': ['Apache License', 'Version 2.0, January 2004'],
+    'NOTICE': ['Engineering Development Workflow', 'Copyright 2026 Kittipat Tangittinunt'],
+}
+
 errors = []
 for rel in REQUIRED_FILES:
     if not (ROOT / rel).is_file():
@@ -45,6 +51,15 @@ for rel, headings in REQUIRED_HEADINGS.items():
     for heading in headings:
         if heading not in text:
             errors.append(f'{rel}: missing heading {heading!r}')
+
+for rel, snippets in REQUIRED_TEXT.items():
+    path = ROOT / rel
+    if not path.is_file():
+        continue
+    text = path.read_text(encoding='utf-8')
+    for snippet in snippets:
+        if snippet not in text:
+            errors.append(f'{rel}: missing required text {snippet!r}')
 
 if errors:
     print('Repository validation FAILED')
