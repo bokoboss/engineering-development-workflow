@@ -2,7 +2,7 @@
 
 A reusable, evidence-first workflow for developing engineering software with humans, ChatGPT, coding agents, GitHub, explicit success gates, and cost-aware model routing.
 
-Current workflow version: **v1.1.0 baseline candidate**.
+Current workflow version: **v1.1.0 baseline**.
 
 ## Why this exists
 
