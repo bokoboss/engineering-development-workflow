@@ -30,7 +30,7 @@ Use this precedence unless a project explicitly overrides it:
 4. Verified CI/test/runtime evidence.
 5. Conversation history and memory as convenience, not authoritative project state.
 
-When chat context is long, stale, or missing, reconstruct from Git/GGitHub and project documents rather than guessing.
+When chat context is long, stale, or missing, reconstruct from Git/GitHub and project documents rather than guessing.
 
 ## 4. Focused skills
 
