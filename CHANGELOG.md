@@ -7,6 +7,21 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 ### Pending
 - Collect external feedback after real project adoption.
 
+## [1.4.1] - 2026-08-25
+
+### Added
+- `ACKNOWLEDGEMENTS.md` as a structured register for material external inspiration, provenance, licensing status, and attribution.
+- Explicit credit to `thananon/9arm-skills` for concept-level inspiration that contributed to the focused skill-layer discussion.
+
+### Changed
+- CONTRIBUTING now requires material external influences to be documented as `conceptual inspiration`, `adapted`, or `copied/embedded`, together with source and license/status information.
+- README now surfaces the acknowledgements and attribution policy.
+- Repository validation now requires the attribution contracts and verifies the current workflow metadata as v1.4.1.
+- Installer/workflow metadata updated to v1.4.1; installer ownership and conflict behavior are unchanged.
+
+### Attribution note
+- `thananon/9arm-skills` had no declared repository license when reviewed on 2026-08-25. No text, code, or skill implementation was copied from it; the acknowledgement records conceptual influence only.
+
 ## [1.4.0] - 2026-08-25
 
 ### Added
