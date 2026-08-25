@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Dict
 
 WORKFLOW_REPO = "https://github.com/bokoboss/engineering-development-workflow"
-WORKFLOW_VERSION = "1.4.0"
+WORKFLOW_VERSION = "1.4.1"
 MANIFEST_NAME = ".engineering-workflow.json"
 
 SOURCE_ROOT = Path(__file__).resolve().parents[1]
@@ -46,7 +46,7 @@ def read_text(path: Path) -> str:
 
 
 def workflow_reference() -> str:
-    return f"""# Engineering Development Workflow Reference\n\nThis project adopts the shared Engineering Development Workflow.\n\n- Upstream: {WORKFLOW_REPO}\n- Installed workflow version: {WORKFLOW_VERSION}\n- Local project authority: `PROJECT_PROFILE.md` and project-specific `AGENTS.md`\n\n## Operating rule\n\nUse the upstream repository as the normative workflow source. Keep project-specific facts,\ncommands, invariants, protected behavior, approvals, and accepted-baseline state in this\nrepository.\n\nDefault control loop:\n\n`Understand -> Bound -> Route -> Execute -> Verify -> Audit -> Accept / Escalate`\n\nFor coding-agent work, prepare a bounded execution contract, choose the cheapest model that\ncan reliably finish the task, prefer Luna for well-specified execution, diagnose failures\nbefore escalation, and require objective evidence before claiming completion.\n\nFocused skills such as scrutiny, systematic debugging, postmortems, technical-status\ntranslation, and long-task guarding live in the upstream workflow. ChatGPT/control-plane\nwork should apply them when relevant and translate their conclusions into this project's\nexecution contracts, gates, and coding-agent prompts rather than duplicating the skill library.\n\n## Local reusable templates\n\nSee `docs/development/templates/`. These copies are installer-managed. Do not edit them\ndirectly; customize an instantiated work item instead.\n"""
+    return f"""# Engineering Development Workflow Reference\n\nThis project adopts the shared Engineering Development Workflow.\n\n- Upstream: {WORKFLOW_REPO}\n- Installed workflow version: {WORKFLOW_VERSION}\n- Local project authority: `PROJECT_PROFILE.md` and project-specific `AGENTS.md`\n\n## Operating rule\n\nUse the upstream repository as the normative workflow source. Keep project-specific facts,\ncommands, invariants, protected behavior, approvals, and accepted-baseline state in this\nrepository.\n\nDefault control loop:\n\n`Understand -> Bound -> Route -> Execute -> Verify -> Audit -> Accept / Escalate`\n\nFor coding-agent work, prepare a bounded execution contract, choose the cheapest model that\ncan reliably finish the task, prefer Luna for well-specified execution, diagnose failures\nbefore escalation, and require objective evidence before claiming completion. Focused skills\nremain upstream; ChatGPT/control-plane work should apply the relevant current skill and pass\nits conclusions into the local contract, gates, and coding-agent prompt.\n\n## Local reusable templates\n\nSee `docs/development/templates/`. These copies are installer-managed. Do not edit them\ndirectly; customize an instantiated work item instead.\n"""
 
 
 def desired_project_owned() -> Dict[str, str]:

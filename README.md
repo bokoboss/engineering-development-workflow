@@ -2,7 +2,7 @@
 
 A reusable, evidence-first workflow for developing engineering software with humans, ChatGPT, coding agents, GitHub, explicit success gates, focused reasoning skills, and cost-aware model routing.
 
-Current workflow version: **v1.4.0 baseline**.
+Current workflow version: **v1.4.1 baseline**.
 
 License: **Apache-2.0**.
 
@@ -114,6 +114,7 @@ Ask ChatGPT to inspect the shared workflow and project repository, verify the pr
 - `SKILL.md` — root router for the core workflow and focused skills.
 - `skills/` — focused reusable protocols for scrutiny, debugging, postmortems, status translation, and long tasks.
 - `docs/skill-system.md` — how and when focused skills apply.
+- `ACKNOWLEDGEMENTS.md` — external inspiration, provenance, licensing status, and attribution records.
 - `AGENTS.md` — concise repository instructions for coding agents.
 - `scripts/setup_project.py` — safe bootstrap/upgrade/validation installer for target repositories.
 - `templates/CHATGPT_PROJECT_INSTRUCTIONS.md` — reusable ChatGPT Project control-plane instructions.
@@ -130,6 +131,14 @@ Ask ChatGPT to inspect the shared workflow and project repository, verify the pr
 6. Route the situation through any focused skills that materially apply, then create the Issue/execution contract with explicit success gates.
 7. Invoke Codex only when execution-plane capabilities are required, using `MODEL_ROUTING_POLICY.md` for model + effort selection.
 8. Validate, review actual GitHub evidence, and accept or remediate.
+
+## Attribution and acknowledgements
+
+This project gives explicit credit when identifiable external work materially influences a reusable workflow rule, skill, template, architecture decision, or validation method.
+
+See [`ACKNOWLEDGEMENTS.md`](ACKNOWLEDGEMENTS.md) for the current attribution register and the distinction between **conceptual inspiration**, **adapted material**, and **copied/embedded material**. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the rule contributors should follow when introducing externally influenced work.
+
+A source can deserve credit even when no literal text or code is copied. Conversely, a public repository without a compatible declared license is not treated as permission to copy its contents.
 
 ## Important distinction
 
