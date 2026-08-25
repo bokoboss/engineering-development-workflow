@@ -12,7 +12,8 @@ SKILL_FILES = [
 ]
 
 REQUIRED_FILES = [
-    'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'LICENSE', 'NOTICE', 'AGENTS.md', 'SKILL.md',
+    'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'ACKNOWLEDGEMENTS.md',
+    'LICENSE', 'NOTICE', 'AGENTS.md', 'SKILL.md',
     'ENGINEERING_DEV_WORKFLOW.md', 'MODEL_ROUTING_POLICY.md', 'UX_UI_WORKFLOW.md',
     'DEBUGGING_PROTOCOL.md', 'REVIEW_AND_SCRUTINY.md', 'PARALLEL_EXECUTION.md',
     'ACCEPTANCE_AND_EVIDENCE.md', 'SECURITY_AND_GOVERNANCE.md', 'VERSIONING.md',
@@ -38,6 +39,8 @@ COMMON_SKILL_HEADINGS = [
 REQUIRED_HEADINGS = {
     'SKILL.md': ['## Core router', '## Focused skill routing', '## Mandatory scrutiny', '## Control-plane rule'],
     'ENGINEERING_DEV_WORKFLOW.md': ['## 4. Focused skills', '## 5. End-to-end loop'],
+    'CONTRIBUTING.md': ['## External inspiration and attribution'],
+    'ACKNOWLEDGEMENTS.md': ['## Attribution principles', '## Current acknowledgements', '### thananon/9arm-skills', '## Future acknowledgements'],
     'templates/EXECUTION_CONTRACT.md': [
         '## Objective', '## Scope', '## Out of scope', '## Execution routing',
         '## Success gates', '## Stop conditions', '## Definition of done'
@@ -56,9 +59,10 @@ for skill_file in SKILL_FILES:
     REQUIRED_HEADINGS[skill_file] = COMMON_SKILL_HEADINGS
 
 REQUIRED_TEXT = {
-    'README.md': ['Current workflow version: **v1.4.0 baseline**.', 'License: **Apache-2.0**.', 'Apache License, Version 2.0'],
-    'ENGINEERING_DEV_WORKFLOW.md': ['Version: 1.4.0', 'skills/scrutinize/SKILL.md'],
-    'scripts/setup_project.py': ['WORKFLOW_VERSION = "1.4.0"'],
+    'README.md': ['Current workflow version: **v1.4.1 baseline**.', 'License: **Apache-2.0**.', 'ACKNOWLEDGEMENTS.md', 'Apache License, Version 2.0'],
+    'ENGINEERING_DEV_WORKFLOW.md': ['Version: 1.4.1', 'skills/scrutinize/SKILL.md'],
+    'scripts/setup_project.py': ['WORKFLOW_VERSION = "1.4.1"'],
+    'ACKNOWLEDGEMENTS.md': ['https://github.com/thananon/9arm-skills', 'conceptual inspiration only', 'no text, code, or skill implementation'],
     'LICENSE': ['Apache License', 'Version 2.0, January 2004'],
     'NOTICE': ['Engineering Development Workflow', 'Copyright 2026 Kittipat Tangittinunt'],
 }
