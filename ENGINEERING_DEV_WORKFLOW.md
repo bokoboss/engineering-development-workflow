@@ -1,6 +1,6 @@
 # Engineering Development Workflow
 
-Version: 1.1.0
+Version: 1.4.0
 
 ## 1. Purpose
 
@@ -32,7 +32,21 @@ Use this precedence unless a project explicitly overrides it:
 
 When chat context is long, stale, or missing, reconstruct from Git/GitHub and project documents rather than guessing.
 
-## 4. End-to-end loop
+## 4. Focused skills
+
+The core workflow is authoritative. Focused modules under `skills/` add repeatable procedures for recurring situations:
+
+- `skills/scrutinize/SKILL.md` — challenge plans, designs, assumptions, risk, and readiness;
+- `skills/systematic-debug/SKILL.md` — diagnose defects from a reliable reproducer and evidence;
+- `skills/postmortem/SKILL.md` — preserve lessons after significant resolved defects/incidents;
+- `skills/technical-status/SKILL.md` — translate raw execution output into decision-ready status;
+- `skills/long-task-guard/SKILL.md` — keep long or multi-step work bounded, observable, and resumable.
+
+Use the smallest set of skills that materially improves the work. Skills do not replace the Issue/execution contract, validation gates, project profile, or human approval requirements.
+
+Explicit scrutiny is required unless documented as not applicable for material architecture/interface/schema changes, protected engineering or safety/security-sensitive logic, major work packages with material wrong-direction cost, high-risk pre-merge decisions, and important acceptance decisions based on incomplete or contradictory evidence.
+
+## 5. End-to-end loop
 
 ### Stage 0 — Establish state
 - Confirm repository, branch, accepted baseline, dirty/local constraints, standard commands, protected behavior, and current objective.
@@ -41,12 +55,15 @@ When chat context is long, stale, or missing, reconstruct from Git/GitHub and pr
 ### Stage 1 — Understand and scrutinize
 - Translate the request into user outcome and engineering behavior.
 - Identify ambiguity, invariants, risks, affected contracts, and likely regressions.
-- For architectural, methodology, safety-critical, or large changes, perform explicit scrutiny before implementation.
+- Route to `skills/scrutinize/SKILL.md` when scrutiny is required or materially useful.
+- Do not proceed past a scrutiny blocker merely because implementation is possible.
 
 ### Stage 2 — Bound the work
 Create an execution contract containing objective, scope, out-of-scope, constraints, protected areas, likely modules, dependencies, success gates, validation, stop conditions, and definition of done.
 
 Prefer one coherent phase/PR when the work is related and still reviewable. Split only when scope, risk, dependency, ownership, or reviewability justifies it.
+
+For long or multi-step work, apply `skills/long-task-guard/SKILL.md` and use meaningful evidence checkpoints rather than arbitrary phase splitting.
 
 ### Stage 3 — Route execution
 Use `MODEL_ROUTING_POLICY.md`.
@@ -61,12 +78,17 @@ Do not use a premium model to compensate for a vague packet that ChatGPT or the 
 - Fix root cause before polish or unrelated cleanup.
 - Add or update tests with the implementation.
 - Stop rather than silently expanding scope when a stop condition is reached.
+- For reproducible defects, apply `skills/systematic-debug/SKILL.md` rather than trial-and-error editing.
 
 ### Stage 5 — Verify
 Run the gates required by the change: targeted tests, regression suites, type/lint/build checks, package/runtime checks, browser/E2E, artifact comparison, numerical/reference equivalence, real-data validation, performance/security checks, or CI.
 
 ### Stage 6 — Audit and review
 Review the actual diff and evidence against the Issue/contract, not merely the executor summary. Check scope containment, behavior, regression risk, documentation, UX, security, protected areas, and unresolved assumptions.
+
+Use `skills/technical-status/SKILL.md` when execution evidence is long, fragmented, or mixed so the acceptance decision remains explicit.
+
+Run the required scrutiny gate again before high-risk merge/acceptance when the implemented result materially differs from the original reviewed plan or when evidence reveals new risk.
 
 ### Stage 7 — Diagnose failures
 A failed attempt is not an automatic reason to use a stronger model.
@@ -78,10 +100,14 @@ Classify the failure:
 - integration conflict -> reconcile ownership/contracts;
 - demonstrated capability limitation -> escalate model tier.
 
+For defects or unexplained failures, route through `skills/systematic-debug/SKILL.md` before escalating merely on model strength.
+
 ### Stage 8 — Accept, remediate, or block
 Accept only when required gates pass and required approvals exist. Otherwise remediate or mark the work blocked with explicit missing evidence.
 
-## 5. Completion semantics
+For a significant resolved defect/incident whose lesson is likely to prevent recurrence or reduce future diagnosis cost, apply `skills/postmortem/SKILL.md` after the fix is validated.
+
+## 6. Completion semantics
 
 Implementation exists != work complete.
 
@@ -93,8 +119,10 @@ A completion claim must identify:
 - known limitations and deferred items;
 - human approvals still required.
 
-## 6. Handoff
+## 7. Handoff
 
 For a new chat, phase, or executor, use a compact authoritative handoff: repo, baseline, completed work, open issues, protected behavior, validation commands, current objective, recommended model/effort, and next success gates.
 
 Use the existing chat when scope is continuous and context remains useful; start a new chat when context pollution, phase change, or excessive rereading would reduce reliability or cost efficiency.
+
+For long work, the handoff/checkpoint rules in `skills/long-task-guard/SKILL.md` apply.
