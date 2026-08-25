@@ -4,16 +4,31 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 
 ## [Unreleased]
 
-### Added
-- Apache License 2.0 (`Apache-2.0`) as the repository redistribution license.
-- `NOTICE` attribution file.
-
-### Changed
-- README now documents the public reuse and redistribution terms explicitly.
-- Repository validation now requires `LICENSE` and `NOTICE`.
-
 ### Pending
 - Collect external feedback after real project adoption.
+
+## [1.4.0] - 2026-08-25
+
+### Added
+- Focused reusable skill layer under `skills/`.
+- `scrutinize` skill for readiness, risk, assumption, and high-impact decision review.
+- `systematic-debug` skill for reproducer-first root-cause diagnosis and regression proof.
+- `postmortem` skill for preserving lessons after significant resolved defects/incidents.
+- `technical-status` skill for turning long or mixed technical evidence into decision-ready status.
+- `long-task-guard` skill for bounded, observable, resumable multi-step execution.
+- `docs/skill-system.md` describing routing, mandatory scrutiny cases, ChatGPT/Codex responsibilities, and evidence discipline.
+- Apache License 2.0 (`Apache-2.0`) as the repository redistribution license and `NOTICE` attribution file.
+
+### Changed
+- Root `SKILL.md` is now an explicit router into focused skill modules.
+- Core workflow now integrates skill routing at scrutiny, execution, debugging, audit, acceptance, and handoff stages.
+- Scrutiny is now a required gate for selected high-impact work unless explicitly documented as not applicable.
+- ChatGPT Project Instructions now route through the current upstream skill system before coding-agent execution.
+- Installer metadata and workflow reference now identify v1.4.0 and explain that focused skills remain upstream rather than being duplicated into every target repository.
+- README documents the skill layer and public Apache-2.0 reuse terms.
+
+### Licensing note
+- Skill modules in this repository are original workflow-native definitions. No third-party skill text was imported from repositories without a declared compatible license.
 
 ## [1.3.0] - 2026-08-24
 
