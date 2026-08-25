@@ -13,7 +13,7 @@ Installing the workflow into a repository does not install anything into ChatGPT
 
 Create a ChatGPT Project for the software project. Copy `templates/CHATGPT_PROJECT_INSTRUCTIONS.md` into Project Instructions.
 
-Keep those instructions concise. Do not copy the entire workflow policy into ChatGPT Project Instructions; the shared workflow repository remains the policy source of truth.
+Keep those instructions concise. Do not copy the entire workflow or skill library into ChatGPT Project Instructions; the shared workflow repository remains the policy source of truth.
 
 ## 2. Bootstrap the target repository
 
@@ -34,27 +34,35 @@ See `docs/installation.md` for Windows examples, upgrade behavior, ownership rul
 3. Identify protected behavior and required human approvals.
 4. Verify current GitHub branch, accepted baseline, open Issues/PRs, CI, and known limitations.
 
-## 4. Start work from ChatGPT
+## 4. Start work from ChatGPT and route the situation
 
 A minimal starting instruction is:
 
 ```text
-Use our Engineering Development Workflow for this project. Inspect the current shared workflow repository and the target project repository, verify the project profile and current GitHub state, then determine the next development step. Complete everything that can be reliably done in ChatGPT before recommending Codex execution.
+Use our Engineering Development Workflow for this project. Inspect the current shared workflow repository and the target project repository, verify the project profile and current GitHub state, apply the upstream skill router where relevant, then determine the next development step. Complete everything that can be reliably done in ChatGPT before recommending Codex execution.
 ```
 
-ChatGPT should research, inspect, scrutinize, scope, define success gates, prepare execution contracts, and perform GitHub-side work before deciding whether Codex is needed.
+ChatGPT should read the root `SKILL.md` router and apply focused modules when materially useful:
+- `scrutinize` for plans, architecture, risk, and important readiness decisions;
+- `systematic-debug` for defects and failing validation;
+- `postmortem` after significant resolved defects/incidents;
+- `technical-status` for long or mixed technical evidence;
+- `long-task-guard` for multi-step or resumable work.
+
+See `docs/skill-system.md` for the routing rules and mandatory scrutiny cases.
 
 ## 5. Invoke Codex only when execution-plane capabilities are required
 
 When code/file mutation, local runtime/browser execution, or environment-specific debugging is materially required:
 
 1. Create a GitHub Issue or fill `docs/development/templates/EXECUTION_CONTRACT.md`.
-2. Define success gates before coding.
-3. Use upstream `MODEL_ROUTING_POLICY.md` to choose model + effort + chat reuse/new-chat strategy.
-4. Execute in an isolated branch/worktree where appropriate.
-5. Return implementation evidence through commits, PRs, tests, CI, artifacts, and other required validation.
-6. Have ChatGPT review actual diff + evidence before merge/acceptance.
-7. Update `PROJECT_PROFILE.md` and handoff when the accepted baseline changes.
+2. Translate relevant skill conclusions into scope, constraints, success gates, stop conditions, and the coding-agent prompt.
+3. Define success gates before coding.
+4. Use upstream `MODEL_ROUTING_POLICY.md` to choose model + effort + chat reuse/new-chat strategy.
+5. Execute in an isolated branch/worktree where appropriate.
+6. Return implementation evidence through commits, PRs, tests, CI, artifacts, and other required validation.
+7. Have ChatGPT review actual diff + evidence before merge/acceptance.
+8. Update `PROJECT_PROFILE.md` and handoff when the accepted baseline changes.
 
 ## Upgrading the repository scaffold
 
@@ -77,4 +85,4 @@ For a small repository, start with:
 - an Issue with scope/out-of-scope/success gates;
 - PR evidence.
 
-Add more templates only when they reduce recurring ambiguity or verification burden. Manual repository adoption remains valid when Python is unavailable.
+Add focused skills and additional templates when they reduce real ambiguity, risk, or verification burden. Manual repository adoption remains valid when Python is unavailable.
