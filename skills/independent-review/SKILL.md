@@ -13,7 +13,7 @@ Apply when one or more of these are true:
 - the change affects protected engineering, safety, security, public interfaces, schemas, migrations, or other high-impact behavior;
 - the implementation is large, cross-module, difficult to reason about, or materially different from the reviewed plan;
 - tests/CI pass but important correctness still depends on judgment or assumptions;
-- the same executor produced both the implementation and the only substantive review;
+- the change is material and the same executor produced both the implementation and the only substantive review;
 - a defect escaped earlier checks and recurrence risk is material;
 - evidence is mixed, contradictory, or unusually easy to rationalize;
 - a fresh-context review is cheap relative to the consequence of a missed defect.
