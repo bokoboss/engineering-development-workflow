@@ -60,6 +60,7 @@ REQUIRED_HEADINGS = {
         '### thananon/9arm-skills', '### shanraisshan/claude-code-best-practice',
         '## Future acknowledgements'
     ],
+    '.github/pull_request_template.md': ['## Research / decision basis', '## Independent review', '## Review checklist'],
     'templates/EXECUTION_CONTRACT.md': [
         '## Objective', '## Scope', '## Out of scope', '## Research / decision basis',
         '## Execution routing', '## Context strategy', '## Independent review',
