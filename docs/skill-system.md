@@ -93,7 +93,7 @@ skills/<skill>/
 
 Create supporting directories only when they earn their maintenance cost. Empty scaffolding does not improve the workflow.
 
-A focused skill should include `## Gotchas` when real use has revealed recurring, high-signal failure modes. A Gotcha should prevent a repeated mistake or blind spot; generic advice and one-off project facts do not belong there.
+Every focused skill contains a `## Gotchas` section as the standard place for recurring, high-signal failure modes learned from real use. If a new skill has no observed reusable Gotcha yet, state that explicitly rather than inventing generic filler. A Gotcha should prevent a repeated mistake or blind spot; one-off project facts do not belong there.
 
 ## 7. External inspiration and licensing
 
