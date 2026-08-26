@@ -54,6 +54,15 @@ Never summarize a mixed result as simply "passed" or "done". A failed required g
 
 When evidence is stale or incomplete, say so and avoid an acceptance decision.
 
+## Gotchas
+
+- A long list of commands run is not proof of completion; summarize outcomes and required gates.
+- Always anchor status to the current branch/SHA when state may have moved.
+- Do not hide one failed mandatory gate behind many passing checks.
+- Distinguish "implemented", "validated locally", "CI green", "UAT accepted", and "merged"; they are different states.
+- Preserve exact evidence identifiers when compressing logs so the conclusion can be audited.
+- Avoid percentage-complete estimates when the remaining blocker could dominate the actual effort or acceptance risk.
+
 ## Stop / escalation
 
 Escalate when conflicting evidence cannot be reconciled from available sources, when a protected change lacks approval, or when the requested status would require inventing progress not demonstrated by Git/GitHub/tests/CI/real-data evidence.
