@@ -102,7 +102,7 @@ Only add these when they reduce repeated reconstruction or improve reliability. 
 
 ## 8. Gotchas as learned context
 
-A focused skill may contain `## Gotchas` for recurring, high-signal failure modes discovered through real use.
+Every focused skill keeps a `## Gotchas` section as the standard place for recurring, high-signal failure modes discovered through real use. If no reusable Gotcha has been observed yet, say so explicitly rather than inventing filler advice.
 
 Good Gotchas:
 - capture a repeated mistake or blind spot;
