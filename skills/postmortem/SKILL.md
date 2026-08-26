@@ -57,6 +57,15 @@ Do not write a definitive root cause when evidence supports only a hypothesis. M
 
 A postmortem is complete when the accepted fix is validated and prevention actions are either tracked or consciously declined with rationale.
 
+## Gotchas
+
+- Hindsight makes the root cause look obvious; record what evidence was actually available at each stage.
+- Avoid blame labels such as "human error" when a system, test, interface, or guardrail could have prevented recurrence.
+- Do not create prevention actions that amount only to "remember to be careful" when deterministic controls are possible.
+- Keep trigger, root cause, and contributing conditions distinct; combining them weakens prevention.
+- A long incident narrative is not a useful postmortem unless it changes future behavior.
+- Do not close follow-ups implicitly; track them or explicitly accept the residual risk.
+
 ## Stop / escalation
 
 Escalate to human/project leadership when the record involves personnel-sensitive matters, contractual/client impact, security disclosure, safety implications, or decisions about accepting material engineering risk.

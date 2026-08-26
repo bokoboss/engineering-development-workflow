@@ -59,6 +59,15 @@ A defect is not closed because the symptom disappeared once. Closure requires:
 - required broader gates pass;
 - protected behavior remains intact.
 
+## Gotchas
+
+- Editing before a reliable reproducer often converts one unknown into several.
+- A passing unit test does not prove browser/runtime/package behavior when the defect crosses those boundaries.
+- Change one causal variable at a time where practical; large speculative patches destroy diagnostic information.
+- Watch for stale asynchronous/session responses and partial-state cleanup when stateful workflows fail mid-operation.
+- A symptom disappearing after restart or retry is not root-cause evidence.
+- Do not broaden architecture merely because the local root cause is inconvenient to fix.
+
 ## Stop / escalation
 
 Stop scope expansion when evidence points outside the authorized work packet. Re-plan before changing architecture, public contracts, protected engineering logic, or unrelated modules.

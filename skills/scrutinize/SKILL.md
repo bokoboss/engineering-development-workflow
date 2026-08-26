@@ -64,6 +64,15 @@ Use `REPLAN` when the objective is valid but scope, design, sequencing, or valid
 
 Use `NO-GO` when proceeding would violate a protected invariant, create unacceptable risk, or rely on evidence that cannot support the decision.
 
+## Gotchas
+
+- An implementable plan is not necessarily the right plan; test the problem framing before implementation detail.
+- More detail can hide a weak assumption. Do not confuse document completeness with decision quality.
+- Separate blockers from preferences so scrutiny does not become endless polish.
+- Do not reward sunk cost: partially implemented work can still deserve `REPLAN` or `NO-GO`.
+- Missing evidence should lower confidence, not be silently converted into assumptions.
+- Do not turn scrutiny into ceremony for low-risk edits where the review cost exceeds the plausible failure cost.
+
 ## Stop / escalation
 
 Stop and request a higher-level decision or human approval when the review reaches a protected methodology, safety-critical rule, destructive operation, irreversible migration, or material engineering judgment that the workflow does not authorize an agent to decide.

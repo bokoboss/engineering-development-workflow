@@ -60,6 +60,15 @@ A checkpoint is not a mini-release. It exists to make the task observable and re
 
 Do not mark overall completion while any required gate remains `FAIL` or `BLOCKED`, unless an explicit human-approved limitation changes the acceptance contract.
 
+## Gotchas
+
+- Do not split work into phases merely because it is long; split when ownership, risk, dependency, or reviewability requires it.
+- A checkpoint without branch/SHA and gate state is a narrative, not a resumable checkpoint.
+- Repeated retries can silently change the objective; restate the objective after material failures or discoveries.
+- Parallel workers that touch overlapping contracts can increase wall-clock time through reconciliation rather than reduce it.
+- Percentage-complete reporting is weak when one unresolved gate can still block acceptance.
+- Before context reset, preserve decisions and evidence, not the full transcript.
+
 ## Stop / escalation
 
 Stop and re-plan when:

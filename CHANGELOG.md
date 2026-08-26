@@ -7,6 +7,28 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 ### Pending
 - Collect external feedback after real project adoption.
 
+## [1.5.0] - 2026-08-26
+
+### Added
+- `skills/research-gate/SKILL.md` for conditional evidence-backed feasibility and direction decisions using `GO`, `GO WITH CONDITIONS`, `NO-GO`, and `NEEDS MORE EVIDENCE` outcomes.
+- `skills/independent-review/SKILL.md` for risk-based fresh-context, cross-model, deterministic, or human second-pass verification.
+- `CONTEXT_MANAGEMENT.md` for lean working sets, progressive disclosure, fresh-context decisions, context isolation, recovery from polluted context, and authoritative handoffs.
+- `Gotchas` convention for focused skills, populated with recurring high-signal failure modes from real workflow use.
+- Research and independent-review fields in execution and acceptance templates.
+
+### Changed
+- Core workflow now routes material unknowns through a research gate before committing to implementation direction.
+- High-risk acceptance should not rely solely on executor self-report; independent review is required when the project/risk contract calls for it.
+- Independent review does not automatically require a stronger model; a fresh context at the same capable tier is explicitly supported.
+- Parallel execution guidance now prefers task/feature-specific worker packets over vague generic roles and supports fresh-context reviewers as test-time review.
+- Acceptance guidance now prefers deterministic enforcement through tests, schemas, validators, settings, protection rules, or CI when those can reliably enforce a requirement.
+- Skill architecture now supports progressive disclosure through optional `references/`, `examples/`, `scripts/`, and `templates/` rather than continuously enlarging `SKILL.md`.
+- ChatGPT Project Instructions and Quick Start now include research, context, and independent-review routing.
+- Installer/workflow metadata updated to v1.5.0; installer ownership and conflict behavior remain unchanged.
+
+### Attribution note
+- `shanraisshan/claude-code-best-practice` (MIT License, Shayan Rais) materially informed the v1.5.0 discussion around Research -> Plan -> Implement gating, cross-model/fresh-context review, context hygiene, progressive disclosure, task-specific workers, and deterministic guardrails. See `ACKNOWLEDGEMENTS.md`. The workflow-native text and contracts in this repository are independently written rather than copied wholesale.
+
 ## [1.4.1] - 2026-08-25
 
 ### Added

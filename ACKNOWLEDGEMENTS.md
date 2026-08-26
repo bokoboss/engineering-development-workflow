@@ -32,6 +32,25 @@ A public source being viewable does not by itself grant permission to copy its t
 
 Credit is given because the external project materially influenced the direction of the skill-layer discussion even though the resulting implementation and wording are original to this repository.
 
+### shanraisshan/claude-code-best-practice
+
+- **Source:** https://github.com/shanraisshan/claude-code-best-practice
+- **Author/maintainer:** Shayan Rais (`shanraisshan`).
+- **Relationship:** conceptual inspiration; no source file is embedded wholesale in this repository.
+- **License/status when reviewed:** MIT License, copyright 2025-2026 Shayan Rais; reviewed on 2026-08-26.
+- **Relevant influence:** the repository's documented practices materially informed the v1.5.0 design discussion in several areas:
+  - conditional Research -> Plan -> Implement gating before committing to uncertain feature directions;
+  - cross-model/fresh-context plan and implementation review;
+  - context hygiene, deliberate fresh sessions, isolated subagents, and progressive disclosure;
+  - separating workflow/orchestration, autonomous workers, and reusable skills;
+  - feature/task-specific workers rather than relying only on generic agent roles;
+  - using independent context as additional review/test-time compute;
+  - preferring deterministic settings/hooks/verification mechanisms over instruction-only rules when the harness can enforce behavior.
+- **Relevant source areas reviewed:** `development-workflows/rpi/`, `development-workflows/cross-model-workflow/`, `orchestration-workflow/`, `best-practice/`, `reports/claude-agent-command-skill.md`, and the sourced tips collected in the repository README.
+- **Use in this project:** v1.5.0 introduces original workflow-native `research-gate` and `independent-review` skills, `CONTEXT_MANAGEMENT.md`, progressive-disclosure/Gotchas conventions, task-specific worker guidance, and deterministic-enforcement guidance. These are independently written and integrated with this repository's existing ChatGPT-control-plane, cost-aware model-routing, engineering-governance, and evidence/acceptance contracts rather than copying the Claude-specific harness or wording wholesale.
+
+The source repository focuses heavily on Claude Code mechanics and best practices; this project generalizes selected ideas into a tool-independent engineering-development workflow. Product-specific Claude commands, fixed context heuristics, mandatory plan mode, per-file commit rules, and wholesale `.claude/` configuration are intentionally not adopted as universal rules here.
+
 ## Future acknowledgements
 
 Add an entry when an external source materially affects a workflow rule, skill, template, architecture decision, validation method, or other reusable project capability.

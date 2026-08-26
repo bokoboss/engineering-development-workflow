@@ -24,6 +24,9 @@ The intended architecture is:
                     PR / CI / Evidence
                          |
                          v
+            Independent review when needed
+                         |
+                         v
                   ChatGPT final review
 ```
 
@@ -34,6 +37,8 @@ GitHub is the bridge. ChatGPT reads the shared workflow and target project throu
 Create one ChatGPT Project for the software project you are developing. Keep the project focused on that repository/product so discussions, decisions, and project-specific context remain coherent.
 
 Copy `templates/CHATGPT_PROJECT_INSTRUCTIONS.md` into the ChatGPT Project Instructions. Replace or append only genuinely project-specific context; do not copy the entire workflow policy into Project Instructions.
+
+The Project Instructions intentionally point back to the shared workflow. `CONTEXT_MANAGEMENT.md` and the root `SKILL.md` router should be read when relevant rather than duplicated permanently into the Project Instructions.
 
 ## 3. Bootstrap the target repository
 
@@ -46,16 +51,26 @@ The repository bootstrap creates or establishes the contracts both sides can use
 The normal starting point is ChatGPT, not Codex. A minimal first instruction is:
 
 ```text
-Use our Engineering Development Workflow for this project. Inspect the current shared workflow repository and the target project repository, verify the project profile and current GitHub state, then determine the next development step. Complete everything that can be reliably done in ChatGPT before recommending Codex execution.
+Use our Engineering Development Workflow for this project. Inspect the current shared workflow repository and the target project repository, verify the project profile and current GitHub state, apply the upstream context and skill router where relevant, then determine the next development step. Complete everything that can be reliably done in ChatGPT before recommending Codex execution.
 ```
 
-ChatGPT should then research, inspect, scrutinize, scope, define success gates, prepare execution contracts, and perform GitHub-side work before deciding whether an execution-plane agent is required.
+ChatGPT should then:
+- establish a lean authoritative working context;
+- apply the research gate when material feasibility/evidence unknowns remain;
+- scrutinize high-impact plans and decisions;
+- scope the work and define success gates;
+- record whether independent review will be required for acceptance;
+- prepare execution contracts and perform GitHub-side work before deciding whether an execution-plane agent is required.
 
 ## 5. Invoke Codex only when needed
 
 When local code mutation, browser/runtime execution, environment-specific debugging, or other execution capabilities are required, ChatGPT prepares a bounded packet and recommends model + effort according to `MODEL_ROUTING_POLICY.md`.
 
 Codex implements against the project repository and returns evidence through commits, PRs, tests, and CI. ChatGPT then reviews the actual evidence before acceptance.
+
+For material risk, use `skills/independent-review/SKILL.md` to determine whether a fresh-context, different-model/agent, deterministic, or human second pass is warranted. Independent review does not automatically require a stronger model.
+
+When the current conversation has become polluted by failed attempts, when a genuinely new task begins, or when a reviewer should not inherit executor anchoring, create a concise authoritative handoff and continue in fresh context according to `CONTEXT_MANAGEMENT.md`.
 
 ## 6. Two-sided onboarding checklist
 
@@ -65,4 +80,7 @@ Codex implements against the project repository and returns evidence through com
 - `PROJECT_PROFILE.md` filled only from verified repository facts plus explicit project context.
 - `AGENTS.md` contains project-specific permanent rules.
 - Shared workflow repository remains the policy source of truth.
+- Context is loaded progressively rather than copying the full workflow/skill library into every prompt.
+- Material unknowns are researched before being converted into assumptions.
+- High-risk acceptance records independent-review requirements when applicable.
 - New development work begins in ChatGPT control plane; Codex is invoked only when execution-plane capabilities are required.
