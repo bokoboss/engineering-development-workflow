@@ -50,9 +50,18 @@ ChatGPT should read the root `SKILL.md` router and apply focused modules only wh
 - `independent-review` for risk-based fresh-context/cross-model/human second passes;
 - `postmortem` after significant resolved defects/incidents;
 - `technical-status` for long or mixed technical evidence;
-- `long-task-guard` for multi-step or resumable work.
+- `long-task-guard` for multi-step or resumable work;
+- `loop-readiness` when a recurring/event-driven loop is being activated or its autonomy is increasing.
 
 See `docs/skill-system.md` for routing and progressive-disclosure rules.
+
+## Optional: continuous operations
+
+Most projects do **not** need recurring automation on day one. When a project benefits from scheduled/event-driven observation, read `CONTINUOUS_OPERATIONS.md` and create a `templates/LOOP_CONTRACT.md` only for that loop.
+
+Start new loop patterns at **A1 observe/report** unless a reviewed readiness record supports otherwise. Use `skills/loop-readiness/SKILL.md` before activation or autonomy increases. GitHub/project evidence remains authoritative; operational state is optional derived memory, not a second source of truth.
+
+The v1.6 reference pilot is `patterns/pr-ci-watcher.md`, intentionally A1/report-only with no code mutation, automatic Codex remediation, close, or merge.
 
 ## 5. Invoke Codex only when execution-plane capabilities are required
 
