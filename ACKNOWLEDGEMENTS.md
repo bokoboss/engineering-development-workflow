@@ -51,6 +51,19 @@ Credit is given because the external project materially influenced the direction
 
 The source repository focuses heavily on Claude Code mechanics and best practices; this project generalizes selected ideas into a tool-independent engineering-development workflow. Product-specific Claude commands, fixed context heuristics, mandatory plan mode, per-file commit rules, and wholesale `.claude/` configuration are intentionally not adopted as universal rules here.
 
+
+### cobusgreyling/loop-engineering
+
+- **Source:** https://github.com/cobusgreyling/loop-engineering
+- **Author/maintainer:** Cobus Greyling (`cobusgreyling`) and contributors.
+- **Relationship:** conceptual inspiration and prior-art research; no source file, CLI, skill, or harness is embedded wholesale in this repository.
+- **License/status when reviewed:** MIT License, copyright 2026 Cobus Greyling and contributors; reviewed at revision `ffeb5a37d0a0d397bb7438609b1713da1c69f204` on 2026-08-30.
+- **Relevant influence:** materially informed the foundation research for a possible v1.6 Continuous Operations Layer, especially recurring work discovery/triage, phased autonomy, operational state, maker/checker separation, finite retry/circuit-breaker controls, recurring-operation budgets, selective notifications, run observability, multi-loop collision control, and human escalation.
+- **Relevant source areas reviewed:** `LOOP.md`, `STATE.md`, `docs/concepts.md`, `docs/primitives.md`, `docs/loop-design-checklist.md`, `docs/operating-loops.md`, `docs/failure-modes.md`, `docs/anti-patterns.md`, `docs/safety.md`, `docs/multi-loop.md`, `docs/refactor.md`, `docs/architecture-diagrams.md`, `tools/loop-audit/README.md`, `starters/thin-loop/README.md`, and the Daily Triage / PR Babysitter / CI Sweeper / Issue Triage patterns.
+- **Use in this project:** the adoption review at `docs/research/loop-engineering-adoption-review.md` independently re-expresses selected concepts for this workflow's existing ChatGPT-control-plane, GitHub-source-of-truth, cost-aware model-routing, independent-review, engineering-governance, and human-approval architecture. It explicitly rejects wholesale harness adoption, mandatory `STATE.md`, product-specific loop commands, fixed budgets/attempt counts, broad unattended refactoring, and initial auto-merge.
+
+Credit is given because this source materially shaped the proposed continuous-operations architecture and risk controls even though the resulting recommendation and wording are original to this repository.
+
 ## Future acknowledgements
 
 Add an entry when an external source materially affects a workflow rule, skill, template, architecture decision, validation method, or other reusable project capability.
