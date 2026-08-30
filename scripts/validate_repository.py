@@ -67,7 +67,7 @@ REQUIRED_HEADINGS = {
     'ACKNOWLEDGEMENTS.md': [
         '## Attribution principles', '## Current acknowledgements',
         '### thananon/9arm-skills', '### shanraisshan/claude-code-best-practice',
-        '## Future acknowledgements'
+        '### cobusgreyling/loop-engineering', '## Future acknowledgements'
     ],
     '.github/pull_request_template.md': ['## Research / decision basis', '## Independent review', '## Review checklist'],
     'templates/EXECUTION_CONTRACT.md': [
