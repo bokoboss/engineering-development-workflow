@@ -6,7 +6,28 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 
 ### Pending
 - Collect external feedback after real project adoption.
-- Foundation research for a possible v1.6 Continuous Operations Layer completed in `docs/research/loop-engineering-adoption-review.md`; research verdict is `GO WITH CONDITIONS`. No v1.6 workflow contract is implemented by this research-only change.
+
+## [1.6.0] - 2026-08-30
+
+### Added
+- `CONTINUOUS_OPERATIONS.md` defining a tool-independent outer operational layer for recurring/event-driven work without replacing the core development workflow.
+- A0-A3 autonomy model with A1 observe/report as the default starting level and an explicit human-owned ceiling for protected engineering/safety/security/legal/destructive decisions.
+- `skills/loop-readiness/SKILL.md` with qualitative `READY FOR A1`, `READY FOR A2`, `READY FOR A3`, and `NOT READY` outcomes.
+- `templates/LOOP_CONTRACT.md` for source of truth, operational state, action boundaries, budget/circuit breaker, notifications, human gates, observability, and pause/kill controls.
+- `patterns/pr-ci-watcher.md` as the first A1 report-only reference pattern.
+- Foundation adoption research at `docs/research/loop-engineering-adoption-review.md` with a `GO WITH CONDITIONS` verdict.
+
+### Changed
+- Root skill routing and core workflow now distinguish one-off development from optional continuous operations.
+- Operational state is explicitly derived memory/cache/ledger and may not supersede live GitHub/project evidence; extra state is optional when the authoritative system already holds enough truth.
+- Action-capable recurring loops require finite attempts/no-progress detection, explicit budgets/model ceilings, verification, human escalation, observability, and pause/kill behavior before higher autonomy is considered.
+- Notification policy defaults to silence on no-op and suppression of unchanged duplicate findings.
+- Multi-loop guidance now requires one action owner per item/branch, namespaced state, shared protected-area policy, and collision escalation without introducing a distributed locking runtime.
+- ChatGPT Project Instructions, Quick Start, project setup guidance, skill system, installer reference/template set, and repository self-validation aligned to v1.6.0.
+- Existing v1.5 research, scrutiny, independent-review, context, model-routing, security/governance, evidence, and human-approval authority remains unchanged.
+
+### Attribution note
+- `cobusgreyling/loop-engineering` (MIT License; Cobus Greyling and contributors) materially informed the foundation research around recurring work discovery, phased autonomy, operational state, circuit breakers, budgets, selective notifications, observability, and multi-loop coordination. See `ACKNOWLEDGEMENTS.md`. v1.6 policy/skill/pattern wording is independently written; the external CLI/plugin/harness is not embedded or required.
 
 ## [1.5.0] - 2026-08-26
 
