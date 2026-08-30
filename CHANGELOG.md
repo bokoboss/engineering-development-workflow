@@ -6,6 +6,7 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 
 ### Pending
 - Collect external feedback after real project adoption.
+- Foundation research for a possible v1.6 Continuous Operations Layer completed in `docs/research/loop-engineering-adoption-review.md`; research verdict is `GO WITH CONDITIONS`. No v1.6 workflow contract is implemented by this research-only change.
 
 ## [1.5.0] - 2026-08-26
 
