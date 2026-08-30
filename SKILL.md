@@ -1,6 +1,6 @@
 ---
 name: engineering-development-workflow
-description: Research, scrutinize, plan, route, execute, verify, independently review, accept, and hand off engineering-software development using explicit contracts, lean context, cost-aware model routing, focused skills, and evidence-first GitHub workflows.
+description: Research, scrutinize, plan, route, execute, verify, independently review, accept, hand off, and safely operate recurring engineering-software workflows using explicit contracts, lean context, cost-aware model routing, focused skills, and evidence-first GitHub controls.
 ---
 
 # Engineering Development Workflow Skill
@@ -14,13 +14,14 @@ This file is the **router**. The core workflow remains authoritative; focused mo
 1. Establish the authoritative project state from the repository and `PROJECT_PROFILE.md` if present.
 2. Apply `ENGINEERING_DEV_WORKFLOW.md`.
 3. Apply `CONTEXT_MANAGEMENT.md` to keep the working set relevant and decide when fresh context or isolation is useful.
-4. Apply `MODEL_ROUTING_POLICY.md` before recommending a coding model or reasoning effort.
-5. Route focused situations through the skill modules below.
-6. Apply `UX_UI_WORKFLOW.md` when UX/UI changes are involved.
-7. Apply `PARALLEL_EXECUTION.md` when multiple workers are proposed.
-8. Define gates using `ACCEPTANCE_AND_EVIDENCE.md` and `templates/ACCEPTANCE_GATE.md`.
-9. Produce or update an execution packet using `templates/EXECUTION_CONTRACT.md`.
-10. Do not claim completion without the required evidence, review, and approvals.
+4. If the work is recurring, event-driven, or monitored over time, apply `CONTINUOUS_OPERATIONS.md` before enabling automation or increasing autonomy.
+5. Apply `MODEL_ROUTING_POLICY.md` before recommending a coding model or reasoning effort.
+6. Route focused situations through the skill modules below.
+7. Apply `UX_UI_WORKFLOW.md` when UX/UI changes are involved.
+8. Apply `PARALLEL_EXECUTION.md` when multiple workers are proposed.
+9. Define gates using `ACCEPTANCE_AND_EVIDENCE.md` and `templates/ACCEPTANCE_GATE.md`.
+10. Produce or update an execution packet using `templates/EXECUTION_CONTRACT.md`.
+11. Do not claim completion without the required evidence, review, and approvals.
 
 ## Focused skill routing
 
@@ -31,6 +32,7 @@ This file is the **router**. The core workflow remains authoritative; focused mo
 - **Significant fixed defect or incident with reusable lessons** -> `skills/postmortem/SKILL.md`.
 - **Long agent report / mixed gates / "what is actually done?"** -> `skills/technical-status/SKILL.md`.
 - **Long, multi-step, resumable, or multi-worker execution** -> `skills/long-task-guard/SKILL.md`.
+- **Recurring/event-driven loop design, activation, or autonomy increase** -> `skills/loop-readiness/SKILL.md`, together with `CONTINUOUS_OPERATIONS.md`.
 
 Multiple modules may apply to one work item. Use the smallest set that materially improves correctness or control.
 
@@ -50,6 +52,14 @@ Do not turn scrutiny into ceremony for trivial edits.
 Use `skills/independent-review/SKILL.md` when a materially independent second pass is justified by risk. High-risk acceptance should not rely solely on the executor's own narrative or review.
 
 Independence may be provided by a fresh context using the same model tier, a different model/agent, deterministic recomputation or end-to-end verification, a human specialist, or an appropriate combination. Do not escalate to a premium model merely to satisfy the word "independent"; choose the cheapest reviewer that can reliably challenge the material risk.
+
+## Continuous operations
+
+For recurring or event-driven work, `CONTINUOUS_OPERATIONS.md` defines the outer operational layer. The loop may observe/triage and then invoke this core workflow when real development work is justified; it does not replace the core workflow or its acceptance authority.
+
+New loop patterns start at A1 observe/report unless an explicit readiness record supports otherwise. Use `templates/LOOP_CONTRACT.md` to record source of truth, operational state, action boundaries, budget/circuit breaker, notification, human gates, observability, and pause/kill behavior. Use `skills/loop-readiness/SKILL.md` before activation or autonomy increases.
+
+Operational state is derived memory, not project truth. Protected engineering/safety/security/legal/destructive decisions retain mandatory human ownership regardless of loop autonomy.
 
 ## Progressive disclosure
 
