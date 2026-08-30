@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Dict
 
 WORKFLOW_REPO = "https://github.com/bokoboss/engineering-development-workflow"
-WORKFLOW_VERSION = "1.5.0"
+WORKFLOW_VERSION = "1.6.0"
 MANIFEST_NAME = ".engineering-workflow.json"
 
 SOURCE_ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +33,7 @@ MANAGED_SOURCES = {
     "docs/development/templates/HANDOFF.md": "templates/HANDOFF.md",
     "docs/development/templates/POSTMORTEM.md": "templates/POSTMORTEM.md",
     "docs/development/templates/CODEX_PROMPT.md": "templates/CODEX_PROMPT.md",
+    "docs/development/templates/LOOP_CONTRACT.md": "templates/LOOP_CONTRACT.md",
     ".github/ISSUE_TEMPLATE/engineering-workflow-task.md": ".github/ISSUE_TEMPLATE/implementation-task.md",
 }
 
@@ -46,7 +47,7 @@ def read_text(path: Path) -> str:
 
 
 def workflow_reference() -> str:
-    return f"""# Engineering Development Workflow Reference\n\nThis project adopts the shared Engineering Development Workflow.\n\n- Upstream: {WORKFLOW_REPO}\n- Installed workflow version: {WORKFLOW_VERSION}\n- Local project authority: `PROJECT_PROFILE.md` and project-specific `AGENTS.md`\n\n## Operating rule\n\nUse the upstream repository as the normative workflow source. Keep project-specific facts,\ncommands, invariants, protected behavior, approvals, and accepted-baseline state in this\nrepository.\n\nDefault control loop:\n\n`Understand -> Bound -> Route -> Execute -> Verify -> Audit -> Accept / Escalate`\n\nFor coding-agent work, prepare a bounded execution contract, choose the cheapest model that\ncan reliably finish the task, prefer Luna for well-specified execution, diagnose failures\nbefore escalation, and require objective evidence before claiming completion. Focused skills\nand context policy remain upstream; ChatGPT/control-plane work should apply relevant research,\nscrutiny, context, and independent-review rules and pass their conclusions into the local\ncontract, gates, and coding-agent prompt.\n\n## Local reusable templates\n\nSee `docs/development/templates/`. These copies are installer-managed. Do not edit them\ndirectly; customize an instantiated work item instead.\n"""
+    return f"""# Engineering Development Workflow Reference\n\nThis project adopts the shared Engineering Development Workflow.\n\n- Upstream: {WORKFLOW_REPO}\n- Installed workflow version: {WORKFLOW_VERSION}\n- Local project authority: `PROJECT_PROFILE.md` and project-specific `AGENTS.md`\n\n## Operating rule\n\nUse the upstream repository as the normative workflow source. Keep project-specific facts,\ncommands, invariants, protected behavior, approvals, and accepted-baseline state in this\nrepository.\n\nDefault control loop:\n\n`Understand -> Bound -> Route -> Execute -> Verify -> Audit -> Accept / Escalate`\n\nFor coding-agent work, prepare a bounded execution contract, choose the cheapest model that\ncan reliably finish the task, prefer Luna for well-specified execution, diagnose failures\nbefore escalation, and require objective evidence before claiming completion. Focused skills\nand context policy remain upstream; ChatGPT/control-plane work should apply relevant research,\nscrutiny, context, and independent-review rules and pass their conclusions into the local\ncontract, gates, and coding-agent prompt. Recurring/event-driven operation remains optional;\nwhen used, apply upstream `CONTINUOUS_OPERATIONS.md`, default new loops to A1 observe/report,\nand use the local `LOOP_CONTRACT.md` template to record authority and operating bounds.\n\n## Local reusable templates\n\nSee `docs/development/templates/`. These copies are installer-managed. Do not edit them\ndirectly; customize an instantiated work item instead.\n"""
 
 
 def desired_project_owned() -> Dict[str, str]:
