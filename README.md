@@ -1,8 +1,8 @@
 # Engineering Development Workflow
 
-A reusable, evidence-first workflow for developing engineering software with humans, ChatGPT, coding agents, GitHub, explicit success gates, focused reasoning skills, lean context, independent review, and cost-aware model routing.
+A reusable, evidence-first workflow for developing and safely operating engineering software with humans, ChatGPT, coding agents, GitHub, explicit success gates, focused reasoning skills, lean context, independent review, cost-aware model routing, and bounded continuous operations.
 
-Current workflow version: **v1.5.0 baseline**.
+Current workflow version: **v1.6.0 baseline**.
 
 License: **Apache-2.0**.
 
@@ -76,12 +76,27 @@ The core workflow stays authoritative, while reusable skills provide more specif
 | Preserve lessons after a significant resolved defect/incident | `skills/postmortem/SKILL.md` |
 | Turn long/mixed technical output into a decision-ready status | `skills/technical-status/SKILL.md` |
 | Keep long or multi-step work bounded and resumable | `skills/long-task-guard/SKILL.md` |
+| Assess whether a recurring/event-driven loop is ready for A1/A2/A3 autonomy | `skills/loop-readiness/SKILL.md` |
 
 `SKILL.md` is the router. See [`docs/skill-system.md`](docs/skill-system.md) for routing, progressive disclosure, Gotchas, and mandatory scrutiny cases.
 
 Scrutiny is a required gate unless explicitly documented as not applicable for material architecture/interface/schema changes, protected engineering or safety/security-sensitive logic, major high-cost work packages, high-risk pre-merge decisions, and important acceptance decisions based on incomplete or contradictory evidence.
 
 Research and independent review are risk-based rather than mandatory ceremony for every change.
+
+## Continuous operations (optional)
+
+See [`CONTINUOUS_OPERATIONS.md`](CONTINUOUS_OPERATIONS.md).
+
+v1.6 adds a small outer operational layer for recurring/event-driven work:
+
+`Observe / Discover -> Triage -> Autonomy Gate -> invoke the existing core workflow when action is justified -> persist operational outcome -> wait / trigger again`
+
+This does **not** replace the development workflow. New loop patterns default to **A1 observe/report**, GitHub/project evidence remains authoritative, and operational state is optional derived memory rather than a second source of truth. Action-capable A2/A3 loops require explicit boundaries, finite attempts/no-progress detection, budgets, verification, human escalation, observability, and pause/kill controls.
+
+Use [`templates/LOOP_CONTRACT.md`](templates/LOOP_CONTRACT.md) and [`skills/loop-readiness/SKILL.md`](skills/loop-readiness/SKILL.md) when continuous operation is actually needed. The first reference pattern, [`patterns/pr-ci-watcher.md`](patterns/pr-ci-watcher.md), is intentionally A1/report-only with no automatic code mutation, Codex remediation, close, or merge.
+
+Most projects do not need to configure a loop during initial onboarding.
 
 ## Context management
 
