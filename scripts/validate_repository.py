@@ -131,7 +131,7 @@ REQUIRED_TEXT = {
         'Default: **silence on no-op**.'
     ],
     'skills/loop-readiness/SKILL.md': ['READY FOR A1', 'READY FOR A2', 'READY FOR A3', 'NOT READY'],
-    'patterns/pr-ci-watcher.md': ['Autonomy: **A1 — Observe / report**', 'no automatic Codex/coding-agent remediation'],
+    'patterns/pr-ci-watcher.md': ['Autonomy: **A1 — Observe / report**', 'invoke automatic Codex/coding-agent remediation'],
     'ACCEPTANCE_AND_EVIDENCE.md': ['Prefer deterministic enforcement over instruction-only compliance'],
     'LICENSE': ['Apache License', 'Version 2.0, January 2004'],
     'NOTICE': ['Engineering Development Workflow', 'Copyright 2026 Kittipat Tangittinunt'],
