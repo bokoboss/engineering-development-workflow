@@ -22,6 +22,7 @@ Core workflow
    +-- postmortem --------- preserve lessons after significant fixes
    +-- technical-status --- turn raw execution output into a decision
    +-- long-task-guard ----- keep multi-step work bounded and resumable
+   +-- loop-readiness ------ assess safe autonomy for recurring/event-driven loops
 ```
 
 The root `SKILL.md` is the router. Individual `skills/*/SKILL.md` files contain the focused procedure. `CONTEXT_MANAGEMENT.md` defines how to keep the active working set lean and when to use fresh or isolated context.
@@ -37,6 +38,7 @@ The root `SKILL.md` is the router. Individual `skills/*/SKILL.md` files contain 
 | Significant resolved defect/incident with reusable lessons | `postmortem` |
 | Long agent report, mixed CI results, or "what is the real status?" | `technical-status` |
 | Multi-step work, long execution, many gates, or resumable work | `long-task-guard` |
+| Recurring/event-driven loop activation or autonomy increase | `loop-readiness` + `CONTINUOUS_OPERATIONS.md` |
 
 More than one skill may apply. Example: a new integration may use `research-gate`, then `scrutinize`; its implementation may later require `systematic-debug` and a risk-based `independent-review` before acceptance.
 
@@ -63,6 +65,8 @@ Examples:
 - A fresh Codex session or different model may be used as an independent reviewer when the material evidence requires local repository execution.
 - A postmortem should be assembled from verified GitHub/test evidence after the fix is accepted.
 - Long-task guard governs both ChatGPT planning and Codex execution packets.
+
+For recurring/event-driven work, `CONTINUOUS_OPERATIONS.md` governs the outer operational loop and `loop-readiness` evaluates whether A1/A2/A3 authority is supported. These controls remain subordinate to the core development and acceptance workflow.
 
 A stronger model is not automatically required for independent review. Fresh context at the same capable tier may be sufficient and cheaper. Escalate reviewer capability only when the review itself requires greater judgment.
 

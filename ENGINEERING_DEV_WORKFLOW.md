@@ -1,6 +1,6 @@
 # Engineering Development Workflow
 
-Version: 1.5.0
+Version: 1.6.0
 
 ## 1. Purpose
 
@@ -46,13 +46,26 @@ The core workflow is authoritative. Focused modules under `skills/` add repeatab
 - `skills/independent-review/SKILL.md` — obtain a fresh-context/cross-model/human second pass when acceptance risk justifies it;
 - `skills/postmortem/SKILL.md` — preserve lessons after significant resolved defects/incidents;
 - `skills/technical-status/SKILL.md` — translate raw execution output into decision-ready status;
-- `skills/long-task-guard/SKILL.md` — keep long or multi-step work bounded, observable, and resumable.
+- `skills/long-task-guard/SKILL.md` — keep long or multi-step work bounded, observable, and resumable;
+- `skills/loop-readiness/SKILL.md` — assess whether a recurring/event-driven loop is safe for A1, A2, or A3 autonomy.
 
 Use the smallest set of skills that materially improves the work. Skills do not replace the Issue/execution contract, validation gates, project profile, or human approval requirements.
 
 Explicit scrutiny is required unless documented as not applicable for material architecture/interface/schema changes, protected engineering or safety/security-sensitive logic, major work packages with material wrong-direction cost, high-risk pre-merge decisions, and important acceptance decisions based on incomplete or contradictory evidence.
 
 Research and independent review are conditional gates: invoke them when the unresolved uncertainty or acceptance risk justifies their cost, not as ceremony for routine work.
+
+## 4A. Continuous operations outer layer
+
+Recurring or event-driven operation is governed by `CONTINUOUS_OPERATIONS.md`. It sits outside this core workflow:
+
+`Observe / Discover -> Triage -> Autonomy Gate -> invoke core workflow when action is justified -> persist operational outcome -> wait / trigger again`
+
+The outer layer may decide that work deserves attention; it cannot bypass research, scrutiny, execution contracts, model routing, verification, independent review, acceptance, security/governance, or human approval.
+
+New loop patterns default to A1 observe/report. Operational state is derived memory/cache/ledger and must be refreshed against authoritative repository/GitHub/project evidence before action. Use `skills/loop-readiness/SKILL.md` and `templates/LOOP_CONTRACT.md` before activation or autonomy increases.
+
+Protected engineering, safety, security, legal/regulatory, destructive, and other human-owned decisions are not generically eligible for unattended acceptance or merge.
 
 ## 5. End-to-end loop
 

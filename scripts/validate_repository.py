@@ -11,22 +11,25 @@ SKILL_FILES = [
     'skills/postmortem/SKILL.md',
     'skills/technical-status/SKILL.md',
     'skills/long-task-guard/SKILL.md',
+    'skills/loop-readiness/SKILL.md',
 ]
 
 REQUIRED_FILES = [
     'README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'ACKNOWLEDGEMENTS.md',
     'LICENSE', 'NOTICE', 'AGENTS.md', 'SKILL.md',
-    'ENGINEERING_DEV_WORKFLOW.md', 'CONTEXT_MANAGEMENT.md', 'MODEL_ROUTING_POLICY.md',
+    'ENGINEERING_DEV_WORKFLOW.md', 'CONTEXT_MANAGEMENT.md', 'CONTINUOUS_OPERATIONS.md', 'MODEL_ROUTING_POLICY.md',
     'UX_UI_WORKFLOW.md', 'DEBUGGING_PROTOCOL.md', 'REVIEW_AND_SCRUTINY.md',
     'PARALLEL_EXECUTION.md', 'ACCEPTANCE_AND_EVIDENCE.md',
     'SECURITY_AND_GOVERNANCE.md', 'VERSIONING.md',
     'templates/PROJECT_PROFILE.md', 'templates/EXECUTION_CONTRACT.md',
     'templates/ACCEPTANCE_GATE.md', 'templates/EVIDENCE_PACKAGE.md',
     'templates/HANDOFF.md', 'templates/POSTMORTEM.md', 'templates/CODEX_PROMPT.md',
+    'templates/LOOP_CONTRACT.md',
     'templates/CHATGPT_PROJECT_INSTRUCTIONS.md',
     '.github/pull_request_template.md',
     'scripts/setup_project.py', 'docs/installation.md', 'docs/quick-start.md',
-    'docs/chatgpt-project-setup.md', 'docs/skill-system.md', 'tests/test_setup_project.py',
+    'docs/chatgpt-project-setup.md', 'docs/skill-system.md', 'patterns/pr-ci-watcher.md',
+    'docs/research/loop-engineering-adoption-review.md', 'tests/test_setup_project.py',
     *SKILL_FILES,
 ]
 
@@ -43,9 +46,15 @@ COMMON_SKILL_HEADINGS = [
 REQUIRED_HEADINGS = {
     'SKILL.md': [
         '## Core router', '## Focused skill routing', '## Mandatory scrutiny',
-        '## Independent review', '## Progressive disclosure', '## Control-plane rule'
+        '## Independent review', '## Continuous operations', '## Progressive disclosure', '## Control-plane rule'
     ],
-    'ENGINEERING_DEV_WORKFLOW.md': ['## 4. Focused skills', '## 5. End-to-end loop'],
+    'ENGINEERING_DEV_WORKFLOW.md': ['## 4. Focused skills', '## 4A. Continuous operations outer layer', '## 5. End-to-end loop'],
+    'CONTINUOUS_OPERATIONS.md': [
+        '## 2. Autonomy levels', '## 4. Source of truth and operational state',
+        '## 5. Budget and circuit breaker', '## 6. Notification policy',
+        '## 7. Multi-loop coordination', '## 10. Graduation and rollback',
+        '## 12. First v1.6 pilot'
+    ],
     'CONTEXT_MANAGEMENT.md': [
         '## 1. Authoritative context hierarchy', '## 2. Load only what is relevant',
         '## 3. Choose continue vs fresh context deliberately', '## 4. Context isolation',
@@ -58,7 +67,7 @@ REQUIRED_HEADINGS = {
     'ACKNOWLEDGEMENTS.md': [
         '## Attribution principles', '## Current acknowledgements',
         '### thananon/9arm-skills', '### shanraisshan/claude-code-best-practice',
-        '## Future acknowledgements'
+        '### cobusgreyling/loop-engineering', '## Future acknowledgements'
     ],
     '.github/pull_request_template.md': ['## Research / decision basis', '## Independent review', '## Review checklist'],
     'templates/EXECUTION_CONTRACT.md': [
@@ -67,6 +76,16 @@ REQUIRED_HEADINGS = {
         '## Success gates', '## Stop conditions', '## Definition of done'
     ],
     'templates/ACCEPTANCE_GATE.md': ['## Research conditions', '## Gates', '## Independent review', '## Decision'],
+    'templates/LOOP_CONTRACT.md': [
+        '## Identity', '## Purpose', '## Autonomy', '## Authoritative source of truth',
+        '## Operational state', '## Action boundary', '## Budget and circuit breaker',
+        '## Notification', '## Pause / kill / recovery', '## Graduation criteria'
+    ],
+    'patterns/pr-ci-watcher.md': [
+        '## Purpose', '## Non-goals', '## Authoritative sources',
+        '## Observation and classification', '## Notification contract',
+        '## Safety and permissions', '## Graduation'
+    ],
     'templates/PROJECT_PROFILE.md': [
         '## Current accepted baseline', '## Architecture / invariants',
         '## Protected behavior', '## Validation matrix', '## Current next objective'
@@ -87,23 +106,32 @@ for skill_file in SKILL_FILES:
 
 REQUIRED_TEXT = {
     'README.md': [
-        'Current workflow version: **v1.5.0 baseline**.', 'License: **Apache-2.0**.',
+        'Current workflow version: **v1.6.0 baseline**.', 'License: **Apache-2.0**.',
         'CONTEXT_MANAGEMENT.md', 'skills/research-gate/SKILL.md',
-        'skills/independent-review/SKILL.md', 'ACKNOWLEDGEMENTS.md',
+        'skills/independent-review/SKILL.md', 'skills/loop-readiness/SKILL.md',
+        'CONTINUOUS_OPERATIONS.md', 'patterns/pr-ci-watcher.md', 'ACKNOWLEDGEMENTS.md',
         'Apache License, Version 2.0'
     ],
     'ENGINEERING_DEV_WORKFLOW.md': [
-        'Version: 1.5.0', 'skills/research-gate/SKILL.md',
+        'Version: 1.6.0', 'skills/research-gate/SKILL.md',
         'skills/scrutinize/SKILL.md', 'skills/independent-review/SKILL.md',
-        'CONTEXT_MANAGEMENT.md'
+        'CONTEXT_MANAGEMENT.md', 'CONTINUOUS_OPERATIONS.md', 'skills/loop-readiness/SKILL.md'
     ],
-    'scripts/setup_project.py': ['WORKFLOW_VERSION = "1.5.0"'],
+    'scripts/setup_project.py': ['WORKFLOW_VERSION = "1.6.0"', 'templates/LOOP_CONTRACT.md'],
     'ACKNOWLEDGEMENTS.md': [
         'https://github.com/thananon/9arm-skills', 'conceptual inspiration only',
         'no text, code, or skill implementation',
         'https://github.com/shanraisshan/claude-code-best-practice',
-        'MIT License', 'Shayan Rais'
+        'MIT License', 'Shayan Rais',
+        'https://github.com/cobusgreyling/loop-engineering', 'Cobus Greyling'
     ],
+    'CONTINUOUS_OPERATIONS.md': [
+        'Operational state is **derived memory/cache/ledger**',
+        '**New loop patterns start at A1 unless an explicit adoption record justifies otherwise.**',
+        'Default: **silence on no-op**.'
+    ],
+    'skills/loop-readiness/SKILL.md': ['READY FOR A1', 'READY FOR A2', 'READY FOR A3', 'NOT READY'],
+    'patterns/pr-ci-watcher.md': ['Autonomy: **A1 — Observe / report**', 'invoke automatic Codex/coding-agent remediation'],
     'ACCEPTANCE_AND_EVIDENCE.md': ['Prefer deterministic enforcement over instruction-only compliance'],
     'LICENSE': ['Apache License', 'Version 2.0, January 2004'],
     'NOTICE': ['Engineering Development Workflow', 'Copyright 2026 Kittipat Tangittinunt'],

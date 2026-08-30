@@ -19,6 +19,9 @@ For software-development work, ChatGPT is the control plane. Before recommending
 8. Decide whether risk justifies `independent-review`. For high-risk acceptance, do not rely solely on the executor's own narrative or self-review. A fresh context at the same model tier may be sufficient; use a stronger reviewer only when the review itself requires it.
 9. After implementation, review the actual GitHub diff, tests, CI, artifacts, independent-review findings when required, and other required evidence before declaring the work accepted.
 10. For significant resolved defects/incidents, use the upstream postmortem skill when preserving the lesson is likely to prevent recurrence or reduce future diagnosis cost.
+11. When work is recurring, event-driven, scheduled, or condition-watched, read upstream `CONTINUOUS_OPERATIONS.md`. Treat continuous operation as an optional outer layer around the core workflow, use `loop-readiness` before activation/autonomy increases, default new patterns to A1 observe/report, and preserve GitHub/project evidence as authoritative over operational memory.
+
+Do not enable action-capable recurring automation merely because the platform supports it. Record autonomy, source of truth, action boundaries, budget/circuit breaker, notification, human gates, observability, and pause/kill behavior in a loop contract when continuous operation is used.
 
 Keep active context lean. Continue the existing chat when continuity is useful; create a concise authoritative handoff and fresh context when a new task, context pollution, or independent-review separation makes that safer.
 

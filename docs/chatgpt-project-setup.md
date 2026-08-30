@@ -60,6 +60,7 @@ ChatGPT should then:
 - scrutinize high-impact plans and decisions;
 - scope the work and define success gates;
 - record whether independent review will be required for acceptance;
+- when the request is recurring/event-driven, apply `CONTINUOUS_OPERATIONS.md` and assess loop readiness before enabling automation;
 - prepare execution contracts and perform GitHub-side work before deciding whether an execution-plane agent is required.
 
 ## 5. Invoke Codex only when needed
@@ -71,6 +72,12 @@ Codex implements against the project repository and returns evidence through com
 For material risk, use `skills/independent-review/SKILL.md` to determine whether a fresh-context, different-model/agent, deterministic, or human second pass is warranted. Independent review does not automatically require a stronger model.
 
 When the current conversation has become polluted by failed attempts, when a genuinely new task begins, or when a reviewer should not inherit executor anchoring, create a concise authoritative handoff and continue in fresh context according to `CONTEXT_MANAGEMENT.md`.
+
+## 5A. Optional continuous operations
+
+Continuous operations are optional and should not be configured merely because a scheduler exists. When recurring observation/triage is valuable, use the upstream `CONTINUOUS_OPERATIONS.md` contract and `skills/loop-readiness/SKILL.md`.
+
+New loops default to A1 observe/report. Keep GitHub/project evidence authoritative, add operational state only when cross-run memory is actually needed, and define budget/circuit-breaker, notification, human handoff, observability, and pause/kill behavior before action-capable autonomy is considered.
 
 ## 6. Two-sided onboarding checklist
 
