@@ -6,6 +6,7 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 
 ### Pending
 - Collect external feedback after real project adoption.
+- Foundation research for a possible Local Workspace Evidence Bridge completed in `docs/research/local-workspace-evidence-bridge-adoption-review.md`. Concept verdict: `GO WITH CONDITIONS`; direct adoption of pinned `XiaoDuoYa/codex-with-chatgpt` v0.1.1: `NO-GO AT THIS TIME`. No v1.7 workflow contract or candidate installation is introduced by this research-only change.
 
 ## [1.6.0] - 2026-08-30
 
