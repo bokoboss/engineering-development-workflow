@@ -1,0 +1,19 @@
+# Default owner for workflow/repository contract changes.
+* @bokoboss
+
+# High-impact workflow and safety contracts.
+/WORK_MODE_ROUTING.md @bokoboss
+/WORKSPACE_SAFETY.md @bokoboss
+/SECURITY_AND_GOVERNANCE.md @bokoboss
+/ACCEPTANCE_AND_EVIDENCE.md @bokoboss
+/ENGINEERING_DEV_WORKFLOW.md @bokoboss
+/SKILL.md @bokoboss
+
+# Executable repository automation.
+/scripts/ @bokoboss
+/tests/ @bokoboss
+/.github/workflows/ @bokoboss
+
+# Execution-facing templates and skills.
+/templates/ @bokoboss
+/skills/ @bokoboss
