@@ -99,6 +99,8 @@ REQUIRED_HEADINGS = {
         '## Execution routing', '## Context strategy', '## Independent review',
         '## Success gates', '## Evidence reuse', '## Stop conditions', '## Definition of done'
     ],
+    'templates/POSTMORTEM.md': ['## Optional workflow-efficiency sample'],
+    'templates/EVIDENCE_PACKAGE.md': ['## Optional workflow-efficiency sample'],
     'templates/FAST_EXECUTION_PACKET.md': [
         '## Routing', '## Workspace safety', '## Objective', '## Scope',
         '## Evidence reusable without rerun', '## Targeted success gates', '## Stop / escalate'
@@ -152,6 +154,7 @@ REQUIRED_TEXT = {
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'CONTEXT_MANAGEMENT.md', 'skills/research-gate/SKILL.md',
         'skills/independent-review/SKILL.md', 'skills/loop-readiness/SKILL.md',
         'CONTINUOUS_OPERATIONS.md', 'patterns/pr-ci-watcher.md', 'ACKNOWLEDGEMENTS.md',
+        'docs/CHEAT_SHEET.md',
         'Apache License, Version 2.0'
     ],
     'ENGINEERING_DEV_WORKFLOW.md': [
@@ -195,6 +198,8 @@ REQUIRED_TEXT = {
     'docs/CHEAT_SHEET.md': [
         'FAST', 'STANDARD', 'STRICT', '.engineering-workflow/', 'WORKSPACE_SAFETY.md'
     ],
+    'templates/POSTMORTEM.md': ['Do not make this mandatory for routine FAST work.'],
+    'templates/EVIDENCE_PACKAGE.md': ['Use for pilots, tuning, or selected postmortems only.'],
     'ACCEPTANCE_AND_EVIDENCE.md': ['Prefer deterministic enforcement over instruction-only compliance', 'Evidence is revision-bound.'],
     'LICENSE': ['Apache License', 'Version 2.0, January 2004'],
     'NOTICE': ['Engineering Development Workflow', 'Copyright 2026 Kittipat Tangittinunt'],
