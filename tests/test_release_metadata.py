@@ -46,7 +46,7 @@ class ReleaseMetadataTests(unittest.TestCase):
             self.assertIn("Current workflow version: **v1.7.3 baseline**.", text)
             readme.write_text(
                 text.replace(
-                    "Current workflow version: **v1.7.2 baseline**.",
+                    "Current workflow version: **v1.7.3 baseline**.",
                     "Current workflow version: **v9.9.9 baseline**.",
                     1,
                 ),
