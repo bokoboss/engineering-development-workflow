@@ -38,6 +38,13 @@ class SetupProjectTests(unittest.TestCase):
         self.assertTrue((target / "PROJECT_PROFILE.md").is_file())
         self.assertTrue((target / MANIFEST).is_file())
         self.assertTrue((target / "docs/development/ENGINEERING_WORKFLOW.md").is_file())
+        self.assertTrue((target / ".engineering-workflow/SKILL.md").is_file())
+        self.assertTrue((target / ".engineering-workflow/WORK_MODE_ROUTING.md").is_file())
+        self.assertTrue((target / ".engineering-workflow/WORKSPACE_SAFETY.md").is_file())
+        self.assertTrue((target / ".engineering-workflow/skills/scrutinize/SKILL.md").is_file())
+        manifest = json.loads((target / MANIFEST).read_text(encoding="utf-8"))
+        self.assertEqual(manifest["workflow_version"], "1.7.0")
+        self.assertEqual(manifest["local_workflow_dir"], ".engineering-workflow")
         self.assertIn("VALIDATION PASS", result.stdout)
         valid = run_cli("validate", target)
         self.assertEqual(valid.returncode, 0, valid.stderr)
@@ -103,6 +110,66 @@ class SetupProjectTests(unittest.TestCase):
         valid = run_cli("validate", target)
         self.assertEqual(valid.returncode, 1)
         self.assertIn("VALIDATION FAILED", valid.stderr)
+
+
+    def test_created_agents_contains_project_root_safety_boundary(self):
+        target = self.make_target()
+        result = run_cli("install", target)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        agents = (target / "AGENTS.md").read_text(encoding="utf-8")
+        self.assertIn("writable filesystem boundary is this project root only", agents)
+        self.assertIn(".engineering-workflow/WORK_MODE_ROUTING.md", agents)
+        self.assertIn(".engineering-workflow/WORKSPACE_SAFETY.md", agents)
+
+    def test_refuses_filesystem_root_target(self):
+        root = Path(Path.cwd().anchor)
+        if not str(root):
+            self.skipTest("platform does not expose a filesystem anchor")
+        result = run_cli("install", root)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("filesystem-root target", result.stderr)
+
+    def test_refuses_user_home_target(self):
+        result = run_cli("install", Path.home())
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("user-home target", result.stderr)
+
+    def test_refuses_workflow_source_target(self):
+        result = run_cli("install", ROOT)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("workflow-source target", result.stderr)
+
+    def test_refuses_symlink_managed_destination_escape(self):
+        target = self.make_target()
+        outside_temp = tempfile.TemporaryDirectory()
+        self.addCleanup(outside_temp.cleanup)
+        outside = Path(outside_temp.name)
+        link = target / ".engineering-workflow"
+        try:
+            link.symlink_to(outside, target_is_directory=True)
+        except (OSError, NotImplementedError):
+            self.skipTest("symlink creation unavailable on this platform")
+
+        marker = outside / "must-not-change.txt"
+        marker.write_text("safe", encoding="utf-8")
+        result = run_cli("install", target)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("symlink/junction", result.stderr)
+        self.assertEqual(marker.read_text(encoding="utf-8"), "safe")
+        self.assertFalse((outside / "SKILL.md").exists())
+
+    def test_refuses_symlink_target(self):
+        real_target = self.make_target()
+        link_parent = tempfile.TemporaryDirectory()
+        self.addCleanup(link_parent.cleanup)
+        link = Path(link_parent.name) / "project-link"
+        try:
+            link.symlink_to(real_target, target_is_directory=True)
+        except (OSError, NotImplementedError):
+            self.skipTest("symlink creation unavailable on this platform")
+        result = run_cli("install", link)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("target must not be a symlink/junction", result.stderr)
 
 
 if __name__ == "__main__":
