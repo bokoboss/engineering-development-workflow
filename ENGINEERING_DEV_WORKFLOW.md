@@ -1,6 +1,6 @@
 # Engineering Development Workflow
 
-Version: 1.6.0
+Version: 1.7.0
 
 ## 1. Purpose
 
@@ -34,7 +34,15 @@ Use this precedence unless a project explicitly overrides it:
 5. Concise handoff/checkpoint records.
 6. Conversation history and memory as convenience, not authoritative project state.
 
-Apply `CONTEXT_MANAGEMENT.md`. When chat context is long, stale, polluted by failed approaches, or missing, reconstruct from Git/GitHub and project documents rather than guessing. Load only the workflow/skill material relevant to the current task.
+Apply `WORK_MODE_ROUTING.md` first, then `CONTEXT_MANAGEMENT.md`. Classify the task as FAST, STANDARD, or STRICT before coding-agent execution and load only the workflow/skill material justified by that mode and task. When chat context is long, stale, polluted by failed approaches, or missing, reconstruct from Git/GitHub and project documents rather than guessing.
+
+## 3A. Work mode and workspace safety
+
+Before entering the full workflow, apply `WORK_MODE_ROUTING.md` and state the selected **FAST / STANDARD / STRICT** mode, rationale, evidence that can be reused, and escalation triggers.
+
+All modes inherit `WORKSPACE_SAFETY.md`. The default writable boundary is the explicit target project root only. External/system mutation requires explicit human approval for the exact path/resource/action and is STRICT by definition.
+
+Work mode controls process intensity, not correctness. FAST reduces ceremony; it does not waive the common quality floor, required repository CI, protected-change rules, or actual diff review.
 
 ## 4. Focused skills
 
@@ -69,7 +77,9 @@ Protected engineering, safety, security, legal/regulatory, destructive, and othe
 
 ## 5. End-to-end loop
 
-### Stage 0 — Establish state and working context
+### Stage 0 — Route mode, establish state, and working context
+- Apply `WORK_MODE_ROUTING.md` and record FAST / STANDARD / STRICT before coding-agent execution.
+- Confirm target project root and `WORKSPACE_SAFETY.md` boundary before any mutation.
 - Confirm repository, branch, accepted baseline, dirty/local constraints, standard commands, protected behavior, and current objective.
 - Inspect before modifying.
 - Establish the smallest reliable working context using `CONTEXT_MANAGEMENT.md`.
@@ -83,7 +93,7 @@ Protected engineering, safety, security, legal/regulatory, destructive, and othe
 - Do not proceed past a research or scrutiny blocker merely because implementation is possible.
 
 ### Stage 2 — Bound the work
-Create an execution contract containing objective, scope, out-of-scope, constraints, protected areas, likely modules, dependencies, relevant research verdict/conditions, success gates, validation, independent-review requirement if any, stop conditions, and definition of done.
+For FAST, a compact execution packet is sufficient when FAST eligibility remains satisfied. For STANDARD/STRICT, create an execution contract containing objective, scope, out-of-scope, constraints, protected areas, likely modules, dependencies, relevant research verdict/conditions, success gates, validation, independent-review requirement if any, stop conditions, and definition of done.
 
 Prefer one coherent phase/PR when the work is related and still reviewable. Split only when scope, risk, dependency, ownership, or reviewability justifies it.
 
@@ -106,12 +116,12 @@ Do not use a premium model to compensate for a vague packet that ChatGPT or the 
 - For parallel work, use task/feature-specific worker packets with explicit ownership rather than vague generic roles.
 
 ### Stage 5 — Verify
-Run the gates required by the change: targeted tests, regression suites, type/lint/build checks, package/runtime checks, browser/E2E, artifact comparison, numerical/reference equivalence, real-data validation, performance/security checks, or CI.
+Reuse valid revision-bound evidence according to `WORK_MODE_ROUTING.md`; do not rerun broad validation merely because a workflow stage changed. Run or rerun the gates required by the change: targeted tests, regression suites, type/lint/build checks, package/runtime checks, browser/E2E, artifact comparison, numerical/reference equivalence, real-data validation, performance/security checks, or CI.
 
 Prefer deterministic enforcement when a rule can be encoded reliably in tests, schemas, validators, settings, branch protection, hooks, or CI. Do not rely on instruction-only compliance for behavior that can be mechanically checked or blocked.
 
 ### Stage 6 — Audit and review
-Review the actual diff and evidence against the Issue/contract, not merely the executor summary. Check scope containment, behavior, regression risk, documentation, UX, security, protected areas, research conditions, and unresolved assumptions.
+Review the actual diff and evidence against the Issue/contract or compact FAST packet, not merely the executor summary. Check scope containment, behavior, regression risk, documentation, UX, security, protected areas, research conditions, and unresolved assumptions.
 
 Use `skills/technical-status/SKILL.md` when execution evidence is long, fragmented, or mixed so the acceptance decision remains explicit.
 
@@ -143,6 +153,7 @@ For a significant resolved defect/incident whose lesson is likely to prevent rec
 Implementation exists != work complete.
 
 A completion claim must identify:
+- work mode used and any escalation;
 - accepted commit/PR;
 - gates executed and outcomes;
 - exact CI status when CI is required;
