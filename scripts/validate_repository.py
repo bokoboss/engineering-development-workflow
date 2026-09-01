@@ -62,12 +62,6 @@ REQUIRED_HEADINGS = {
         '## Licensed and restricted references', '## Tool and remote-agent boundary',
         '## Human approval'
     ],
-    'SECURITY_AND_GOVERNANCE.md': [
-        '`WORKSPACE_SAFETY.md` is normative for local filesystem/system boundaries and applies to every work mode.',
-        'Never commit credentials, tokens, personal secrets, production private data, or temporary debug artifacts containing them.',
-        'Default local write authority is the explicit target project root only; external/system writes require explicit human approval under `WORKSPACE_SAFETY.md`.',
-        'Human approval is a design control, not a failure of automation.'
-    ],
     'WORKSPACE_SAFETY.md': [
         '## 1. Default filesystem authority', '## 2. Forbidden external mutations by default',
         '## 5. Symlink / junction / reparse-point safety', '## 6. External-write approval protocol',
@@ -142,6 +136,12 @@ REQUIRED_TEXT = {
         '### Looks FAST but is not',
         'How will we prove this exact change is correct?',
         'Evidence is revision-bound.'
+    ],
+    'SECURITY_AND_GOVERNANCE.md': [
+        '`WORKSPACE_SAFETY.md` is normative for local filesystem/system boundaries and applies to every work mode.',
+        'Never commit credentials, tokens, personal secrets, production private data, or temporary debug artifacts containing them.',
+        'Default local write authority is the explicit target project root only; external/system writes require explicit human approval under `WORKSPACE_SAFETY.md`.',
+        'Human approval is a design control, not a failure of automation.'
     ],
     'WORKSPACE_SAFETY.md': [
         '**the explicit target project root, and only that project root.**',
