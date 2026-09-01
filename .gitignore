@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Local Python environments
+.venv/
+venv/
+env/
+
+# Logs / temporary editor files
+*.log
+*.tmp
+*.swp
+*~
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE-local state
+.idea/
+.vscode/
+
+# Do NOT ignore .engineering-workflow/.
+# It is an intentional, reviewable project artifact in adopted repositories.
