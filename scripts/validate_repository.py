@@ -21,7 +21,7 @@ REQUIRED_FILES = [
     'CONTEXT_MANAGEMENT.md', 'CONTINUOUS_OPERATIONS.md', 'MODEL_ROUTING_POLICY.md',
     'UX_UI_WORKFLOW.md', 'DEBUGGING_PROTOCOL.md', 'REVIEW_AND_SCRUTINY.md',
     'PARALLEL_EXECUTION.md', 'ACCEPTANCE_AND_EVIDENCE.md',
-    'SECURITY_AND_GOVERNANCE.md', 'VERSIONING.md', 'docs/CHEAT_SHEET.md',
+    'SECURITY_AND_GOVERNANCE.md', 'VERSIONING.md', 'docs/CHEAT_SHEET.md', 'docs/THAI_USER_GUIDE.md',
     'templates/PROJECT_PROFILE.md', 'templates/EXECUTION_CONTRACT.md',
     'templates/ACCEPTANCE_GATE.md', 'templates/EVIDENCE_PACKAGE.md',
     'templates/HANDOFF.md', 'templates/POSTMORTEM.md', 'templates/CODEX_PROMPT.md',
@@ -171,20 +171,20 @@ REQUIRED_TEXT = {
         'Prefer a harness-enforced boundary over prompt-only compliance.'
     ],
     'README.md': [
-        'Current workflow version: **v1.7.2 baseline**.', 'License: **Apache-2.0**.',
+        'Current workflow version: **v1.7.3 baseline**.', 'License: **Apache-2.0**.',
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'CONTEXT_MANAGEMENT.md', 'skills/research-gate/SKILL.md',
         'skills/independent-review/SKILL.md', 'skills/loop-readiness/SKILL.md',
         'CONTINUOUS_OPERATIONS.md', 'patterns/pr-ci-watcher.md', 'ACKNOWLEDGEMENTS.md',
-        'docs/CHEAT_SHEET.md',
+        'docs/CHEAT_SHEET.md', 'docs/THAI_USER_GUIDE.md',
         'Apache License, Version 2.0'
     ],
     'ENGINEERING_DEV_WORKFLOW.md': [
-        'Version: 1.7.2', 'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'skills/research-gate/SKILL.md',
+        'Version: 1.7.3', 'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'skills/research-gate/SKILL.md',
         'skills/scrutinize/SKILL.md', 'skills/independent-review/SKILL.md',
         'CONTEXT_MANAGEMENT.md', 'CONTINUOUS_OPERATIONS.md', 'skills/loop-readiness/SKILL.md'
     ],
     'scripts/setup_project.py': [
-        'WORKFLOW_VERSION = "1.7.2"', 'LOCAL_WORKFLOW_DIR = ".engineering-workflow"',
+        'WORKFLOW_VERSION = "1.7.3"', 'LOCAL_WORKFLOW_DIR = ".engineering-workflow"',
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'templates/FAST_EXECUTION_PACKET.md',
         'def resolve_safe_target', 'def safe_destination', 'refusing filesystem-root target',
         'refusing user-home target', 'refusing target that overlaps workflow-source checkout', 'symlink/junction'
@@ -291,6 +291,23 @@ REQUIRED_TEXT = {
     ],
     'docs/CHEAT_SHEET.md': [
         'FAST', 'STANDARD', 'STRICT', '.engineering-workflow/', 'WORKSPACE_SAFETY.md'
+    ],
+    'docs/quick-start.md': ['docs/THAI_USER_GUIDE.md'],
+    'docs/chatgpt-project-setup.md': ['docs/THAI_USER_GUIDE.md'],
+    'docs/THAI_USER_GUIDE.md': [
+        '# คู่มือใช้งาน Engineering Development Workflow ภาษาไทย',
+        '## 4. Project Instructions ต้องเอาจากไฟล์ไหน',
+        '## 9. ติดตั้ง workflow ใน project ใหม่',
+        '## 14. Upgrade project',
+        '## 16. Work mode คืออะไร',
+        '## 23. กฎสำคัญที่สุด',
+        '## 28. Evidence reuse',
+        '## 47. Checklist โปรเจกต์ใหม่',
+        '## 51. Prompt เริ่มงานทั่วไปใน ChatGPT',
+        'templates/CHATGPT_PROJECT_INSTRUCTIONS.md',
+        '.engineering-workflow/SKILL.md',
+        'target project root เท่านั้น',
+        'FAST / STANDARD / STRICT'
     ],
     'templates/POSTMORTEM.md': ['Do not make this mandatory for routine FAST work.'],
     'templates/EVIDENCE_PACKAGE.md': ['Use for pilots, tuning, or selected postmortems only.'],

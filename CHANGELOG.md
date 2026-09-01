@@ -8,6 +8,20 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 - Collect external feedback after real project adoption.
 - Foundation research for a possible Local Workspace Evidence Bridge completed in `docs/research/local-workspace-evidence-bridge-adoption-review.md`. Concept verdict: `GO WITH CONDITIONS`; direct adoption of pinned `XiaoDuoYa/codex-with-chatgpt` v0.1.1: `NO-GO AT THIS TIME`. No v1.7 workflow contract or candidate installation is introduced by this research-only change.
 
+## [1.7.3] - 2026-09-01
+
+### Added
+- `docs/THAI_USER_GUIDE.md`, a detailed Thai-language operational guide covering ChatGPT Project setup, Project Instructions, workflow install/upgrade/validation, FAST/STANDARD/STRICT routing, Codex handoff, model/effort guidance, evidence reuse, GitHub PR/CI/release concepts, workspace safety, troubleshooting, continuous operations, and practical checklists/prompts.
+
+### Changed
+- README, Quick Start, and ChatGPT Project Setup now link prominently to the Thai guide.
+- Workflow/installer stable version metadata updated to v1.7.3.
+- Repository validation now requires the Thai guide and its key operational/safety anchors.
+- Release metadata regression coverage now includes v1.7.2 historical notes while expecting v1.7.3 as the current stable version.
+
+### Policy note
+- The Thai guide is explanatory onboarding material. English normative policy files remain authoritative if wording ever differs.
+
 ## [1.7.2] - 2026-09-01
 
 ### Added

@@ -2,6 +2,8 @@
 
 For a one-page operational summary, see `docs/CHEAT_SHEET.md`.
 
+สำหรับคู่มือภาษาไทยแบบละเอียดทีละขั้นตอน ดู `docs/THAI_USER_GUIDE.md`.
+
 ## Recommended adoption path: two-sided setup
 
 A complete adoption has **two sides**:

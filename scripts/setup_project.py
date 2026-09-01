@@ -23,7 +23,7 @@ from pathlib import Path
 from typing import Dict
 
 WORKFLOW_REPO = "https://github.com/bokoboss/engineering-development-workflow"
-WORKFLOW_VERSION = "1.7.2"
+WORKFLOW_VERSION = "1.7.3"
 MANIFEST_NAME = ".engineering-workflow.json"
 LOCAL_WORKFLOW_DIR = ".engineering-workflow"
 
