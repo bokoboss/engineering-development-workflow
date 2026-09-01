@@ -1,5 +1,18 @@
 # Execution Contract
 
+## Work mode
+- FAST / STANDARD / STRICT:
+- Mode rationale:
+- Mode confidence:
+- Escalation triggers:
+
+## Workspace safety
+- Target project root:
+- Writable boundary: target project root only
+- External writes approved: No / explicit approved path+action
+- Project-local workflow version:
+- Required local workflow/policies/skills:
+
 ## Objective
 
 ## Scope
@@ -61,6 +74,11 @@
 |---|---|---|---|
 | G1 | | | Yes |
 
+## Evidence reuse
+- Valid evidence reused without rerun:
+- Revision/provenance:
+- What would invalidate it:
+
 ## Required evidence
 -
 
@@ -75,9 +93,13 @@ Stop and report rather than expanding scope if:
 -
 
 ## Final report format
+- work mode used and any escalation;
+- target project root and workspace-safety confirmation;
 - changed files / behavior;
 - validation and gate outcomes;
 - research conditions resolved/unresolved;
 - independent-review outcome when required;
 - exact commit/PR/CI identifiers where available;
-- assumptions, risks, limitations, and follow-up items.
+- assumptions, risks, limitations, and follow-up items;
+- external writes performed (normally none);
+- global/system changes performed (normally none).
