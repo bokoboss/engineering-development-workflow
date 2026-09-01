@@ -148,7 +148,7 @@ REQUIRED_TEXT = {
         'WORKFLOW_VERSION = "1.7.0"', 'LOCAL_WORKFLOW_DIR = ".engineering-workflow"',
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'templates/FAST_EXECUTION_PACKET.md',
         'def resolve_safe_target', 'def safe_destination', 'refusing filesystem-root target',
-        'refusing user-home target', 'refusing workflow-source target', 'symlink/junction'
+        'refusing user-home target', 'refusing target that overlaps workflow-source checkout', 'symlink/junction'
     ],
     'ACKNOWLEDGEMENTS.md': [
         'https://github.com/thananon/9arm-skills', 'conceptual inspiration only',
