@@ -2,7 +2,7 @@
 
 A reusable, evidence-first workflow for developing and safely operating engineering software with humans, ChatGPT, coding agents, GitHub, explicit success gates, focused reasoning skills, lean context, independent review, cost-aware model routing, and bounded continuous operations.
 
-Current workflow version: **v1.7.2 baseline**.
+Current workflow version: **v1.7.3 baseline**.
 
 License: **Apache-2.0**.
 
@@ -144,7 +144,7 @@ This is intentional duplication for the **execution plane**: Codex should be abl
 
 Create a ChatGPT Project for the software project and copy `templates/CHATGPT_PROJECT_INSTRUCTIONS.md` into its Project Instructions.
 
-See **[`docs/chatgpt-project-setup.md`](docs/chatgpt-project-setup.md)**. For the shortest operational summary, see **[`docs/CHEAT_SHEET.md`](docs/CHEAT_SHEET.md)**.
+See **[`docs/chatgpt-project-setup.md`](docs/chatgpt-project-setup.md)**. For the shortest operational summary, see **[`docs/CHEAT_SHEET.md`](docs/CHEAT_SHEET.md)**. For a detailed step-by-step Thai guide, see **[`docs/THAI_USER_GUIDE.md`](docs/THAI_USER_GUIDE.md)**.
 
 ### 2. Bootstrap the target repository before Codex feature work
 
@@ -190,6 +190,7 @@ Ask ChatGPT to inspect the shared workflow and project repository, verify the pr
 - `templates/CHATGPT_PROJECT_INSTRUCTIONS.md` — reusable ChatGPT Project control-plane instructions.
 - `templates/` — reusable project, execution, acceptance, evidence, handoff, and postmortem contracts.
 - `docs/CHEAT_SHEET.md` — one-page FAST/STANDARD/STRICT onboarding and safe Codex handoff.
+- `docs/THAI_USER_GUIDE.md` — detailed Thai-language guide for ChatGPT Project setup, workflow installation/upgrade, Codex handoff, work modes, evidence, GitHub, and workspace safety.
 - `docs/` — philosophy, ChatGPT setup, installation, quick start, skills, and examples.
 
 ## Quick start
