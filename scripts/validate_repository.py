@@ -214,11 +214,15 @@ REQUIRED_TEXT = {
     ],
     '.github/workflows/validate.yml': [
         "cron: '17 4 1 * *'",
+        'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1',
+        'actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1',
         'python scripts/validate_repository.py',
         'python scripts/release_metadata.py verify',
         "python -m unittest discover -s tests -p 'test_*.py' -v"
     ],
     '.github/workflows/release.yml': [
+        'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1',
+        'actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1',
         'workflows: ["Validate workflow repository"]',
         "github.event.workflow_run.conclusion == 'success'",
         "github.event.workflow_run.head_branch == 'main'",
