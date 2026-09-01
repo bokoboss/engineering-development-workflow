@@ -1,5 +1,7 @@
 # ChatGPT Project Control-Plane Setup
 
+สำหรับคู่มือภาษาไทยแบบละเอียดตั้งแต่สร้าง ChatGPT Project, ใส่ Project Instructions, ติดตั้ง workflow ใน target repo จนถึงการใช้งานร่วมกับ Codex/GitHub ดู `docs/THAI_USER_GUIDE.md`.
+
 ## 1. The important distinction
 
 Installing this workflow into a project repository does **not** install anything into ChatGPT. ChatGPT and Codex are separate execution contexts.
