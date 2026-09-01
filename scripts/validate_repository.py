@@ -130,7 +130,8 @@ REQUIRED_TEXT = {
     'WORKSPACE_SAFETY.md': [
         '**the explicit target project root, and only that project root.**',
         'External paths are non-writable by default.',
-        'Proceed only after explicit human approval for that exact resource/action.'
+        'Proceed only after explicit human approval for that exact resource/action.',
+        'Prefer a harness-enforced boundary over prompt-only compliance.'
     ],
     'README.md': [
         'Current workflow version: **v1.7.0 baseline**.', 'License: **Apache-2.0**.',
