@@ -175,7 +175,7 @@ REQUIRED_TEXT = {
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'CONTEXT_MANAGEMENT.md', 'skills/research-gate/SKILL.md',
         'skills/independent-review/SKILL.md', 'skills/loop-readiness/SKILL.md',
         'CONTINUOUS_OPERATIONS.md', 'patterns/pr-ci-watcher.md', 'ACKNOWLEDGEMENTS.md',
-        'docs/CHEAT_SHEET.md',
+        'docs/CHEAT_SHEET.md', 'docs/THAI_USER_GUIDE.md',
         'Apache License, Version 2.0'
     ],
     'ENGINEERING_DEV_WORKFLOW.md': [
@@ -292,6 +292,8 @@ REQUIRED_TEXT = {
     'docs/CHEAT_SHEET.md': [
         'FAST', 'STANDARD', 'STRICT', '.engineering-workflow/', 'WORKSPACE_SAFETY.md'
     ],
+    'docs/quick-start.md': ['docs/THAI_USER_GUIDE.md'],
+    'docs/chatgpt-project-setup.md': ['docs/THAI_USER_GUIDE.md'],
     'docs/THAI_USER_GUIDE.md': [
         '# คู่มือใช้งาน Engineering Development Workflow ภาษาไทย',
         '## 4. Project Instructions ต้องเอาจากไฟล์ไหน',
