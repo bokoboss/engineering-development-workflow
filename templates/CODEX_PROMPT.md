@@ -23,6 +23,7 @@ During execution:
 - Stay within scope and the target project root.
 - Do not create/modify/move/delete files outside the project, modify another repository, install globally, or change user/system configuration without explicit human approval for that exact action.
 - Prefer project-local environments, dependencies, caches, staging, and generated artifacts.
+- Where the harness supports writable-root/sandbox controls, keep the project root as the only writable root; do not enable unrestricted filesystem access for convenience.
 - Preserve pre-existing user/uncommitted work; do not use blanket destructive cleanup/reset commands as a convenience.
 - If the task needs an external/system write, STOP before action and report the exact resource, mutation, reason, safer local alternative, and rollback.
 - Stay within scope.
