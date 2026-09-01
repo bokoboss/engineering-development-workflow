@@ -59,21 +59,49 @@ jobs:
             local target="$2"
             local version="$3"
 
+            if gh release view "${tag}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+              if ! git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
+                echo "ERROR: release ${tag} exists but its Git tag is unavailable." >&2
+                exit 1
+              fi
+
+              actual="$(git rev-list -n 1 "${tag}")"
+              recorded="$(gh release view "${tag}" --repo "${GITHUB_REPOSITORY}" --json body --jq '.body'                 | grep -E '^Accepted commit: [0-9a-f]{40}
+
+          # Historical backfill is intentionally limited to accepted SHAs that
+          # were explicitly verified during v1.7.x development.
+          ensure_release "v1.7.0" "21437f848beaa04d7684d396a07993b40c0dbcd1" "1.7.0"
+          ensure_release "v1.7.1" "02553e582a81a8d0ec120f30c5fa08bfd0def576" "1.7.1"
+          ensure_release "${current_tag}" "${VALIDATED_SHA}" "${current_version}"
+                 | head -n 1                 | cut -d ' ' -f 3 || true)"
+
+              if [[ -z "${recorded}" ]]; then
+                echo "ERROR: release ${tag} does not record an Accepted commit SHA." >&2
+                exit 1
+              fi
+              if [[ "${actual}" != "${recorded}" ]]; then
+                echo "ERROR: release ${tag} records ${recorded}, but tag points to ${actual}." >&2
+                exit 1
+              fi
+
+              echo "Release ${tag} already exists at accepted commit ${recorded}; leaving it unchanged."
+              return
+            fi
+
             if git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
               actual="$(git rev-list -n 1 "${tag}")"
               if [[ "${actual}" != "${target}" ]]; then
-                echo "ERROR: existing tag ${tag} points to ${actual}, expected ${target}" >&2
+                echo "ERROR: unreleased existing tag ${tag} points to ${actual}, expected ${target}" >&2
                 exit 1
               fi
             fi
 
-            if gh release view "${tag}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
-              echo "Release ${tag} already exists at the verified tag; leaving it unchanged."
-              return
-            fi
-
             notes="${RUNNER_TEMP}/${tag}-notes.md"
-            python scripts/release_metadata.py notes "${version}" > "${notes}"
+            {
+              echo "Accepted commit: ${target}"
+              echo
+              python scripts/release_metadata.py notes "${version}"
+            } > "${notes}"
 
             gh release create "${tag}" --repo "${GITHUB_REPOSITORY}" --target "${target}" --title "${tag}" --notes-file "${notes}"
 
