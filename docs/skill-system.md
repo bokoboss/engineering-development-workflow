@@ -4,6 +4,8 @@ The Engineering Development Workflow has one core workflow and a small set of re
 
 ## 1. Relationship to the core workflow
 
+Before focused-skill routing, apply `WORK_MODE_ROUTING.md`. FAST / STANDARD / STRICT determines how much process is justified; focused skills remain conditional. `WORKSPACE_SAFETY.md` applies regardless of mode.
+
 The core remains:
 
 `Understand -> Bound -> Route -> Execute -> Verify -> Audit -> Accept / Escalate`
@@ -28,6 +30,8 @@ Core workflow
 The root `SKILL.md` is the router. Individual `skills/*/SKILL.md` files contain the focused procedure. `CONTEXT_MANAGEMENT.md` defines how to keep the active working set lean and when to use fresh or isolated context.
 
 ## 2. Skill routing
+
+Efficiency rule: FAST should normally use no focused skill unless a material trigger appears. STANDARD loads only skills that materially improve correctness/control. STRICT loads the set justified by the actual risk; do not load every skill mechanically.
 
 | Situation | Skill |
 |---|---|
@@ -71,6 +75,8 @@ For recurring/event-driven work, `CONTINUOUS_OPERATIONS.md` governs the outer op
 A stronger model is not automatically required for independent review. Fresh context at the same capable tier may be sufficient and cheaper. Escalate reviewer capability only when the review itself requires greater judgment.
 
 ## 5. Evidence discipline
+
+Reuse valid revision-bound evidence according to `WORK_MODE_ROUTING.md`. Do not rerun broad validation or a second-pass review solely because another stage started.
 
 A skill output does not override objective gates. Tests, CI, browser/runtime validation, real data, engineering references, independent verification, and required human approvals remain authoritative according to the project contract.
 
