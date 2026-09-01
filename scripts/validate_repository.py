@@ -122,6 +122,16 @@ for skill_file in SKILL_FILES:
     REQUIRED_HEADINGS[skill_file] = COMMON_SKILL_HEADINGS
 
 REQUIRED_TEXT = {
+    'WORK_MODE_ROUTING.md': [
+        '**FAST**', '**STANDARD**', '**STRICT**',
+        'FAST is faster because it omits unnecessary ceremony, not because it accepts weaker work.',
+        'Evidence is revision-bound.'
+    ],
+    'WORKSPACE_SAFETY.md': [
+        '**the explicit target project root, and only that project root.**',
+        'External paths are non-writable by default.',
+        'Proceed only after explicit human approval for that exact resource/action.'
+    ],
     'README.md': [
         'Current workflow version: **v1.7.0 baseline**.', 'License: **Apache-2.0**.',
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'CONTEXT_MANAGEMENT.md', 'skills/research-gate/SKILL.md',
