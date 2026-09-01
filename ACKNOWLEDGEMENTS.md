@@ -64,6 +64,19 @@ The source repository focuses heavily on Claude Code mechanics and best practice
 
 Credit is given because this source materially shaped the proposed continuous-operations architecture and risk controls even though the resulting recommendation and wording are original to this repository.
 
+### XiaoDuoYa/codex-with-chatgpt
+
+- **Source:** https://github.com/XiaoDuoYa/codex-with-chatgpt
+- **Author/maintainer:** `XiaoDuoYa` and contributors.
+- **Relationship:** conceptual and implementation prior-art research; no source file, Skill, bridge implementation, protocol text, or code is embedded wholesale in this repository.
+- **License/status when reviewed:** MIT License; candidate LICENSE states copyright 2026 codex-with-chatgpt contributors. Foundation review pinned revision `d6d0dd4e866fd9253572fcf84d8414132838d6f9` (v0.1.1) on 2026-09-01.
+- **Relevant influence:** materially informed research into a possible tool-independent **Local Workspace Evidence Bridge**: a narrow read-only evidence/data plane allowing the ChatGPT control plane to inspect local workspace files, Git status/diff, validation records, and selected sanitized execution evidence while Codex retains mutation/execution ownership.
+- **Relevant source areas reviewed:** `README.md`, `docs/architecture.md`, `docs/protocol.md`, `docs/security.md`, `skill/SKILL.md`, MCP/workspace/Git/auth/pairing/bridge/tunnel/execution/session implementation, package/lock metadata, tests, and relevant public issues.
+- **Use in this project:** the decision record at `docs/research/local-workspace-evidence-bridge-adoption-review.md` independently evaluates and re-expresses the capability for this workflow's existing ChatGPT-control-plane, GitHub-source-of-truth, Codex-execution-plane, security, model-routing, independent-review, continuous-operations, and human-approval contracts.
+- **Explicit non-adoption:** the pinned C2C v0.1.1 implementation is not approved for direct installation by this research. The workflow does not adopt its public Cloudflare Quick Tunnel default, mutable-branch daily auto-update, fail-open scope behavior, always-open OAuth client registration, denylist-only sensitive-data model, or C2C PLAN as an authority over the workflow's Issue/execution contract.
+
+Credit is given because the project's read-only MCP data-plane architecture and plan/execute/review separation materially shaped the Local Workspace Evidence Bridge research direction even though the resulting workflow recommendation and wording are original to this repository.
+
 ## Future acknowledgements
 
 Add an entry when an external source materially affects a workflow rule, skill, template, architecture decision, validation method, or other reusable project capability.
