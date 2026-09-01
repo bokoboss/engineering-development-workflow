@@ -229,7 +229,9 @@ REQUIRED_TEXT = {
         '.base.ref == "main"',
         'python scripts/release_metadata.py verify',
         'Accepted commit:',
-        "grep -E '^Accepted commit: [0-9a-f]{40}
+        "grep -E '^Accepted commit: [0-9a-f]{40}$'",
+        'gh release create',
+        '21437f848beaa04d7684d396a07993b40c0dbcd1',
         '02553e582a81a8d0ec120f30c5fa08bfd0def576'
     ],
     'scripts/release_metadata.py': [
