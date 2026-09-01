@@ -222,7 +222,11 @@ REQUIRED_TEXT = {
         'workflows: ["Validate workflow repository"]',
         "github.event.workflow_run.conclusion == 'success'",
         "github.event.workflow_run.head_branch == 'main'",
+        'pull-requests: read',
         'VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}',
+        'commits/${VALIDATED_SHA}/pulls',
+        'merged_at != null',
+        '.base.ref == "main"',
         'python scripts/release_metadata.py verify',
         'gh release create',
         '21437f848beaa04d7684d396a07993b40c0dbcd1',
@@ -335,6 +339,9 @@ CROSS_CONTRACT_REQUIREMENTS = [
         [
             'Validate workflow repository',
             "head_branch == 'main'",
+            'commits/${VALIDATED_SHA}/pulls',
+            'merged_at != null',
+            '.base.ref == "main"',
             'gh release create',
             '21437f848beaa04d7684d396a07993b40c0dbcd1',
             '02553e582a81a8d0ec120f30c5fa08bfd0def576'
@@ -344,6 +351,7 @@ CROSS_CONTRACT_REQUIREMENTS = [
         'VERSIONING.md',
         [
             '.github/workflows/release.yml',
+            'merged Pull Request to `main`',
             'Git tag `vX.Y.Z`',
             'GitHub Release'
         ],
