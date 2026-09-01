@@ -1,0 +1,109 @@
+name: Publish validated workflow release
+
+on:
+  workflow_run:
+    workflows: ["Validate workflow repository"]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  release:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
+    steps:
+      - name: Check out the exact validated main revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.12'
+
+      - name: Verify stable release metadata
+        run: python scripts/release_metadata.py verify
+
+      - name: Verify validated SHA came through a merged PR to main
+        shell: bash
+        run: |
+          set -euo pipefail
+          merged_prs="$(gh api -H "Accept: application/vnd.github+json" "repos/${GITHUB_REPOSITORY}/commits/${VALIDATED_SHA}/pulls" --jq '[.[] | select(.merged_at != null and .base.ref == "main")] | length')"
+
+          if [[ "${merged_prs}" -lt 1 ]]; then
+            echo "ERROR: validated SHA ${VALIDATED_SHA} is not associated with a merged PR to main; refusing release." >&2
+            exit 1
+          fi
+
+          echo "Validated SHA has merged-PR provenance."
+
+      - name: Publish missing validated releases
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          current_version="$(python scripts/release_metadata.py current)"
+          current_tag="v${current_version}"
+
+          ensure_release() {
+            local tag="$1"
+            local target="$2"
+            local version="$3"
+
+            if gh release view "${tag}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+              if ! git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
+                echo "ERROR: release ${tag} exists but its Git tag is unavailable." >&2
+                exit 1
+              fi
+
+              actual="$(git rev-list -n 1 "${tag}")"
+              body="$(gh release view "${tag}" --repo "${GITHUB_REPOSITORY}" --json body --jq '.body')"
+              recorded="$(printf '%s\n' "${body}" | grep -E '^Accepted commit: [0-9a-f]{40}$' | head -n 1 | cut -d ' ' -f 3 || true)"
+
+              if [[ -z "${recorded}" ]]; then
+                echo "ERROR: release ${tag} does not record an Accepted commit SHA." >&2
+                exit 1
+              fi
+              if [[ "${actual}" != "${recorded}" ]]; then
+                echo "ERROR: release ${tag} records ${recorded}, but tag points to ${actual}." >&2
+                exit 1
+              fi
+
+              echo "Release ${tag} already exists at accepted commit ${recorded}; leaving it unchanged."
+              return
+            fi
+
+            if git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
+              actual="$(git rev-list -n 1 "${tag}")"
+              if [[ "${actual}" != "${target}" ]]; then
+                echo "ERROR: unreleased existing tag ${tag} points to ${actual}, expected ${target}" >&2
+                exit 1
+              fi
+            fi
+
+            notes="${RUNNER_TEMP}/${tag}-notes.md"
+            {
+              echo "Accepted commit: ${target}"
+              echo
+              python scripts/release_metadata.py notes "${version}"
+            } > "${notes}"
+
+            gh release create "${tag}" --repo "${GITHUB_REPOSITORY}" --target "${target}" --title "${tag}" --notes-file "${notes}"
+
+            echo "Created release ${tag} at ${target}"
+          }
+
+          # Historical backfill is intentionally limited to accepted SHAs that
+          # were explicitly verified during v1.7.x development.
+          ensure_release "v1.7.0" "21437f848beaa04d7684d396a07993b40c0dbcd1" "1.7.0"
+          ensure_release "v1.7.1" "02553e582a81a8d0ec120f30c5fa08bfd0def576" "1.7.1"
+          ensure_release "${current_tag}" "${VALIDATED_SHA}" "${current_version}"

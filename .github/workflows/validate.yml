@@ -4,17 +4,22 @@ on:
   pull_request:
   push:
     branches: [main]
+  schedule:
+    # Monthly platform/toolchain drift check; not a substitute for branch protection.
+    - cron: '17 4 1 * *'
   workflow_dispatch:
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
           python-version: '3.12'
       - name: Validate required workflow contracts
         run: python scripts/validate_repository.py
-      - name: Test project bootstrap installer
+      - name: Verify stable release metadata
+        run: python scripts/release_metadata.py verify
+      - name: Test repository validation and project bootstrap
         run: python -m unittest discover -s tests -p 'test_*.py' -v

@@ -8,6 +8,33 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 - Collect external feedback after real project adoption.
 - Foundation research for a possible Local Workspace Evidence Bridge completed in `docs/research/local-workspace-evidence-bridge-adoption-review.md`. Concept verdict: `GO WITH CONDITIONS`; direct adoption of pinned `XiaoDuoYa/codex-with-chatgpt` v0.1.1: `NO-GO AT THIS TIME`. No v1.7 workflow contract or candidate installation is introduced by this research-only change.
 
+## [1.7.2] - 2026-09-01
+
+### Added
+- `SECURITY.md` with private vulnerability-reporting guidance and explicit installer/filesystem-safety scope.
+- Conservative `.gitignore` that intentionally does not hide project-local `.engineering-workflow/` artifacts.
+- `.github/CODEOWNERS` for core workflow, safety, scripts, tests, workflows, templates, and skills.
+- `docs/GITHUB_REPOSITORY_CONFIGURATION.md` separating desired GitHub-level rules/metadata from committed repository policy.
+- `docs/validation-design.md` documenting deterministic substring/cross-contract validation scope and semantic limitations.
+- `scripts/release_metadata.py` for stdlib-only stable-version consistency and CHANGELOG release-note extraction.
+- `.github/workflows/release.yml` to publish tags/releases only after successful validation of `main`.
+- Negative validator regression tests proving selected unsafe/invalid repository states fail.
+- Release-metadata tests proving current metadata passes, historical notes remain extractable, and version mismatch fails closed.
+
+### Changed
+- Stable workflow version updated to v1.7.2.
+- `VERSIONING.md` now requires an accepted commit, green validation, `vX.Y.Z` Git tag, and matching GitHub Release for stable versions.
+- Release automation is fail-closed: publication requires successful main validation **and merged-PR provenance**, existing tags are never retargeted, each release records its accepted commit SHA, existing releases are verified against that recorded SHA and left unchanged, and historical backfill is limited to explicitly verified v1.7.0/v1.7.1 SHAs.
+- Repository validation now checks security/release/configuration files, release workflow anchors, release metadata tooling, negative validator tests, and GitHub-level configuration documentation.
+- Validation CI now includes stable-release metadata verification.
+- Validation CI now runs monthly as a low-frequency GitHub Actions/runtime drift safety net; this is not a substitute for branch protection.
+- Official GitHub Actions dependencies were upgraded from Node-20-targeting generations and pinned to immutable commits for `actions/checkout` v7.0.1 and `actions/setup-python` v6.3.0 after CI exposed the platform deprecation warning.
+
+### Repository configuration note
+- Desired `main` ruleset/branch-protection and repository About metadata are documented, but committed Markdown is not treated as evidence that those GitHub-level settings are active.
+- At v1.7.2 preparation time the connected GitHub integration exposed no mutation action for rulesets/branch protection or About description/topics. Those controls remain to be applied and independently verified at the GitHub repository-setting layer.
+- Tag/release creation is handled by the repository's own post-validation release workflow, so v1.7.0, v1.7.1, and v1.7.2 publication must be verified after the v1.7.2 merge.
+
 ## [1.7.1] - 2026-09-01
 
 ### Fixed

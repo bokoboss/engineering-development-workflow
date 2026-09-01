@@ -43,7 +43,7 @@ class SetupProjectTests(unittest.TestCase):
         self.assertTrue((target / ".engineering-workflow/WORKSPACE_SAFETY.md").is_file())
         self.assertTrue((target / ".engineering-workflow/skills/scrutinize/SKILL.md").is_file())
         manifest = json.loads((target / MANIFEST).read_text(encoding="utf-8"))
-        self.assertEqual(manifest["workflow_version"], "1.7.1")
+        self.assertEqual(manifest["workflow_version"], "1.7.2")
         self.assertEqual(manifest["local_workflow_dir"], ".engineering-workflow")
         self.assertIn("VALIDATION PASS", result.stdout)
         valid = run_cli("validate", target)
