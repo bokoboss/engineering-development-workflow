@@ -158,8 +158,10 @@ def resolve_safe_target(raw_target: Path) -> Path:
         raise RuntimeError(f"refusing user-home target: {target}")
 
     source = SOURCE_ROOT.resolve()
-    if target == source:
-        raise RuntimeError(f"refusing workflow-source target: {target}")
+    if target == source or is_within(target, source) or is_within(source, target):
+        raise RuntimeError(
+            f"refusing target that overlaps workflow-source checkout: {target}"
+        )
 
     return target
 
