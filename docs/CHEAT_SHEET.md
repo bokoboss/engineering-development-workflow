@@ -5,12 +5,13 @@ Use this page when you need the shortest safe path through the workflow.
 ## New project
 
 1. Create the ChatGPT Project and use `templates/CHATGPT_PROJECT_INSTRUCTIONS.md`.
-2. Bootstrap the target repository **before first Codex feature/fix work**:
+2. From an explicit checkout of this workflow repository, bootstrap the target repository **before first Codex feature/fix work**:
    ```bash
    python scripts/setup_project.py inspect /path/to/project
    python scripts/setup_project.py install /path/to/project
    python scripts/setup_project.py validate /path/to/project
    ```
+   For an already adopted project, use `inspect -> upgrade -> validate` instead of `install`.
 3. Fill `PROJECT_PROFILE.md` from verified repository facts.
 4. Put permanent project-specific rules in `AGENTS.md`.
 5. Start the task from ChatGPT.
