@@ -57,6 +57,14 @@ Prefer project-local:
 
 If a tool supports both global and project-local installation/configuration, choose project-local by default.
 
+## 3A. Harness / sandbox enforcement
+
+Where the coding harness supports deterministic writable-root allowlists, sandboxing, or per-action approval, configure execution so the target project root is the only writable root by default.
+
+Prefer a harness-enforced boundary over prompt-only compliance.
+
+Do not enable unrestricted/full-filesystem mutation merely to avoid approval friction. Do not let the workflow installer modify global agent settings to enforce this; global configuration itself requires explicit human ownership/approval. Use project-scoped or session-scoped controls when available.
+
 ## 4. Dirty worktree and user work
 
 Before destructive or broad mutation:
