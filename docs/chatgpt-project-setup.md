@@ -30,7 +30,7 @@ The intended architecture is:
                   ChatGPT final review
 ```
 
-GitHub is the bridge. ChatGPT reads the shared workflow and target project through GitHub. Codex reads the same project contracts from its checkout and writes implementation evidence back through commits and PRs.
+GitHub is the bridge and accepted shared source of truth. ChatGPT reads current upstream workflow policy and target project state through GitHub. Codex reads the project's **pinned local workflow snapshot** under `.engineering-workflow/` plus project contracts from its checkout, then writes implementation evidence back through commits and PRs.
 
 ## 2. Create a ChatGPT Project
 
@@ -44,17 +44,20 @@ The Project Instructions intentionally point back to the shared workflow. `CONTE
 
 In parallel with the ChatGPT Project setup, bootstrap the target GitHub repository using `scripts/setup_project.py` or ask Codex to perform the installation using `docs/installation.md`.
 
-The repository bootstrap creates or establishes the contracts both sides can use, including `AGENTS.md`, `PROJECT_PROFILE.md`, a workflow reference, reusable execution templates, and the installation manifest.
+The repository bootstrap creates or establishes the contracts both sides can use, including `AGENTS.md`, `PROJECT_PROFILE.md`, reusable execution templates, the installation manifest, and an installer-managed `.engineering-workflow/` snapshot containing the root router, risk-mode policy, workspace-safety policy, core execution policies, templates, and focused skills.
 
-## 4. Start work from ChatGPT
+## 4. Start work from ChatGPT and route FAST / STANDARD / STRICT
 
 The normal starting point is ChatGPT, not Codex. A minimal first instruction is:
 
 ```text
-Use our Engineering Development Workflow for this project. Inspect the current shared workflow repository and the target project repository, verify the project profile and current GitHub state, apply the upstream context and skill router where relevant, then determine the next development step. Complete everything that can be reliably done in ChatGPT before recommending Codex execution.
+Use our Engineering Development Workflow for this project. Inspect the current shared workflow repository and target project state, verify `.engineering-workflow.json` and the installed local workflow version, classify the next coding work as FAST / STANDARD / STRICT, enforce the project-root write boundary, and complete everything that can be reliably done in ChatGPT before recommending Codex execution. When Codex is needed, provide the work mode, rationale, model/effort/chat choice, required local policies/skills, success gates, evidence reuse, and stop/escalation conditions.
 ```
 
 ChatGPT should then:
+- apply `WORK_MODE_ROUTING.md` first and state FAST / STANDARD / STRICT;
+- apply `WORKSPACE_SAFETY.md` and state the target project root as the default writable boundary;
+- verify the project-local workflow snapshot before first Codex execution;
 - establish a lean authoritative working context;
 - apply the research gate when material feasibility/evidence unknowns remain;
 - scrutinize high-impact plans and decisions;
@@ -65,9 +68,9 @@ ChatGPT should then:
 
 ## 5. Invoke Codex only when needed
 
-When local code mutation, browser/runtime execution, environment-specific debugging, or other execution capabilities are required, ChatGPT prepares a bounded packet and recommends model + effort according to `MODEL_ROUTING_POLICY.md`.
+When local code mutation, browser/runtime execution, environment-specific debugging, or other execution capabilities are required, ChatGPT prepares a mode-appropriate bounded packet and recommends model + effort according to `MODEL_ROUTING_POLICY.md`. Eligible FAST work uses the compact FAST packet; STANDARD/STRICT use the full contract when appropriate.
 
-Codex implements against the project repository and returns evidence through commits, PRs, tests, and CI. ChatGPT then reviews the actual evidence before acceptance.
+Codex must begin from `.engineering-workflow/SKILL.md`, read the local mode/workspace-safety policy, load only additional skills required by the selected mode, implement within the target project root, and return evidence through commits, PRs, tests, and CI. ChatGPT then reviews the actual evidence before acceptance.
 
 For material risk, use `skills/independent-review/SKILL.md` to determine whether a fresh-context, different-model/agent, deterministic, or human second pass is warranted. Independent review does not automatically require a stronger model.
 
@@ -83,10 +86,13 @@ New loops default to A1 observe/report. Keep GitHub/project evidence authoritati
 
 - ChatGPT Project created for the target software project.
 - `CHATGPT_PROJECT_INSTRUCTIONS.md` copied into Project Instructions.
-- Target repository bootstrapped and validated.
+- Target repository bootstrapped and validated **before first Codex feature execution**.
+- `.engineering-workflow/` local pinned router/policies/skills present and version recorded in `.engineering-workflow.json`.
+- ChatGPT explicitly selects FAST / STANDARD / STRICT before coding-agent execution.
+- Project-root-only write boundary is stated in Codex packets; any external/system mutation requires explicit human approval.
 - `PROJECT_PROFILE.md` filled only from verified repository facts plus explicit project context.
 - `AGENTS.md` contains project-specific permanent rules.
-- Shared workflow repository remains the policy source of truth.
+- Shared workflow repository remains the current control-plane policy source; the project-local snapshot is the pinned execution policy for Codex.
 - Context is loaded progressively rather than copying the full workflow/skill library into every prompt.
 - Material unknowns are researched before being converted into assumptions.
 - High-risk acceptance records independent-review requirements when applicable.
