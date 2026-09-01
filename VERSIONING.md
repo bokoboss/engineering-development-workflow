@@ -22,7 +22,7 @@ Before publication:
 4. the accepted commit must be immutable enough to identify by exact SHA;
 5. the repository must publish a Git tag `vX.Y.Z` and a GitHub Release for that same accepted commit.
 
-The release workflow in `.github/workflows/release.yml` runs only after the named validation workflow completes successfully on `main`.
+The release workflow in `.github/workflows/release.yml` runs only after the named validation workflow completes successfully on `main` **and** the validated SHA is associated with a merged Pull Request to `main`. A direct push that merely passes CI is therefore not sufficient for automatic release publication.
 
 Release automation is fail-closed:
 - it never moves or overwrites an existing tag;
