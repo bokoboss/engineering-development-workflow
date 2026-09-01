@@ -35,7 +35,7 @@ REQUIRED_FILES = [
     'patterns/pr-ci-watcher.md',
     'docs/research/loop-engineering-adoption-review.md',
     'docs/research/local-workspace-evidence-bridge-adoption-review.md',
-    'tests/test_setup_project.py', 'tests/test_validate_repository.py',
+    'tests/test_setup_project.py', 'tests/test_validate_repository.py', 'tests/test_release_metadata.py',
     *SKILL_FILES,
 ]
 
@@ -266,6 +266,11 @@ REQUIRED_TEXT = {
         'not a semantic parser or AI reviewer',
         'negative validator tests',
         'Substring/presence checks are therefore a bounded deterministic guard'
+    ],
+    'tests/test_release_metadata.py': [
+        'test_current_release_metadata_passes',
+        'test_historical_release_notes_are_extractable',
+        'test_version_mismatch_fails_closed'
     ],
     'tests/test_validate_repository.py': [
         'test_missing_security_invariant_fails',
