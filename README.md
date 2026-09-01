@@ -2,7 +2,7 @@
 
 A reusable, evidence-first workflow for developing and safely operating engineering software with humans, ChatGPT, coding agents, GitHub, explicit success gates, focused reasoning skills, lean context, independent review, cost-aware model routing, and bounded continuous operations.
 
-Current workflow version: **v1.6.0 baseline**.
+Current workflow version: **v1.7.0 baseline**.
 
 License: **Apache-2.0**.
 
@@ -42,11 +42,33 @@ The intended operating model is:
 
 **ChatGPT is the control plane. GitHub is the shared state/source of truth. Codex is the execution plane when local code, runtime, browser, or environment work is actually required.**
 
+v1.7 adds risk-based process routing: **FAST / STANDARD / STRICT**. The selected mode controls ceremony and verification depth, not the quality floor. It also makes the explicit target project root the default writable filesystem boundary for coding agents.
+
 Installing this workflow into a target repository does **not** install anything into ChatGPT. A complete adoption therefore has two sides: set up the ChatGPT Project control plane and bootstrap the target repository.
+
+Before first Codex execution on an adopted project, bootstrap/validate the repository so it contains an installer-managed pinned workflow snapshot under `.engineering-workflow/`. ChatGPT reads current upstream policy; Codex reads the local pinned router/policies/skills. Version drift must be surfaced and reconciled rather than silently mixed.
+
+## Work modes
+
+See [`WORK_MODE_ROUTING.md`](WORK_MODE_ROUTING.md).
+
+- **FAST** — localized, reversible, non-protected work with strong targeted verification. Uses a compact packet and skips unnecessary research/scrutiny/independent-review ceremony unless a trigger emerges.
+- **STANDARD** — ordinary feature/bug work with normal bounded planning and relevant regression/CI review.
+- **STRICT** — protected engineering/safety/security/legal, destructive, architectural/schema/public-contract, system/global, broad/low-reversibility, or similarly high-impact work.
+
+All modes share the same quality floor: inspect before modify, bounded scope, no unrelated changes, appropriate validation, actual diff review, required CI, and no completion claim with failed mandatory gates.
+
+Work mode is separate from model tier. STRICT does not automatically mean Sol.
+
+## Workspace safety
+
+See [`WORKSPACE_SAFETY.md`](WORKSPACE_SAFETY.md).
+
+The default writable boundary is the explicit target project root only. Without explicit human approval for a specific external action, coding agents must not modify another repository, create persistent external working directories, edit user/system configuration, install globally, or create/modify/delete files outside the project. External/system mutation is a STRICT trigger and must stop for approval first.
 
 ## Core loop
 
-`Understand -> Bound -> Route -> Execute -> Verify -> Audit -> Accept / Escalate`
+`Route mode -> Understand -> Bound -> Route executor -> Execute -> Verify -> Audit -> Accept / Escalate`
 
 Two conditional controls may be inserted where risk justifies them:
 - **Research Gate** before committing to a direction when important feasibility/evidence unknowns remain;
@@ -54,12 +76,12 @@ Two conditional controls may be inserted where risk justifies them:
 
 The default operating pattern is:
 
-1. Start from ChatGPT or a human lead and establish the authoritative project state and a lean working context.
+1. Start from ChatGPT or a human lead, classify FAST / STANDARD / STRICT, establish the target project root, and then establish the authoritative project state and a lean working context.
 2. Research material unknowns before converting them into assumptions.
 3. Scrutinize high-impact plans and decisions before implementation.
 4. Route only the remaining execution work to the cheapest model that can reliably finish the bounded task.
 5. Use parallel workers only for genuinely independent workstreams with explicit ownership and integration contracts.
-6. Prefer deterministic tests, schemas, validators, CI, settings, and protection rules over instruction-only compliance where possible.
+6. Prefer deterministic tests, schemas, validators, CI, settings, workspace-boundary guards, and protection rules over instruction-only compliance where possible.
 7. Treat tests, CI, real-data checks, browser/UAT evidence, engineering references, independent review, and human approval as gates appropriate to the change.
 8. Return to ChatGPT for review of actual GitHub diff and evidence before acceptance.
 
@@ -108,6 +130,12 @@ Fresh or isolated context is particularly useful for broad exploration, diagnost
 
 Product-specific context percentages or commands are operational hints, not universal workflow law.
 
+## Project-local pinned workflow
+
+The safe installer now installs the execution-side workflow library inside each adopted project under `.engineering-workflow/`, including the root router, mode routing, workspace safety, core policies, templates, and focused `skills/*/SKILL.md` modules. These files are installer-managed and versioned in `.engineering-workflow.json`.
+
+This is intentional duplication for the **execution plane**: Codex should be able to read the exact workflow version approved for the project without relying on network access. ChatGPT Project Instructions remain concise and continue to point to current upstream policy.
+
 ## Recommended onboarding
 
 ### 1. Set up the ChatGPT Project control plane
@@ -116,7 +144,7 @@ Create a ChatGPT Project for the software project and copy `templates/CHATGPT_PR
 
 See **[`docs/chatgpt-project-setup.md`](docs/chatgpt-project-setup.md)**.
 
-### 2. Bootstrap the target repository
+### 2. Bootstrap the target repository before Codex feature work
 
 Clone this workflow repository, inspect the target, then install:
 
@@ -130,7 +158,7 @@ python scripts/setup_project.py validate /path/to/target-repo
 
 The installer is stdlib-only and performs no network access. It preserves project-owned `AGENTS.md` and `PROJECT_PROFILE.md`, tracks installer-managed files with SHA-256 hashes, and refuses to overwrite locally modified managed files during upgrades.
 
-The installer intentionally installs the **core project scaffold**, not a duplicate of the complete upstream policy/skill library. ChatGPT reads the current shared workflow and translates relevant conclusions into the target project's execution contract, gates, and Codex prompt.
+The installer installs both the project scaffold and a pinned **project-local workflow/skill snapshot** under `.engineering-workflow/`. ChatGPT uses current upstream policy to route and prepare work; Codex begins from `.engineering-workflow/SKILL.md` and reads only the local policies/skills required by the selected mode/task.
 
 For Windows, upgrade instructions, ownership rules, conflict behavior, and a ready-to-use Codex installation prompt, see **[`docs/installation.md`](docs/installation.md)**.
 
@@ -140,6 +168,8 @@ Ask ChatGPT to inspect the shared workflow and project repository, verify the pr
 
 ## Repository map
 
+- `WORK_MODE_ROUTING.md` — FAST / STANDARD / STRICT risk-based process routing and evidence reuse.
+- `WORKSPACE_SAFETY.md` — project-root-only default write boundary and external/system approval protocol.
 - `ENGINEERING_DEV_WORKFLOW.md` — normative end-to-end workflow.
 - `CONTEXT_MANAGEMENT.md` — lean working context, fresh-context, isolation, checkpoint, and progressive-disclosure policy.
 - `MODEL_ROUTING_POLICY.md` — cost-aware model and reasoning-effort policy.
@@ -165,9 +195,9 @@ Ask ChatGPT to inspect the shared workflow and project repository, verify the pr
 2. Bootstrap and validate the target repository with `scripts/setup_project.py` or ask Codex to do it.
 3. Inspect the actual target repository and fill `PROJECT_PROFILE.md` only from verified facts plus explicit project context.
 4. Add project-specific permanent instructions to `AGENTS.md`.
-5. Start the next development task from ChatGPT control plane.
-6. Apply the research gate only when important unknowns remain; apply scrutiny where risk requires it.
-7. Create the Issue/execution contract with explicit success gates and any independent-review requirement.
+5. Start the next development task from ChatGPT control plane; ChatGPT must state FAST / STANDARD / STRICT before Codex execution.
+6. Apply the research gate only when important unknowns remain; apply scrutiny where risk requires it; do not load every gate/skill for FAST work.
+7. Use `templates/FAST_EXECUTION_PACKET.md` for eligible FAST work; use the full execution contract for STANDARD/STRICT or when complexity warrants it.
 8. Invoke Codex only when execution-plane capabilities are required, using `MODEL_ROUTING_POLICY.md` for model + effort selection.
 9. Validate, independently review when justified, inspect actual GitHub evidence, and accept or remediate.
 
