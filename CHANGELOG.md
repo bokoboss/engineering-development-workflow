@@ -8,6 +8,31 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 - Collect external feedback after real project adoption.
 - Foundation research for a possible Local Workspace Evidence Bridge completed in `docs/research/local-workspace-evidence-bridge-adoption-review.md`. Concept verdict: `GO WITH CONDITIONS`; direct adoption of pinned `XiaoDuoYa/codex-with-chatgpt` v0.1.1: `NO-GO AT THIS TIME`. No v1.7 workflow contract or candidate installation is introduced by this research-only change.
 
+## [1.7.0] - 2026-09-01
+
+### Added
+- `WORK_MODE_ROUTING.md` with explicit **FAST / STANDARD / STRICT** risk-based process modes.
+- Common quality floor across all modes so FAST removes ceremony rather than correctness.
+- Compact `templates/FAST_EXECUTION_PACKET.md` for eligible low-risk work.
+- `WORKSPACE_SAFETY.md` defining the target project root as the default writable boundary and requiring explicit human approval for external/system mutations.
+- Revision-bound evidence reuse rules to avoid repeating valid tests/reviews merely because a workflow stage changes.
+- Installer-managed project-local workflow snapshot under `.engineering-workflow/`, including root router, work-mode/workspace-safety policies, core execution policies/templates, and focused `skills/*/SKILL.md`.
+- Installer regression coverage for dangerous-target rejection, local workflow installation, symlink escape refusal, and project-root safety instructions.
+
+### Changed
+- Core routing now selects work mode before loading the rest of the workflow/skill set.
+- FAST defaults to targeted inspect/validation/diff review/required CI without research, formal scrutiny, independent review, full repo reconstruction, or broad regression unless a trigger emerges.
+- STANDARD preserves the normal bounded workflow; STRICT preserves full evidence-first controls for protected/high-impact work.
+- Model tier and work mode are explicitly separate; STRICT does not automatically imply Sol.
+- ChatGPT execution recommendations now include work mode, rationale, workspace write boundary, local policies/skills, model/effort/chat choice, evidence reuse, success gates, and stop/escalation conditions.
+- Codex execution prompts now begin from the project-local `.engineering-workflow/SKILL.md` and enforce project-root-only default writes.
+- Target repositories should be bootstrap-installed and validated before first Codex feature/fix execution.
+- Installer metadata updated to v1.7.0 and hardened to reject filesystem-root, user-home, workflow-source, and managed symlink/junction escape targets while remaining stdlib-only and network-free.
+- Existing project-owned file preservation and conflict-safe upgrade behavior remains intact.
+
+### Safety note
+- v1.7 does not authorize global package installation, modification of another repository, user/system configuration changes, or external filesystem writes for convenience. Such operations are STRICT and require explicit human approval for the exact action.
+
 ## [1.6.0] - 2026-08-30
 
 ### Added
