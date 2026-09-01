@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: read
 
 jobs:
   release:
@@ -31,6 +32,19 @@ jobs:
 
       - name: Verify stable release metadata
         run: python scripts/release_metadata.py verify
+
+      - name: Verify validated SHA came through a merged PR to main
+        shell: bash
+        run: |
+          set -euo pipefail
+          merged_prs="$(gh api             -H "Accept: application/vnd.github+json"             "repos/${GITHUB_REPOSITORY}/commits/${VALIDATED_SHA}/pulls"             --jq '[.[] | select(.merged_at != null and .base.ref == "main")] | length')"
+
+          if [[ "${merged_prs}" -lt 1 ]]; then
+            echo "ERROR: validated SHA ${VALIDATED_SHA} is not associated with a merged PR to main; refusing release." >&2
+            exit 1
+          fi
+
+          echo "Validated SHA has merged-PR provenance."
 
       - name: Publish missing validated releases
         shell: bash
@@ -61,7 +75,7 @@ jobs:
             notes="${RUNNER_TEMP}/${tag}-notes.md"
             python scripts/release_metadata.py notes "${version}" > "${notes}"
 
-            gh release create "${tag}"               --repo "${GITHUB_REPOSITORY}"               --target "${target}"               --title "${tag}"               --notes-file "${notes}"
+            gh release create "${tag}" --repo "${GITHUB_REPOSITORY}" --target "${target}" --title "${tag}" --notes-file "${notes}"
 
             echo "Created release ${tag} at ${target}"
           }
