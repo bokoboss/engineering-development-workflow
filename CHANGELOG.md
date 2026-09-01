@@ -24,7 +24,7 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 ### Changed
 - Stable workflow version updated to v1.7.2.
 - `VERSIONING.md` now requires an accepted commit, green validation, `vX.Y.Z` Git tag, and matching GitHub Release for stable versions.
-- Release automation is fail-closed: publication requires successful main validation **and merged-PR provenance**, existing tags are never retargeted, existing releases are left unchanged, and historical backfill is limited to explicitly verified v1.7.0/v1.7.1 SHAs.
+- Release automation is fail-closed: publication requires successful main validation **and merged-PR provenance**, existing tags are never retargeted, each release records its accepted commit SHA, existing releases are verified against that recorded SHA and left unchanged, and historical backfill is limited to explicitly verified v1.7.0/v1.7.1 SHAs.
 - Repository validation now checks security/release/configuration files, release workflow anchors, release metadata tooling, negative validator tests, and GitHub-level configuration documentation.
 - Validation CI now includes stable-release metadata verification.
 - Validation CI now runs monthly as a low-frequency GitHub Actions/runtime drift safety net; this is not a substitute for branch protection.
