@@ -1,5 +1,7 @@
 # Quick Start
 
+For a one-page operational summary, see `docs/CHEAT_SHEET.md`.
+
 ## Recommended adoption path: two-sided setup
 
 A complete adoption has **two sides**:

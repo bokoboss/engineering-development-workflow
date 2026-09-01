@@ -8,6 +8,23 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 - Collect external feedback after real project adoption.
 - Foundation research for a possible Local Workspace Evidence Bridge completed in `docs/research/local-workspace-evidence-bridge-adoption-review.md`. Concept verdict: `GO WITH CONDITIONS`; direct adoption of pinned `XiaoDuoYa/codex-with-chatgpt` v0.1.1: `NO-GO AT THIS TIME`. No v1.7 workflow contract or candidate installation is introduced by this research-only change.
 
+## [1.7.1] - 2026-09-01
+
+### Fixed
+- FAST eligibility now requires a concrete proof path before mutation instead of relying on the subjective phrase "strong guidance".
+- Added explicit "looks FAST but is not" negative examples for engineering, security/auth, network exposure, schema/migration, dependency, and unclear-root-cause cases.
+- Repository validation now deterministically protects `SECURITY_AND_GOVERNANCE.md` headings and critical invariants.
+- Repository validation now requires `.github/workflows/validate.yml` and verifies that CI still runs both the repository contract validator and installer regression suite.
+- Added deterministic cross-contract checks linking security/workspace safety, work-mode routing, Codex/ChatGPT execution instructions, and CI.
+
+### Added
+- `docs/CHEAT_SHEET.md` as a one-page onboarding, work-mode, safe Codex handoff, and evidence-reuse reference.
+- Optional workflow-efficiency sampling fields in `templates/POSTMORTEM.md` and `templates/EVIDENCE_PACKAGE.md` for selected tuning/pilot work.
+
+### Changed
+- Workflow/installer metadata updated to v1.7.1.
+- Efficiency metrics remain explicitly optional so routine FAST work does not acquire new reporting ceremony.
+
 ## [1.7.0] - 2026-09-01
 
 ### Added

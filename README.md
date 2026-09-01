@@ -2,7 +2,7 @@
 
 A reusable, evidence-first workflow for developing and safely operating engineering software with humans, ChatGPT, coding agents, GitHub, explicit success gates, focused reasoning skills, lean context, independent review, cost-aware model routing, and bounded continuous operations.
 
-Current workflow version: **v1.7.0 baseline**.
+Current workflow version: **v1.7.1 baseline**.
 
 License: **Apache-2.0**.
 
@@ -52,7 +52,7 @@ Before first Codex execution on an adopted project, bootstrap/validate the repos
 
 See [`WORK_MODE_ROUTING.md`](WORK_MODE_ROUTING.md).
 
-- **FAST** — localized, reversible, non-protected work with strong targeted verification. Uses a compact packet and skips unnecessary research/scrutiny/independent-review ceremony unless a trigger emerges.
+- **FAST** — localized, reversible, non-protected work with a concrete proof path and strong targeted verification. Uses a compact packet and skips unnecessary research/scrutiny/independent-review ceremony unless a trigger emerges.
 - **STANDARD** — ordinary feature/bug work with normal bounded planning and relevant regression/CI review.
 - **STRICT** — protected engineering/safety/security/legal, destructive, architectural/schema/public-contract, system/global, broad/low-reversibility, or similarly high-impact work.
 
@@ -142,7 +142,7 @@ This is intentional duplication for the **execution plane**: Codex should be abl
 
 Create a ChatGPT Project for the software project and copy `templates/CHATGPT_PROJECT_INSTRUCTIONS.md` into its Project Instructions.
 
-See **[`docs/chatgpt-project-setup.md`](docs/chatgpt-project-setup.md)**.
+See **[`docs/chatgpt-project-setup.md`](docs/chatgpt-project-setup.md)**. For the shortest operational summary, see **[`docs/CHEAT_SHEET.md`](docs/CHEAT_SHEET.md)**.
 
 ### 2. Bootstrap the target repository before Codex feature work
 
@@ -187,6 +187,7 @@ Ask ChatGPT to inspect the shared workflow and project repository, verify the pr
 - `scripts/setup_project.py` — safe bootstrap/upgrade/validation installer for target repositories.
 - `templates/CHATGPT_PROJECT_INSTRUCTIONS.md` — reusable ChatGPT Project control-plane instructions.
 - `templates/` — reusable project, execution, acceptance, evidence, handoff, and postmortem contracts.
+- `docs/CHEAT_SHEET.md` — one-page FAST/STANDARD/STRICT onboarding and safe Codex handoff.
 - `docs/` — philosophy, ChatGPT setup, installation, quick start, skills, and examples.
 
 ## Quick start

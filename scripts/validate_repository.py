@@ -21,13 +21,13 @@ REQUIRED_FILES = [
     'CONTEXT_MANAGEMENT.md', 'CONTINUOUS_OPERATIONS.md', 'MODEL_ROUTING_POLICY.md',
     'UX_UI_WORKFLOW.md', 'DEBUGGING_PROTOCOL.md', 'REVIEW_AND_SCRUTINY.md',
     'PARALLEL_EXECUTION.md', 'ACCEPTANCE_AND_EVIDENCE.md',
-    'SECURITY_AND_GOVERNANCE.md', 'VERSIONING.md',
+    'SECURITY_AND_GOVERNANCE.md', 'VERSIONING.md', 'docs/CHEAT_SHEET.md',
     'templates/PROJECT_PROFILE.md', 'templates/EXECUTION_CONTRACT.md',
     'templates/ACCEPTANCE_GATE.md', 'templates/EVIDENCE_PACKAGE.md',
     'templates/HANDOFF.md', 'templates/POSTMORTEM.md', 'templates/CODEX_PROMPT.md',
     'templates/FAST_EXECUTION_PACKET.md', 'templates/LOOP_CONTRACT.md',
     'templates/CHATGPT_PROJECT_INSTRUCTIONS.md',
-    '.github/pull_request_template.md',
+    '.github/pull_request_template.md', '.github/workflows/validate.yml',
     'scripts/setup_project.py', 'docs/installation.md', 'docs/quick-start.md',
     'docs/chatgpt-project-setup.md', 'docs/skill-system.md', 'patterns/pr-ci-watcher.md',
     'docs/research/loop-engineering-adoption-review.md',
@@ -56,6 +56,11 @@ REQUIRED_HEADINGS = {
         '## 1. Common quality floor', '## 2. STRICT triggers', '## 3. FAST eligibility',
         '## 4. STANDARD mode', '## 5. Dynamic escalation', '## 8. Evidence reuse',
         '## 9. Required routing output', '## 11. Safety override'
+    ],
+    'SECURITY_AND_GOVERNANCE.md': [
+        '## Protected changes', '## Secrets and private data',
+        '## Licensed and restricted references', '## Tool and remote-agent boundary',
+        '## Human approval'
     ],
     'WORKSPACE_SAFETY.md': [
         '## 1. Default filesystem authority', '## 2. Forbidden external mutations by default',
@@ -88,6 +93,8 @@ REQUIRED_HEADINGS = {
         '## Execution routing', '## Context strategy', '## Independent review',
         '## Success gates', '## Evidence reuse', '## Stop conditions', '## Definition of done'
     ],
+    'templates/POSTMORTEM.md': ['## Optional workflow-efficiency sample'],
+    'templates/EVIDENCE_PACKAGE.md': ['## Optional workflow-efficiency sample'],
     'templates/FAST_EXECUTION_PACKET.md': [
         '## Routing', '## Workspace safety', '## Objective', '## Scope',
         '## Evidence reusable without rerun', '## Targeted success gates', '## Stop / escalate'
@@ -123,9 +130,18 @@ for skill_file in SKILL_FILES:
 
 REQUIRED_TEXT = {
     'WORK_MODE_ROUTING.md': [
-        '**FAST**', '**STANDARD**', '**STRICT**',
+        'Version: 1.0.1', '**FAST**', '**STANDARD**', '**STRICT**',
         'FAST is faster because it omits unnecessary ceremony, not because it accepts weaker work.',
+        'at least one concrete proof path exists before mutation',
+        '### Looks FAST but is not',
+        'How will we prove this exact change is correct?',
         'Evidence is revision-bound.'
+    ],
+    'SECURITY_AND_GOVERNANCE.md': [
+        '`WORKSPACE_SAFETY.md` is normative for local filesystem/system boundaries and applies to every work mode.',
+        'Never commit credentials, tokens, personal secrets, production private data, or temporary debug artifacts containing them.',
+        'Default local write authority is the explicit target project root only; external/system writes require explicit human approval under `WORKSPACE_SAFETY.md`.',
+        'Human approval is a design control, not a failure of automation.'
     ],
     'WORKSPACE_SAFETY.md': [
         '**the explicit target project root, and only that project root.**',
@@ -134,19 +150,20 @@ REQUIRED_TEXT = {
         'Prefer a harness-enforced boundary over prompt-only compliance.'
     ],
     'README.md': [
-        'Current workflow version: **v1.7.0 baseline**.', 'License: **Apache-2.0**.',
+        'Current workflow version: **v1.7.1 baseline**.', 'License: **Apache-2.0**.',
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'CONTEXT_MANAGEMENT.md', 'skills/research-gate/SKILL.md',
         'skills/independent-review/SKILL.md', 'skills/loop-readiness/SKILL.md',
         'CONTINUOUS_OPERATIONS.md', 'patterns/pr-ci-watcher.md', 'ACKNOWLEDGEMENTS.md',
+        'docs/CHEAT_SHEET.md',
         'Apache License, Version 2.0'
     ],
     'ENGINEERING_DEV_WORKFLOW.md': [
-        'Version: 1.7.0', 'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'skills/research-gate/SKILL.md',
+        'Version: 1.7.1', 'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'skills/research-gate/SKILL.md',
         'skills/scrutinize/SKILL.md', 'skills/independent-review/SKILL.md',
         'CONTEXT_MANAGEMENT.md', 'CONTINUOUS_OPERATIONS.md', 'skills/loop-readiness/SKILL.md'
     ],
     'scripts/setup_project.py': [
-        'WORKFLOW_VERSION = "1.7.0"', 'LOCAL_WORKFLOW_DIR = ".engineering-workflow"',
+        'WORKFLOW_VERSION = "1.7.1"', 'LOCAL_WORKFLOW_DIR = ".engineering-workflow"',
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'templates/FAST_EXECUTION_PACKET.md',
         'def resolve_safe_target', 'def safe_destination', 'refusing filesystem-root target',
         'refusing user-home target', 'refusing target that overlaps workflow-source checkout', 'symlink/junction'
@@ -174,10 +191,61 @@ REQUIRED_TEXT = {
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', '.engineering-workflow.json',
         'work mode + rationale', 'workspace write boundary'
     ],
+    '.github/workflows/validate.yml': [
+        'python scripts/validate_repository.py',
+        "python -m unittest discover -s tests -p 'test_*.py' -v"
+    ],
+    'docs/CHEAT_SHEET.md': [
+        'FAST', 'STANDARD', 'STRICT', '.engineering-workflow/', 'WORKSPACE_SAFETY.md'
+    ],
+    'templates/POSTMORTEM.md': ['Do not make this mandatory for routine FAST work.'],
+    'templates/EVIDENCE_PACKAGE.md': ['Use for pilots, tuning, or selected postmortems only.'],
     'ACCEPTANCE_AND_EVIDENCE.md': ['Prefer deterministic enforcement over instruction-only compliance', 'Evidence is revision-bound.'],
     'LICENSE': ['Apache License', 'Version 2.0, January 2004'],
     'NOTICE': ['Engineering Development Workflow', 'Copyright 2026 Kittipat Tangittinunt'],
 }
+
+CROSS_CONTRACT_REQUIREMENTS = [
+    (
+        'SECURITY_AND_GOVERNANCE.md',
+        [
+            'WORKSPACE_SAFETY.md',
+            'explicit target project root only',
+            'Human approval is a design control'
+        ],
+    ),
+    (
+        'WORK_MODE_ROUTING.md',
+        [
+            'WORKSPACE_SAFETY.md',
+            'If mode confidence is low, do not choose FAST.',
+            'at least one concrete proof path exists before mutation'
+        ],
+    ),
+    (
+        'templates/CODEX_PROMPT.md',
+        [
+            '.engineering-workflow/WORK_MODE_ROUTING.md',
+            '.engineering-workflow/WORKSPACE_SAFETY.md',
+            'Work mode: FAST / STANDARD / STRICT'
+        ],
+    ),
+    (
+        'templates/CHATGPT_PROJECT_INSTRUCTIONS.md',
+        [
+            'WORK_MODE_ROUTING.md',
+            'WORKSPACE_SAFETY.md',
+            'workspace write boundary'
+        ],
+    ),
+    (
+        '.github/workflows/validate.yml',
+        [
+            'python scripts/validate_repository.py',
+            "python -m unittest discover -s tests -p 'test_*.py' -v"
+        ],
+    ),
+]
 
 errors = []
 for rel in REQUIRED_FILES:
@@ -201,6 +269,15 @@ for rel, snippets in REQUIRED_TEXT.items():
     for snippet in snippets:
         if snippet not in text:
             errors.append(f'{rel}: missing required text {snippet!r}')
+
+for rel, snippets in CROSS_CONTRACT_REQUIREMENTS:
+    path = ROOT / rel
+    if not path.is_file():
+        continue
+    text = path.read_text(encoding='utf-8')
+    for snippet in snippets:
+        if snippet not in text:
+            errors.append(f'{rel}: cross-contract invariant missing {snippet!r}')
 
 if errors:
     print('Repository validation FAILED')

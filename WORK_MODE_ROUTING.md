@@ -1,6 +1,6 @@
 # Work Mode Routing
 
-Version: 1.0.0
+Version: 1.0.1
 
 ## Principle
 
@@ -62,17 +62,29 @@ Use **FAST** only when all material conditions are true:
 - no protected engineering/safety/security/legal/destructive behavior is involved;
 - write scope stays inside the target project;
 - change is easy to reverse;
-- existing implementation/tests/reproducer provide strong guidance;
+- at least one concrete proof path exists before mutation: a reliable reproducer, an existing test that directly exercises the behavior, or a deterministic before/after check;
 - regression surface is narrow and identifiable;
-- targeted validation can directly exercise the change;
+- targeted validation can directly exercise the changed behavior and distinguish success from failure;
 - no unresolved external feasibility/dependency/licensing question changes implementation direction.
 
 Typical FAST examples:
 - typo/documentation correction;
 - small test/fixture repair with unchanged production semantics;
 - localized UI spacing/text polish with established behavior;
-- bounded config correction inside the project;
+- bounded config correction inside the project with deterministic validation;
 - obvious low-risk bug with a reliable reproducer and targeted regression test.
+
+### Looks FAST but is not
+
+Do **not** classify by line count or apparent simplicity alone. Examples:
+- one-line engineering formula/threshold/methodology change -> **STRICT**;
+- one-line authentication/authorization/permission/secret-handling change -> **STRICT**;
+- small configuration edit that changes network exposure, filesystem/system authority, or credential behavior -> **STRICT**;
+- small schema/migration/public protocol change -> **STRICT**;
+- dependency/version bump with uncertain compatibility or security impact -> **STANDARD or STRICT** until bounded;
+- a bug with no reliable reproducer and unclear root cause -> **STANDARD** by default, or **STRICT** when blast radius is high.
+
+FAST requires a credible answer to: **"How will we prove this exact change is correct?"** If the answer is only visual confidence, executor intuition, or "it should work," use STANDARD.
 
 FAST flow:
 
