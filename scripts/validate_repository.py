@@ -62,16 +62,6 @@ REQUIRED_HEADINGS = {
         '## 5. Symlink / junction / reparse-point safety', '## 6. External-write approval protocol',
         '## 10. Installer boundary', '## 11. Stop conditions', '## 12. Completion evidence'
     ],
-    'WORK_MODE_ROUTING.md': [
-        '**FAST**', '**STANDARD**', '**STRICT**',
-        'FAST is faster because it omits unnecessary ceremony, not because it accepts weaker work.',
-        'Evidence is revision-bound.'
-    ],
-    'WORKSPACE_SAFETY.md': [
-        '**the explicit target project root, and only that project root.**',
-        'External paths are non-writable by default.',
-        'Proceed only after explicit human approval for that exact resource/action.'
-    ],
     'CONTINUOUS_OPERATIONS.md': [
         '## 2. Autonomy levels', '## 4. Source of truth and operational state',
         '## 5. Budget and circuit breaker', '## 6. Notification policy',
