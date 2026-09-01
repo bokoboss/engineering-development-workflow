@@ -137,7 +137,7 @@ class SetupProjectTests(unittest.TestCase):
     def test_refuses_workflow_source_target(self):
         result = run_cli("install", ROOT)
         self.assertEqual(result.returncode, 2)
-        self.assertIn("workflow-source target", result.stderr)
+        self.assertIn("overlaps workflow-source checkout", result.stderr)
 
     def test_refuses_symlink_managed_destination_escape(self):
         target = self.make_target()
