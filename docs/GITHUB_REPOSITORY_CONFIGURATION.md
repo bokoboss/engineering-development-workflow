@@ -59,7 +59,7 @@ Stable versions use:
 - GitHub Release for the same tag;
 - green repository validation before release publication.
 
-The post-validation release workflow in `.github/workflows/release.yml` enforces the tag/release side after a successful main validation.
+The post-validation release workflow in `.github/workflows/release.yml` enforces the tag/release side only after successful main validation and merged-PR provenance. This provides release-level protection against a direct push even while GitHub branch/ruleset enforcement is still pending.
 
 ## 5. Scheduled validation
 
