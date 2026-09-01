@@ -28,6 +28,7 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 - Repository validation now checks security/release/configuration files, release workflow anchors, release metadata tooling, negative validator tests, and GitHub-level configuration documentation.
 - Validation CI now includes stable-release metadata verification.
 - Validation CI now runs monthly as a low-frequency GitHub Actions/runtime drift safety net; this is not a substitute for branch protection.
+- Official GitHub Actions dependencies were upgraded from Node-20-targeting generations and pinned to immutable commits for `actions/checkout` v7.0.1 and `actions/setup-python` v6.3.0 after CI exposed the platform deprecation warning.
 
 ### Repository configuration note
 - Desired `main` ruleset/branch-protection and repository About metadata are documented, but committed Markdown is not treated as evidence that those GitHub-level settings are active.
