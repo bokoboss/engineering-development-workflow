@@ -12,16 +12,18 @@ This file is the **router**. The core workflow remains authoritative; focused mo
 ## Core router
 
 1. Establish the authoritative project state from the repository and `PROJECT_PROFILE.md` if present.
-2. Apply `ENGINEERING_DEV_WORKFLOW.md`.
-3. Apply `CONTEXT_MANAGEMENT.md` to keep the working set relevant and decide when fresh context or isolation is useful.
-4. If the work is recurring, event-driven, or monitored over time, apply `CONTINUOUS_OPERATIONS.md` before enabling automation or increasing autonomy.
-5. Apply `MODEL_ROUTING_POLICY.md` before recommending a coding model or reasoning effort.
-6. Route focused situations through the skill modules below.
-7. Apply `UX_UI_WORKFLOW.md` when UX/UI changes are involved.
-8. Apply `PARALLEL_EXECUTION.md` when multiple workers are proposed.
-9. Define gates using `ACCEPTANCE_AND_EVIDENCE.md` and `templates/ACCEPTANCE_GATE.md`.
-10. Produce or update an execution packet using `templates/EXECUTION_CONTRACT.md`.
-11. Do not claim completion without the required evidence, review, and approvals.
+2. Apply `WORK_MODE_ROUTING.md` and state FAST / STANDARD / STRICT before coding-agent execution.
+3. Apply `WORKSPACE_SAFETY.md`; default write authority is the target project root only.
+4. Apply `ENGINEERING_DEV_WORKFLOW.md`.
+5. Apply `CONTEXT_MANAGEMENT.md` to keep the working set relevant and decide when fresh context or isolation is useful.
+6. If the work is recurring, event-driven, or monitored over time, apply `CONTINUOUS_OPERATIONS.md` before enabling automation or increasing autonomy.
+7. Apply `MODEL_ROUTING_POLICY.md` before recommending a coding model or reasoning effort.
+8. Route focused situations through the skill modules below.
+9. Apply `UX_UI_WORKFLOW.md` when UX/UI changes are involved.
+10. Apply `PARALLEL_EXECUTION.md` when multiple workers are proposed.
+11. Define gates using `ACCEPTANCE_AND_EVIDENCE.md` and `templates/ACCEPTANCE_GATE.md`.
+12. Use a compact packet for eligible FAST work; use `templates/EXECUTION_CONTRACT.md` for STANDARD/STRICT or when complexity warrants it.
+13. Do not claim completion without the required evidence, review, and approvals.
 
 ## Focused skill routing
 
@@ -34,7 +36,17 @@ This file is the **router**. The core workflow remains authoritative; focused mo
 - **Long, multi-step, resumable, or multi-worker execution** -> `skills/long-task-guard/SKILL.md`.
 - **Recurring/event-driven loop design, activation, or autonomy increase** -> `skills/loop-readiness/SKILL.md`, together with `CONTINUOUS_OPERATIONS.md`.
 
-Multiple modules may apply to one work item. Use the smallest set that materially improves correctness or control.
+Multiple modules may apply to one work item. Use the smallest set that materially improves correctness or control. FAST should normally load no focused skill unless a trigger emerges; STANDARD loads only relevant skills; STRICT uses the full set justified by risk.
+
+## Work mode routing
+
+`WORK_MODE_ROUTING.md` is the first lightweight router. FAST is permitted only for clear, localized, reversible, non-protected work with strong targeted verification. STRICT triggers include protected engineering/safety/security/legal behavior, destructive or low-reversibility work, architecture/schema/public-contract changes, system/global changes, and similarly high-impact uncertainty. Otherwise use STANDARD.
+
+If execution reveals a higher-risk trigger, stop at a safe checkpoint and escalate the mode before continuing.
+
+## Workspace safety
+
+`WORKSPACE_SAFETY.md` applies to every mode and worker. Without explicit human approval, do not create/modify/move/delete files outside the target project root, modify another repository, install globally, or change user/system configuration. A need for external/system mutation is a STRICT trigger and must be reported before action.
 
 ## Mandatory scrutiny
 
