@@ -1,5 +1,7 @@
 # Security and Governance
 
+`WORKSPACE_SAFETY.md` is normative for local filesystem/system boundaries and applies to every work mode.
+
 ## Protected changes
 
 Projects should explicitly identify changes that require human approval before merge, including as applicable:
@@ -20,7 +22,7 @@ Do not commit or redistribute licensed standards, manuals, workbooks, client doc
 
 ## Tool and remote-agent boundary
 
-Grant only the mutation, network, filesystem, and credential capabilities required for the work. Remote automation that increases attack surface should be justified by concrete workflow value rather than convenience alone.
+Grant only the mutation, network, filesystem, and credential capabilities required for the work. Default local write authority is the explicit target project root only; external/system writes require explicit human approval under `WORKSPACE_SAFETY.md`. Remote automation that increases attack surface should be justified by concrete workflow value rather than convenience alone.
 
 ## Human approval
 

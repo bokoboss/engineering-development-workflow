@@ -6,6 +6,8 @@ Continuous operations are an **outer operational layer** around the Engineering 
 
 They do **not** replace research, scrutiny, execution contracts, model routing, debugging, verification, independent review, acceptance, security/governance, or required human approval.
 
+When a loop decides real development work is justified, classify that work through `WORK_MODE_ROUTING.md` before execution. `WORKSPACE_SAFETY.md` applies to every loop action and worker; autonomy level never expands the filesystem/system boundary.
+
 The canonical relationship is:
 
 ```text

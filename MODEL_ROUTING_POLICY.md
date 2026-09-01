@@ -1,6 +1,6 @@
 # Model Routing Policy
 
-Version: 1.1.0
+Version: 1.2.0
 
 ## 1. Objective
 
@@ -11,6 +11,17 @@ Model capability and reasoning effort are separate routing axes.
 ## 2. Control-plane rule
 
 Before invoking a coding agent, ChatGPT or the human lead should complete as much research, repo inspection, decomposition, architecture/UX reasoning, acceptance design, and prompt preparation as practical. This converts ambiguous work into bounded execution packets and increases the share of work that lower-cost models can complete reliably.
+
+## 2A. Work mode first
+
+Apply `WORK_MODE_ROUTING.md` before model selection.
+
+Work mode and model tier are separate axes:
+- FAST often fits Luna Medium, or Luna High for a slightly broader but still low-risk bounded change;
+- STANDARD often fits Luna High/Max;
+- STRICT does not automatically require Sol. After ChatGPT has completed high-risk reasoning and bounded the implementation, a lower-cost executor may still be appropriate if the execution itself is mechanical and strongly testable.
+
+Do not use a stronger model as a substitute for scrutiny, evidence, workspace safety, or a clear packet.
 
 ## 3. Default routing
 
@@ -70,9 +81,11 @@ A cheaper worker that requires many retries can be more expensive than a stronge
 ## 8. Recommendation format
 
 Whenever recommending Codex/coding-agent execution, state:
+- work mode (FAST / STANDARD / STRICT) and rationale;
+- workspace write boundary and whether any external write is explicitly approved;
 - model;
 - reasoning effort;
 - existing chat or new chat;
 - why this tier is sufficient;
 - why a higher tier is not currently required;
-- explicit escalation trigger.
+- explicit escalation trigger, including work-mode escalation when scope/risk grows.

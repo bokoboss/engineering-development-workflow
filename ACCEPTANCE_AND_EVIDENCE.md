@@ -22,7 +22,7 @@ Possible gates include:
 - G11 Evidence completeness
 - G12 Independent review / independent recomputation when risk requires it
 
-Use only gates relevant to the change, but explicitly justify omitted high-risk gates.
+Use only gates relevant to the change, but explicitly justify omitted high-risk gates. FAST may use a smaller targeted gate set when `WORK_MODE_ROUTING.md` eligibility is satisfied; STRICT requires the fuller matrix justified by risk.
 
 ## Gate record
 
@@ -41,6 +41,12 @@ When a research gate produced `GO WITH CONDITIONS`, those conditions must appear
 A change is accepted only when all mandatory gates are PASS, required independent review is resolved, required research conditions are satisfied, and mandatory approvals are present. BLOCKED is a valid outcome when required evidence cannot yet be obtained.
 
 For high-risk work, executor self-report alone is not sufficient evidence even when the executor also ran tests. Independence can come from a fresh-context reviewer, a different model/agent, a human specialist, or deterministic verification that genuinely exercises or recomputes the material behavior.
+
+## Evidence reuse
+
+Evidence is revision-bound. Reuse valid prior evidence when the relevant code/input/revision and environment have not materially changed and the evidence still covers the risk. Do not rerun broad suites or reviews solely because another workflow stage started. Re-run when evidence is stale, incomplete, invalidated by a change/failure, or explicitly required by repository pre-merge/CI policy.
+
+Record reused evidence provenance clearly enough to audit.
 
 ## Evidence hierarchy
 
@@ -73,4 +79,4 @@ Prompts and instructions remain useful for judgment, intent, and behavior that c
 
 Use `skills/independent-review/SKILL.md` when the acceptance risk justifies a second pass. Review scope should target the material risk rather than repeat every check indiscriminately.
 
-A different reviewer is not automatically correct. Independent findings must still be reconciled against repository state, tests, references, and other evidence.
+FAST does not require independent review by default; STANDARD/STRICT use it when risk justifies it. A different reviewer is not automatically correct. Independent findings must still be reconciled against repository state, tests, references, and other evidence.
