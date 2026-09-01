@@ -27,9 +27,10 @@ The release workflow in `.github/workflows/release.yml` runs only after the name
 Release automation is fail-closed:
 - it never moves or overwrites an existing tag;
 - if an existing tag points to a different commit than the expected accepted SHA, publication fails;
-- an existing GitHub Release is left unchanged;
+- an existing GitHub Release is left unchanged after verifying its Git tag still matches the `Accepted commit` SHA recorded in the release body;
 - historical release backfill is limited to explicitly verified accepted SHAs;
-- current release metadata must pass `scripts/release_metadata.py verify`.
+- current release metadata must pass `scripts/release_metadata.py verify`;
+- every automatically created release records `Accepted commit: <SHA>` in its body so later `main` commits with the same version do not cause retargeting or false failure.
 
 ## Historical backfill policy
 
