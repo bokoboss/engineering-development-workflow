@@ -130,7 +130,7 @@ for skill_file in SKILL_FILES:
 
 REQUIRED_TEXT = {
     'WORK_MODE_ROUTING.md': [
-        '**FAST**', '**STANDARD**', '**STRICT**',
+        'Version: 1.0.1', '**FAST**', '**STANDARD**', '**STRICT**',
         'FAST is faster because it omits unnecessary ceremony, not because it accepts weaker work.',
         'at least one concrete proof path exists before mutation',
         '### Looks FAST but is not',
