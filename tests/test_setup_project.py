@@ -190,6 +190,27 @@ class SetupProjectTests(unittest.TestCase):
         self.assertEqual(unmanaged.read_text(encoding="utf-8"), "# user-owned file\n")
 
 
+    def test_validate_rejects_obsolete_managed_manifest_entry(self):
+        target = self.make_target()
+        result = run_cli("install", target)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+        rel = "docs/development/templates/EXECUTION_CONTRACT.md"
+        path = target / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        content = "# obsolete duplicate still recorded\n"
+        path.write_text(content, encoding="utf-8")
+
+        manifest_path = target / MANIFEST
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["managed"][rel] = sha(content)
+        manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+        valid = run_cli("validate", target)
+        self.assertEqual(valid.returncode, 1)
+        self.assertIn("obsolete managed entry remains", valid.stderr)
+
+
     def test_created_agents_contains_project_root_safety_boundary(self):
         target = self.make_target()
         result = run_cli("install", target)
