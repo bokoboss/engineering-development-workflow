@@ -75,7 +75,7 @@ When code/file mutation, local runtime/browser execution, or environment-specifi
 
 1. Verify `.engineering-workflow.json` and the local pinned snapshot. Install/upgrade/validate first if missing or materially incompatible.
 2. State FAST / STANDARD / STRICT and the target project root write boundary.
-3. Use `docs/development/templates/FAST_EXECUTION_PACKET.md` for eligible FAST work; otherwise create a GitHub Issue or fill `docs/development/templates/EXECUTION_CONTRACT.md`.
+3. Use `.engineering-workflow/templates/FAST_EXECUTION_PACKET.md` for eligible FAST work; otherwise create a GitHub Issue or fill `.engineering-workflow/templates/EXECUTION_CONTRACT.md`.
 4. Record any research verdict/conditions and independent-review requirement.
 5. Translate relevant conclusions into scope, constraints, success gates, stop conditions, evidence reuse, and the coding-agent prompt.
 6. Use upstream `MODEL_ROUTING_POLICY.md` to choose model + effort + chat reuse/new-chat strategy.
