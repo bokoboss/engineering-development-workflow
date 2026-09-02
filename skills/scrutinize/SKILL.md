@@ -43,6 +43,22 @@ Do not invent missing project facts. If evidence is unavailable, make the conclu
 8. Separate blockers from non-blocking improvements.
 9. Produce a decision: `GO`, `GO WITH CONDITIONS`, `REPLAN`, or `NO-GO`.
 
+## Pre-merge review order
+
+When scrutinizing an implementation or PR before acceptance, review in this order:
+
+1. scope and intent;
+2. behavior and correctness;
+3. protected engineering logic and data contracts;
+4. regression risk;
+5. tests and evidence quality;
+6. UX, error recovery, accessibility, and localization when relevant;
+7. security, privacy, and secrets;
+8. maintainability and documentation;
+9. cosmetic polish.
+
+A passing CI run is necessary when required, but it is not sufficient when the tests do not exercise the acceptance contract.
+
 ## Output
 
 Report:
