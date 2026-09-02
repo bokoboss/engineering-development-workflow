@@ -8,6 +8,29 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 - Collect external feedback after real project adoption.
 - Foundation research for a possible Local Workspace Evidence Bridge completed in `docs/research/local-workspace-evidence-bridge-adoption-review.md`. Concept verdict: `GO WITH CONDITIONS`; direct adoption of pinned `XiaoDuoYa/codex-with-chatgpt` v0.1.1: `NO-GO AT THIS TIME`. No v1.7 workflow contract or candidate installation is introduced by this research-only change.
 
+## [1.7.4] - 2026-09-02
+
+### Removed
+- `DEBUGGING_PROTOCOL.md` after consolidating its durable root-cause/reproducer/postmortem rules into `skills/systematic-debug/SKILL.md`.
+- `REVIEW_AND_SCRUTINY.md` after consolidating its durable pre-merge review order into `skills/scrutinize/SKILL.md`.
+- `docs/philosophy.md` because its principles are already represented by README/core workflow policy.
+- obsolete examples `docs/examples/bounded-feature.md` and `docs/examples/sol-orchestrated-luna-workers.md`.
+- duplicate installer-managed execution/evidence templates under `docs/development/templates/`; the canonical installed set is now only `.engineering-workflow/templates/`.
+
+### Changed
+- Stable workflow version updated to v1.7.4.
+- Root routing now points directly to the canonical systematic-debug skill without a second debugging protocol layer.
+- Installer local policy snapshot no longer includes the retired debugging/review protocol files.
+- Fresh installs use a single project-local template set under `.engineering-workflow/templates/`.
+- Upgrades safely retire an explicit allowlist of obsolete managed files only when the prior manifest proves ownership and the current hash is unchanged.
+- Locally modified obsolete managed files block retirement before installer mutation rather than being deleted or silently abandoned.
+- Quick Start and installation documentation now point to the canonical local template paths.
+
+### Safety note
+- v1.7.4 does not introduce arbitrary cleanup. Retirement is restricted to the explicit `RETIRED_MANAGED_PATHS` allowlist, project-contained safe paths, prior-manifest ownership, and exact unchanged hashes.
+- Unmanaged files at retired paths are preserved.
+- No research/provenance documents, focused skills, continuous-operations capability, canonical templates, UX/UI policy, or parallel-execution policy were removed.
+
 ## [1.7.3] - 2026-09-01
 
 ### Added
