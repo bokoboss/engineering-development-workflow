@@ -42,8 +42,19 @@ class SetupProjectTests(unittest.TestCase):
         self.assertTrue((target / ".engineering-workflow/WORK_MODE_ROUTING.md").is_file())
         self.assertTrue((target / ".engineering-workflow/WORKSPACE_SAFETY.md").is_file())
         self.assertTrue((target / ".engineering-workflow/skills/scrutinize/SKILL.md").is_file())
-        self.assertTrue((target / ".engineering-workflow/templates/EXECUTION_CONTRACT.md").is_file())
-        self.assertFalse((target / "docs/development/templates/EXECUTION_CONTRACT.md").exists())
+        canonical_templates = [
+            "EXECUTION_CONTRACT.md",
+            "FAST_EXECUTION_PACKET.md",
+            "ACCEPTANCE_GATE.md",
+            "EVIDENCE_PACKAGE.md",
+            "HANDOFF.md",
+            "POSTMORTEM.md",
+            "CODEX_PROMPT.md",
+            "LOOP_CONTRACT.md",
+        ]
+        for name in canonical_templates:
+            self.assertTrue((target / ".engineering-workflow/templates" / name).is_file(), name)
+            self.assertFalse((target / "docs/development/templates" / name).exists(), name)
         self.assertFalse((target / ".engineering-workflow/DEBUGGING_PROTOCOL.md").exists())
         self.assertFalse((target / ".engineering-workflow/REVIEW_AND_SCRUTINY.md").exists())
         manifest = json.loads((target / MANIFEST).read_text(encoding="utf-8"))
@@ -124,11 +135,19 @@ class SetupProjectTests(unittest.TestCase):
         manifest_path = target / MANIFEST
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
 
-        obsolete = {
-            "docs/development/templates/EXECUTION_CONTRACT.md": "# old duplicate template\n",
-            ".engineering-workflow/DEBUGGING_PROTOCOL.md": "# old debugging protocol\n",
-            ".engineering-workflow/REVIEW_AND_SCRUTINY.md": "# old review protocol\n",
-        }
+        retired_paths = [
+            "docs/development/templates/EXECUTION_CONTRACT.md",
+            "docs/development/templates/FAST_EXECUTION_PACKET.md",
+            "docs/development/templates/ACCEPTANCE_GATE.md",
+            "docs/development/templates/EVIDENCE_PACKAGE.md",
+            "docs/development/templates/HANDOFF.md",
+            "docs/development/templates/POSTMORTEM.md",
+            "docs/development/templates/CODEX_PROMPT.md",
+            "docs/development/templates/LOOP_CONTRACT.md",
+            ".engineering-workflow/DEBUGGING_PROTOCOL.md",
+            ".engineering-workflow/REVIEW_AND_SCRUTINY.md",
+        ]
+        obsolete = {rel: f"# simulated v1.7.3 managed file: {rel}\n" for rel in retired_paths}
         for rel, content in obsolete.items():
             path = target / rel
             path.parent.mkdir(parents=True, exist_ok=True)
