@@ -1,6 +1,6 @@
 # คู่มือใช้งาน Engineering Development Workflow ภาษาไทย
 
-เวอร์ชันคู่มือ: สำหรับ Workflow v1.7.3  
+เวอร์ชันคู่มือ: สำหรับ Workflow v1.7.4  
 สถานะ: คู่มือการใช้งานภาษาไทย  
 เอกสาร policy ภาษาอังกฤษใน repository ยังคงเป็น normative source of truth
 
@@ -415,7 +415,15 @@ docs/development/
 
 เป็น pinned local workflow snapshot สำหรับ Codex.
 
-ไม่ควรแก้โดยตรง.
+ตั้งแต่ v1.7.4 execution/evidence templates ที่ installer จัดการมีชุดเดียวที่:
+
+```text
+.engineering-workflow/templates/
+```
+
+ไม่มีการติดตั้ง duplicate อีกชุดใต้ `docs/development/templates/` แล้ว.
+
+ไม่ควรแก้ไฟล์ managed ใน `.engineering-workflow/` โดยตรง.
 
 ถ้าต้องการอัปเดตให้ใช้ installer `upgrade`.
 
@@ -451,7 +459,7 @@ docs/development/
 ดู:
 
 ```json
-"workflow_version": "1.7.3"
+"workflow_version": "1.7.4"
 ```
 
 หรือรัน:
@@ -483,6 +491,8 @@ python scripts\setup_project.py validate "D:\R&D\my-project"
 ### ถ้าเจอ locally modified managed file
 
 installer จะ block.
+
+ในการ upgrade จากเวอร์ชันเก่า v1.7.4 อาจ retire ไฟล์ duplicate/protocol เก่าที่ installer เคยจัดการ แต่จะลบเฉพาะไฟล์ใน allowlist ที่ manifest เดิมยืนยัน ownership และ hash ยังไม่ถูกแก้เท่านั้น. ถ้าไฟล์นั้นถูกแก้ locally จะไม่ลบและจะ block upgrade เพื่อให้ตรวจสอบก่อน.
 
 อย่าใช้ force overwrite.
 

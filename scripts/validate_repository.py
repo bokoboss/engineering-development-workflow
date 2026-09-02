@@ -19,8 +19,7 @@ REQUIRED_FILES = [
     'LICENSE', 'NOTICE', 'SECURITY.md', '.gitignore', 'AGENTS.md', 'SKILL.md',
     'ENGINEERING_DEV_WORKFLOW.md', 'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md',
     'CONTEXT_MANAGEMENT.md', 'CONTINUOUS_OPERATIONS.md', 'MODEL_ROUTING_POLICY.md',
-    'UX_UI_WORKFLOW.md', 'DEBUGGING_PROTOCOL.md', 'REVIEW_AND_SCRUTINY.md',
-    'PARALLEL_EXECUTION.md', 'ACCEPTANCE_AND_EVIDENCE.md',
+    'UX_UI_WORKFLOW.md', 'PARALLEL_EXECUTION.md', 'ACCEPTANCE_AND_EVIDENCE.md',
     'SECURITY_AND_GOVERNANCE.md', 'VERSIONING.md', 'docs/CHEAT_SHEET.md', 'docs/THAI_USER_GUIDE.md',
     'templates/PROJECT_PROFILE.md', 'templates/EXECUTION_CONTRACT.md',
     'templates/ACCEPTANCE_GATE.md', 'templates/EVIDENCE_PACKAGE.md',
@@ -171,7 +170,7 @@ REQUIRED_TEXT = {
         'Prefer a harness-enforced boundary over prompt-only compliance.'
     ],
     'README.md': [
-        'Current workflow version: **v1.7.3 baseline**.', 'License: **Apache-2.0**.',
+        'Current workflow version: **v1.7.4 baseline**.', 'License: **Apache-2.0**.',
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'CONTEXT_MANAGEMENT.md', 'skills/research-gate/SKILL.md',
         'skills/independent-review/SKILL.md', 'skills/loop-readiness/SKILL.md',
         'CONTINUOUS_OPERATIONS.md', 'patterns/pr-ci-watcher.md', 'ACKNOWLEDGEMENTS.md',
@@ -179,15 +178,18 @@ REQUIRED_TEXT = {
         'Apache License, Version 2.0'
     ],
     'ENGINEERING_DEV_WORKFLOW.md': [
-        'Version: 1.7.3', 'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'skills/research-gate/SKILL.md',
+        'Version: 1.7.4', 'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'skills/research-gate/SKILL.md',
         'skills/scrutinize/SKILL.md', 'skills/independent-review/SKILL.md',
         'CONTEXT_MANAGEMENT.md', 'CONTINUOUS_OPERATIONS.md', 'skills/loop-readiness/SKILL.md'
     ],
     'scripts/setup_project.py': [
-        'WORKFLOW_VERSION = "1.7.3"', 'LOCAL_WORKFLOW_DIR = ".engineering-workflow"',
+        'WORKFLOW_VERSION = "1.7.4"', 'LOCAL_WORKFLOW_DIR = ".engineering-workflow"',
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'templates/FAST_EXECUTION_PACKET.md',
-        'def resolve_safe_target', 'def safe_destination', 'refusing filesystem-root target',
-        'refusing user-home target', 'refusing target that overlaps workflow-source checkout', 'symlink/junction'
+        'def resolve_safe_target', 'def safe_destination', 'def retirement_conflicts',
+        'def retire_managed_files', 'RETIRED_MANAGED_PATHS',
+        'retired unchanged managed', 'obsolete installer-managed file was locally modified',
+        'refusing filesystem-root target', 'refusing user-home target',
+        'refusing target that overlaps workflow-source checkout', 'symlink/junction'
     ],
     'ACKNOWLEDGEMENTS.md': [
         'https://github.com/thananon/9arm-skills', 'conceptual inspiration only',
@@ -203,6 +205,15 @@ REQUIRED_TEXT = {
         'Default: **silence on no-op**.'
     ],
     'skills/loop-readiness/SKILL.md': ['READY FOR A1', 'READY FOR A2', 'READY FOR A3', 'NOT READY'],
+    'skills/systematic-debug/SKILL.md': [
+        'Do not mask symptoms with UI suppression, blind retries, broad dependency changes, or hard-coded special cases',
+        'route to the postmortem skill'
+    ],
+    'skills/scrutinize/SKILL.md': [
+        '## Pre-merge review order',
+        'protected engineering logic and data contracts',
+        'A passing CI run is necessary when required, but it is not sufficient'
+    ],
     'patterns/pr-ci-watcher.md': ['Autonomy: **A1 — Observe / report**', 'invoke automatic Codex/coding-agent remediation'],
     'templates/CODEX_PROMPT.md': [
         'Work mode: FAST / STANDARD / STRICT', '.engineering-workflow/WORKSPACE_SAFETY.md',
@@ -292,7 +303,11 @@ REQUIRED_TEXT = {
     'docs/CHEAT_SHEET.md': [
         'FAST', 'STANDARD', 'STRICT', '.engineering-workflow/', 'WORKSPACE_SAFETY.md'
     ],
-    'docs/quick-start.md': ['docs/THAI_USER_GUIDE.md'],
+    'docs/quick-start.md': [
+        'docs/THAI_USER_GUIDE.md',
+        '.engineering-workflow/templates/FAST_EXECUTION_PACKET.md',
+        '.engineering-workflow/templates/EXECUTION_CONTRACT.md'
+    ],
     'docs/chatgpt-project-setup.md': ['docs/THAI_USER_GUIDE.md'],
     'docs/THAI_USER_GUIDE.md': [
         '# คู่มือใช้งาน Engineering Development Workflow ภาษาไทย',
@@ -398,6 +413,19 @@ CROSS_CONTRACT_REQUIREMENTS = [
     ),
 ]
 
+FORBIDDEN_ACTIVE_REFERENCES = {
+    'README.md': [
+        'DEBUGGING_PROTOCOL.md',
+        'REVIEW_AND_SCRUTINY.md',
+        'docs/philosophy.md',
+        'docs/examples/bounded-feature.md',
+        'docs/examples/sol-orchestrated-luna-workers.md',
+    ],
+    'SKILL.md': ['DEBUGGING_PROTOCOL.md', 'REVIEW_AND_SCRUTINY.md'],
+    'docs/quick-start.md': ['docs/development/templates/'],
+    'docs/installation.md': ['docs/development/templates/EXECUTION_CONTRACT.md'],
+}
+
 errors = []
 for rel in REQUIRED_FILES:
     if not (ROOT / rel).is_file():
@@ -429,6 +457,15 @@ for rel, snippets in CROSS_CONTRACT_REQUIREMENTS:
     for snippet in snippets:
         if snippet not in text:
             errors.append(f'{rel}: cross-contract invariant missing {snippet!r}')
+
+for rel, snippets in FORBIDDEN_ACTIVE_REFERENCES.items():
+    path = ROOT / rel
+    if not path.is_file():
+        continue
+    text = path.read_text(encoding='utf-8')
+    for snippet in snippets:
+        if snippet in text:
+            errors.append(f'{rel}: obsolete active reference remains {snippet!r}')
 
 if errors:
     print('Repository validation FAILED')

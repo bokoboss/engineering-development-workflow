@@ -11,7 +11,7 @@ Safety model:
 - installer-managed writes through symlinks/junctions/reparse-like link paths are refused;
 - project-owned files are preserved;
 - conflicts block mutation;
-- this installer has no arbitrary delete/cleanup operation.
+- this installer has no arbitrary delete/cleanup operation; upgrade may retire only an explicit allowlist of unchanged files proven installer-managed by the prior manifest.
 """
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ from pathlib import Path
 from typing import Dict
 
 WORKFLOW_REPO = "https://github.com/bokoboss/engineering-development-workflow"
-WORKFLOW_VERSION = "1.7.3"
+WORKFLOW_VERSION = "1.7.4"
 MANIFEST_NAME = ".engineering-workflow.json"
 LOCAL_WORKFLOW_DIR = ".engineering-workflow"
 
@@ -68,15 +68,25 @@ engineering/security/safety/human-approval requirements.
 
 BASE_MANAGED_SOURCES = {
     "docs/development/ENGINEERING_WORKFLOW.md": None,
-    "docs/development/templates/EXECUTION_CONTRACT.md": "templates/EXECUTION_CONTRACT.md",
-    "docs/development/templates/FAST_EXECUTION_PACKET.md": "templates/FAST_EXECUTION_PACKET.md",
-    "docs/development/templates/ACCEPTANCE_GATE.md": "templates/ACCEPTANCE_GATE.md",
-    "docs/development/templates/EVIDENCE_PACKAGE.md": "templates/EVIDENCE_PACKAGE.md",
-    "docs/development/templates/HANDOFF.md": "templates/HANDOFF.md",
-    "docs/development/templates/POSTMORTEM.md": "templates/POSTMORTEM.md",
-    "docs/development/templates/CODEX_PROMPT.md": "templates/CODEX_PROMPT.md",
-    "docs/development/templates/LOOP_CONTRACT.md": "templates/LOOP_CONTRACT.md",
     ".github/ISSUE_TEMPLATE/engineering-workflow-task.md": ".github/ISSUE_TEMPLATE/implementation-task.md",
+}
+
+# Paths intentionally retired from the installer-managed surface in v1.7.4.
+# A retired path is deleted only when:
+# - a prior manifest explicitly recorded it as installer-managed; and
+# - the current file hash still matches that prior manifest.
+# Unknown, unmanaged, or locally modified files are never deleted.
+RETIRED_MANAGED_PATHS = {
+    "docs/development/templates/EXECUTION_CONTRACT.md",
+    "docs/development/templates/FAST_EXECUTION_PACKET.md",
+    "docs/development/templates/ACCEPTANCE_GATE.md",
+    "docs/development/templates/EVIDENCE_PACKAGE.md",
+    "docs/development/templates/HANDOFF.md",
+    "docs/development/templates/POSTMORTEM.md",
+    "docs/development/templates/CODEX_PROMPT.md",
+    "docs/development/templates/LOOP_CONTRACT.md",
+    ".engineering-workflow/DEBUGGING_PROTOCOL.md",
+    ".engineering-workflow/REVIEW_AND_SCRUTINY.md",
 }
 
 LOCAL_POLICY_FILES = [
@@ -88,8 +98,6 @@ LOCAL_POLICY_FILES = [
     "MODEL_ROUTING_POLICY.md",
     "SECURITY_AND_GOVERNANCE.md",
     "ACCEPTANCE_AND_EVIDENCE.md",
-    "DEBUGGING_PROTOCOL.md",
-    "REVIEW_AND_SCRUTINY.md",
     "PARALLEL_EXECUTION.md",
     "UX_UI_WORKFLOW.md",
     "CONTINUOUS_OPERATIONS.md",
@@ -231,8 +239,7 @@ missing or materially outdated for the current task, install/upgrade/validate it
 
 ## Local reusable templates
 
-See `docs/development/templates/`. These copies are installer-managed. Do not edit them directly;
-customize an instantiated work item instead.
+See `.engineering-workflow/templates/`. These are the single installer-managed template set. Do not edit them directly; customize an instantiated work item instead.
 """
 
 
@@ -296,6 +303,47 @@ def current_hash(path: Path) -> str | None:
     return sha256_text(read_text(path))
 
 
+def retirement_conflicts(target: Path, manifest: dict | None, managed: Dict[str, str]) -> list[str]:
+    """Return conflicts that make safe retirement impossible."""
+    if manifest is None:
+        return []
+
+    previous = manifest.get("managed", {})
+    conflicts: list[str] = []
+    for rel in sorted(RETIRED_MANAGED_PATHS):
+        if rel in managed or rel not in previous:
+            continue
+        path = safe_destination(target, rel)
+        cur = current_hash(path)
+        if cur is None:
+            continue
+        if cur != previous[rel]:
+            conflicts.append(
+                f"{rel}: obsolete installer-managed file was locally modified; "
+                "preserve/reconcile it before upgrade"
+            )
+    return conflicts
+
+
+def retire_managed_files(target: Path, manifest: dict | None, managed: Dict[str, str]) -> None:
+    """Retire explicit obsolete managed files after conflict preflight."""
+    if manifest is None:
+        return
+
+    previous = manifest.get("managed", {})
+    for rel in sorted(RETIRED_MANAGED_PATHS):
+        if rel in managed or rel not in previous:
+            continue
+        path = safe_destination(target, rel)
+        cur = current_hash(path)
+        if cur is None:
+            continue
+        if cur != previous[rel]:
+            raise RuntimeError(f"retirement safety check changed after preflight: {rel}")
+        path.unlink()
+        print(f"retired unchanged managed: {rel}")
+
+
 def inspect(target: Path) -> int:
     manifest = load_manifest(target)
     managed = desired_managed()
@@ -321,6 +369,20 @@ def inspect(target: Path) -> int:
         else:
             status = "modified/conflict"
         print(f"MANAGED {rel}: {status}")
+
+    previous = (manifest or {}).get("managed", {})
+    for rel in sorted(RETIRED_MANAGED_PATHS):
+        if rel not in previous or rel in managed:
+            continue
+        path = safe_destination(target, rel)
+        cur = current_hash(path)
+        if cur is None:
+            status = "already-absent"
+        elif cur == previous[rel]:
+            status = "retirable-unchanged"
+        else:
+            status = "modified-preserve/conflict"
+        print(f"RETIRED {rel}: {status}")
     return 0
 
 
@@ -343,6 +405,8 @@ def preflight(target: Path, mode: str, manifest: dict | None, managed: Dict[str,
             conflicts.append(f"{rel}: not recorded as installer-managed")
         elif cur != old_hash:
             conflicts.append(f"{rel}: locally modified since installation")
+
+    conflicts.extend(retirement_conflicts(target, manifest, managed))
     return conflicts
 
 
@@ -379,6 +443,8 @@ def apply(target: Path, mode: str) -> int:
             path.write_text(content, encoding="utf-8")
             print(f"{'updated' if manifest else 'created'} managed: {rel}")
 
+    retire_managed_files(target, manifest, managed)
+
     manifest_path = safe_destination(target, MANIFEST_NAME)
     manifest_data = build_manifest(managed, created_owned)
     manifest_path.write_text(
@@ -410,6 +476,14 @@ def validate(target: Path) -> int:
 
     desired = desired_managed()
     recorded = manifest.get("managed", {})
+
+    unexpected = sorted(set(recorded) - set(desired))
+    for rel in unexpected:
+        if rel in RETIRED_MANAGED_PATHS:
+            errors.append(f"obsolete managed entry remains; run upgrade to retire safely: {rel}")
+        else:
+            errors.append(f"unexpected managed entry in manifest: {rel}")
+
     for rel, content in desired.items():
         try:
             path = safe_destination(target, rel)
@@ -435,7 +509,7 @@ def validate(target: Path) -> int:
     if errors:
         print("VALIDATION FAILED", file=sys.stderr)
         for error in errors:
-            print(f"- {error}")
+            print(f"- {error}", file=sys.stderr)
         return 1
     print(f"VALIDATION PASS ({len(desired)} managed files, {len(PROJECT_OWNED)} project-owned files)")
     return 0

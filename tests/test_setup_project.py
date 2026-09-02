@@ -42,8 +42,23 @@ class SetupProjectTests(unittest.TestCase):
         self.assertTrue((target / ".engineering-workflow/WORK_MODE_ROUTING.md").is_file())
         self.assertTrue((target / ".engineering-workflow/WORKSPACE_SAFETY.md").is_file())
         self.assertTrue((target / ".engineering-workflow/skills/scrutinize/SKILL.md").is_file())
+        canonical_templates = [
+            "EXECUTION_CONTRACT.md",
+            "FAST_EXECUTION_PACKET.md",
+            "ACCEPTANCE_GATE.md",
+            "EVIDENCE_PACKAGE.md",
+            "HANDOFF.md",
+            "POSTMORTEM.md",
+            "CODEX_PROMPT.md",
+            "LOOP_CONTRACT.md",
+        ]
+        for name in canonical_templates:
+            self.assertTrue((target / ".engineering-workflow/templates" / name).is_file(), name)
+            self.assertFalse((target / "docs/development/templates" / name).exists(), name)
+        self.assertFalse((target / ".engineering-workflow/DEBUGGING_PROTOCOL.md").exists())
+        self.assertFalse((target / ".engineering-workflow/REVIEW_AND_SCRUTINY.md").exists())
         manifest = json.loads((target / MANIFEST).read_text(encoding="utf-8"))
-        self.assertEqual(manifest["workflow_version"], "1.7.3")
+        self.assertEqual(manifest["workflow_version"], "1.7.4")
         self.assertEqual(manifest["local_workflow_dir"], ".engineering-workflow")
         self.assertIn("VALIDATION PASS", result.stdout)
         valid = run_cli("validate", target)
@@ -105,11 +120,114 @@ class SetupProjectTests(unittest.TestCase):
         target = self.make_target()
         result = run_cli("install", target)
         self.assertEqual(result.returncode, 0, result.stderr)
-        path = target / "docs/development/templates/EXECUTION_CONTRACT.md"
+        path = target / ".engineering-workflow/templates/EXECUTION_CONTRACT.md"
         path.write_text(path.read_text(encoding="utf-8") + "\nlocal edit\n", encoding="utf-8")
         valid = run_cli("validate", target)
         self.assertEqual(valid.returncode, 1)
         self.assertIn("VALIDATION FAILED", valid.stderr)
+
+
+    def test_upgrade_retires_only_unchanged_obsolete_managed_files(self):
+        target = self.make_target()
+        result = run_cli("install", target)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+        manifest_path = target / MANIFEST
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+        retired_paths = [
+            "docs/development/templates/EXECUTION_CONTRACT.md",
+            "docs/development/templates/FAST_EXECUTION_PACKET.md",
+            "docs/development/templates/ACCEPTANCE_GATE.md",
+            "docs/development/templates/EVIDENCE_PACKAGE.md",
+            "docs/development/templates/HANDOFF.md",
+            "docs/development/templates/POSTMORTEM.md",
+            "docs/development/templates/CODEX_PROMPT.md",
+            "docs/development/templates/LOOP_CONTRACT.md",
+            ".engineering-workflow/DEBUGGING_PROTOCOL.md",
+            ".engineering-workflow/REVIEW_AND_SCRUTINY.md",
+        ]
+        obsolete = {rel: f"# simulated v1.7.3 managed file: {rel}\n" for rel in retired_paths}
+        for rel, content in obsolete.items():
+            path = target / rel
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(content, encoding="utf-8")
+            manifest["managed"][rel] = sha(content)
+
+        manifest["workflow_version"] = "1.7.3"
+        manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+        upgrade = run_cli("upgrade", target)
+        self.assertEqual(upgrade.returncode, 0, upgrade.stderr)
+        self.assertIn("retired unchanged managed", upgrade.stdout)
+        for rel in obsolete:
+            self.assertFalse((target / rel).exists(), rel)
+
+        updated = json.loads(manifest_path.read_text(encoding="utf-8"))
+        self.assertEqual(updated["workflow_version"], "1.7.4")
+        for rel in obsolete:
+            self.assertNotIn(rel, updated["managed"])
+
+    def test_upgrade_blocks_locally_modified_obsolete_managed_file_before_mutation(self):
+        target = self.make_target()
+        result = run_cli("install", target)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+        manifest_path = target / MANIFEST
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+        obsolete_rel = "docs/development/templates/EXECUTION_CONTRACT.md"
+        obsolete_path = target / obsolete_rel
+        obsolete_path.parent.mkdir(parents=True, exist_ok=True)
+        prior = "# installer-managed v1.7.3 duplicate\n"
+        custom = prior + "# user customization that must survive\n"
+        obsolete_path.write_text(custom, encoding="utf-8")
+        manifest["managed"][obsolete_rel] = sha(prior)
+
+        current_rel = "docs/development/ENGINEERING_WORKFLOW.md"
+        current_path = target / current_rel
+        old_current = "# simulated old managed current file\n"
+        current_path.write_text(old_current, encoding="utf-8")
+        manifest["managed"][current_rel] = sha(old_current)
+        manifest["workflow_version"] = "1.7.3"
+        manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+        upgrade = run_cli("upgrade", target)
+        self.assertEqual(upgrade.returncode, 2)
+        self.assertIn("obsolete installer-managed file was locally modified", upgrade.stderr)
+        self.assertEqual(obsolete_path.read_text(encoding="utf-8"), custom)
+        self.assertEqual(current_path.read_text(encoding="utf-8"), old_current)
+
+    def test_unmanaged_file_at_retired_path_is_never_deleted(self):
+        target = self.make_target()
+        unmanaged = target / "docs/development/templates/EXECUTION_CONTRACT.md"
+        unmanaged.parent.mkdir(parents=True, exist_ok=True)
+        unmanaged.write_text("# user-owned file\n", encoding="utf-8")
+
+        result = run_cli("install", target)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(unmanaged.read_text(encoding="utf-8"), "# user-owned file\n")
+
+
+    def test_validate_rejects_obsolete_managed_manifest_entry(self):
+        target = self.make_target()
+        result = run_cli("install", target)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+        rel = "docs/development/templates/EXECUTION_CONTRACT.md"
+        path = target / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        content = "# obsolete duplicate still recorded\n"
+        path.write_text(content, encoding="utf-8")
+
+        manifest_path = target / MANIFEST
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest["managed"][rel] = sha(content)
+        manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+        valid = run_cli("validate", target)
+        self.assertEqual(valid.returncode, 1)
+        self.assertIn("obsolete managed entry remains", valid.stderr)
 
 
     def test_created_agents_contains_project_root_safety_boundary(self):

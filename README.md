@@ -2,7 +2,7 @@
 
 A reusable, evidence-first workflow for developing and safely operating engineering software with humans, ChatGPT, coding agents, GitHub, explicit success gates, focused reasoning skills, lean context, independent review, cost-aware model routing, and bounded continuous operations.
 
-Current workflow version: **v1.7.3 baseline**.
+Current workflow version: **v1.7.4 baseline**.
 
 License: **Apache-2.0**.
 
@@ -176,13 +176,11 @@ Ask ChatGPT to inspect the shared workflow and project repository, verify the pr
 - `CONTEXT_MANAGEMENT.md` — lean working context, fresh-context, isolation, checkpoint, and progressive-disclosure policy.
 - `MODEL_ROUTING_POLICY.md` — cost-aware model and reasoning-effort policy.
 - `UX_UI_WORKFLOW.md` — task-oriented engineering UX/UI method.
-- `DEBUGGING_PROTOCOL.md` — reproducer-first defect workflow.
-- `REVIEW_AND_SCRUTINY.md` — pre-implementation and pre-merge scrutiny principles.
 - `PARALLEL_EXECUTION.md` — task-specific worker, independent reviewer, and integration rules.
 - `ACCEPTANCE_AND_EVIDENCE.md` — success gates, deterministic enforcement, and completion evidence.
 - `SECURITY_AND_GOVERNANCE.md` — protected changes, secrets, licensed material, and approvals.
 - `SKILL.md` — root router for the core workflow and focused skills.
-- `skills/` — focused reusable protocols for research, scrutiny, debugging, independent review, postmortems, status translation, and long tasks.
+- `skills/` — canonical focused protocols for research, scrutiny/review, debugging, independent review, postmortems, status translation, and long tasks.
 - `docs/skill-system.md` — how and when focused skills apply and grow through progressive disclosure.
 - `ACKNOWLEDGEMENTS.md` — external inspiration, provenance, licensing status, and attribution records.
 - `AGENTS.md` — concise repository instructions for coding agents.

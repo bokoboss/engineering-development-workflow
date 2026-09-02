@@ -34,10 +34,10 @@ Collect:
 3. Separate symptom, trigger, failing component, and likely root cause.
 4. Form a small set of competing hypotheses; define what evidence would confirm or reject each one.
 5. Inspect the relevant code/data path before modifying it.
-6. Fix the root cause with the smallest change that preserves contracts and unrelated behavior.
+6. Fix the root cause with the smallest change that preserves contracts and unrelated behavior. Do not mask symptoms with UI suppression, blind retries, broad dependency changes, or hard-coded special cases unless that behavior is the intended design.
 7. Add or strengthen a regression test that would have failed before the fix.
 8. Run targeted validation first, then the required broader regression gates.
-9. Check whether the defect reveals a missing guardrail, observability gap, or documentation issue.
+9. Check whether the defect reveals a missing guardrail, observability gap, or documentation issue. For high-impact defects that escaped prior gates, revealed systemic weakness, or are likely to recur, route to the postmortem skill; do not create postmortem ceremony for trivial one-off mistakes.
 10. Report root cause, fix, evidence, residual risk, and whether a postmortem is warranted.
 
 ## Output
