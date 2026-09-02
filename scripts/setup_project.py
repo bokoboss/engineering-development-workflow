@@ -476,6 +476,14 @@ def validate(target: Path) -> int:
 
     desired = desired_managed()
     recorded = manifest.get("managed", {})
+
+    unexpected = sorted(set(recorded) - set(desired))
+    for rel in unexpected:
+        if rel in RETIRED_MANAGED_PATHS:
+            errors.append(f"obsolete managed entry remains; run upgrade to retire safely: {rel}")
+        else:
+            errors.append(f"unexpected managed entry in manifest: {rel}")
+
     for rel, content in desired.items():
         try:
             path = safe_destination(target, rel)
