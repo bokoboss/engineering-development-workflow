@@ -48,7 +48,6 @@ A fresh install creates, when absent:
 - `.engineering-workflow.json` — installer manifest;
 - `.engineering-workflow/` — installer-managed pinned workflow snapshot containing `SKILL.md`, FAST/STANDARD/STRICT routing, workspace safety, core policies/templates, and focused `skills/*/SKILL.md` modules;
 - `docs/development/ENGINEERING_WORKFLOW.md` — local workflow reference;
-- `docs/development/templates/` — installer-managed execution/evidence templates, including the compact FAST packet;
 - `.github/ISSUE_TEMPLATE/engineering-workflow-task.md` — reusable engineering task template.
 
 ### Safety boundary
@@ -66,6 +65,10 @@ It does not perform network access or arbitrary recursive deletion. It never use
 `AGENTS.md` and `PROJECT_PROFILE.md` become **project-owned**. The installer never overwrites them after creation.
 
 Files recorded in `.engineering-workflow.json` are **installer-managed**. Their hashes are tracked so an upgrade can distinguish an untouched managed file from a project-local modification.
+
+The canonical reusable execution/evidence templates live only under `.engineering-workflow/templates/`. v1.7.4 no longer installs duplicate copies under `docs/development/templates/`.
+
+When upgrading from an older workflow, the installer may retire only explicit obsolete paths that the prior manifest proves were installer-managed and whose current hash is unchanged. A locally modified or unmanaged file is preserved and blocks unsafe retirement; the installer never performs arbitrary recursive cleanup.
 
 ## 4. Validate
 
