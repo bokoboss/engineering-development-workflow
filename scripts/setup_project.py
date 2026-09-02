@@ -509,7 +509,7 @@ def validate(target: Path) -> int:
     if errors:
         print("VALIDATION FAILED", file=sys.stderr)
         for error in errors:
-            print(f"- {error}")
+            print(f"- {error}", file=sys.stderr)
         return 1
     print(f"VALIDATION PASS ({len(desired)} managed files, {len(PROJECT_OWNED)} project-owned files)")
     return 0
