@@ -29,7 +29,7 @@ This file is the **router**. The core workflow remains authoritative; focused mo
 
 - **Material unknown / feasibility / new dependency / methodology / external evidence needed before planning** -> `skills/research-gate/SKILL.md`.
 - **Plan / concept / architecture / risky change / pre-merge challenge** -> `skills/scrutinize/SKILL.md`.
-- **Bug / regression / failing CI / runtime or browser defect** -> `skills/systematic-debug/SKILL.md`, together with `DEBUGGING_PROTOCOL.md` where relevant.
+- **Bug / regression / failing CI / runtime or browser defect** -> `skills/systematic-debug/SKILL.md`.
 - **Material plan/implementation needs a fresh-context or cross-model second pass** -> `skills/independent-review/SKILL.md`.
 - **Significant fixed defect or incident with reusable lessons** -> `skills/postmortem/SKILL.md`.
 - **Long agent report / mixed gates / "what is actually done?"** -> `skills/technical-status/SKILL.md`.
