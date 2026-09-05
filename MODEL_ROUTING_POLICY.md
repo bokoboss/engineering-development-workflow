@@ -1,6 +1,6 @@
 # Model Routing Policy
 
-Version: 1.2.0
+Version: 1.3.0
 
 ## 1. Objective
 
@@ -18,22 +18,26 @@ Apply `WORK_MODE_ROUTING.md` before model selection.
 
 Work mode and model tier are separate axes:
 - FAST often fits Luna Medium, or Luna High for a slightly broader but still low-risk bounded change;
-- STANDARD often fits Luna High/Max;
-- STRICT does not automatically require Sol. After ChatGPT has completed high-risk reasoning and bounded the implementation, a lower-cost executor may still be appropriate if the execution itself is mechanical and strongly testable.
+- STANDARD often fits Luna High/Max, with Terra when materially more judgment is needed;
+- STRICT does not automatically require Astra or another premium model. After ChatGPT has completed high-risk reasoning and bounded the implementation, a lower-cost executor may still be appropriate if the execution itself is mechanical and strongly testable.
 
 Do not use a stronger model as a substitute for scrutiny, evidence, workspace safety, or a clear packet.
 
 ## 3. Default routing
 
-Current profile as of 2026-08-24; model availability and economics can change and should be re-verified periodically.
+Current profile as of 2026-09-05; model availability, product-surface access, capability, and economics can change and should be re-verified periodically.
 
 - **Luna Medium** — small, direct, patterned work with strong tests and low ambiguity.
 - **Luna High** — multi-file implementation with clear boundaries and established contracts.
 - **Luna Max** — difficult or long execution that is well specified, testable, and bounded; preferred before automatic escalation when increased reasoning within Luna is economically sensible.
-- **Terra High/Max** — middle-tier escalation for tasks requiring materially more judgment, cross-module synthesis, or when repeated Luna attempts would likely cost more than a stronger worker.
-- **Sol High/Max** — reserve for ambiguous architecture, unknown-root-cause investigation, conflicting contracts, major migrations, high-risk engineering/security/safety logic, final adjudication, or other tasks where premium capability materially reduces failure risk.
+- **Terra High/Max** — balanced escalation when a bounded task needs materially more judgment or cross-module synthesis than Luna, but does not justify the most capable end-to-end agent.
+- **Astra High** — preferred premium route for difficult end-to-end agentic execution spanning several of the following: code mutation, terminal work, browser/computer use, runtime integration, dependency work, performance investigation, and long multi-step follow-through.
+- **Astra XHigh/Max** — reserve for the hardest end-to-end tasks where additional reasoning/verification materially reduces failure risk: ambiguous architecture, major migrations, difficult unknown-root-cause work, conflicting contracts/evidence, high-impact cross-system integration, or premium independent adjudication.
+- **Sol High/Max** — valid premium fallback or continuity route when Astra is unavailable or usage-constrained, when preserving an existing productive Sol context materially lowers verified completion cost, or when task-specific evidence favors Sol. Do not retain Sol as the automatic frontier default merely because it was the prior premium route.
 
-Do not assume `Sol Low` is more cost-effective than `Luna Max`; model tier and effort must be evaluated separately.
+Astra is not the default for routine implementation. Its higher capability is most valuable when the task shape actually uses its end-to-end agentic strengths.
+
+Do not assume that a higher model tier with lower effort is automatically more cost-effective than a lower tier with higher effort. Evaluate model tier, effort, context-reuse value, verification burden, and likely retry cost together.
 
 ## 4. Luna-first principle
 
@@ -43,17 +47,49 @@ The strongest default pattern is often:
 
 `ChatGPT plans -> Luna executes -> tests/CI produce evidence -> ChatGPT reviews`
 
+Use Terra when the bounded work mainly needs more judgment. Use Astra when the work is materially end-to-end/agentic rather than simply difficult.
+
+## 4A. Astra-fit principle
+
+Prefer Astra High over repeated lower-tier retries when several of these are true:
+
+- the task spans code mutation plus terminal/runtime/browser/computer interaction;
+- execution is long and multi-step, with important state that must remain coherent across many tool calls;
+- success requires integrating several technology stacks or environments;
+- the agent must gather evidence, adapt to intermediate results, and continue to a verified end state;
+- task-boundary adherence is important because adjacent future scope must remain blocked;
+- runtime/performance/packaging/security evidence is part of the implementation itself rather than a separate simple test.
+
+Do not use Astra merely because:
+- the work mode is STRICT;
+- the repository is large;
+- the prompt is long;
+- the task is routine but tedious;
+- Luna has not yet been given a clear bounded packet.
+
+When Astra is selected for a well-bounded complex task, start at **High** unless specific evidence justifies XHigh/Max. Increase effort only when the additional reasoning or verification is expected to reduce total cost to verified completion.
+
 ## 5. Escalation
 
-Use:
+Escalation is no longer a single linear ladder.
 
-`Luna -> diagnose -> Terra -> Sol`
+After a lower-tier failure, diagnose the failure class first:
 
-not:
+- weak specification -> improve the packet;
+- environment/tooling failure -> repair the environment/tooling;
+- missing research/dependency evidence -> return to the research gate;
+- bounded task needs more judgment -> consider Terra High/Max;
+- long cross-tool/end-to-end agentic task exceeds Luna/Terra reliability -> consider Astra High;
+- architecture/evidence remains materially contradictory or the hardest end-to-end reasoning is required -> consider Astra XHigh/Max and/or independent review;
+- Astra unavailable, quota-constrained, or task-specific evidence favors prior-model continuity -> consider Sol High/Max.
 
-`Luna failed -> Sol immediately`.
+Do **not** use:
 
-Escalate only after determining that the problem is a capability limitation rather than a weak specification, broken environment, undiscovered dependency, or integration mistake.
+`Luna failed -> Astra Max`
+
+as an automatic rule.
+
+Escalate only after determining that the problem is a capability/effort mismatch rather than a weak specification, broken environment, undiscovered dependency, integration mistake, or context pollution.
 
 ## 6. Orchestrated execution
 
@@ -61,9 +97,11 @@ Use a premium orchestrator only when in-repository coordination itself is comple
 
 A useful pattern for large parallelizable work is:
 
-`ChatGPT control plane -> Sol technical orchestrator -> bounded Luna workers -> Sol integration verification -> CI/evidence -> ChatGPT final review`
+`ChatGPT control plane -> Astra technical orchestrator -> bounded Luna/Terra workers -> Astra integration verification -> CI/evidence -> ChatGPT final review`
 
-Sol should orchestrate and adjudicate rather than spend premium capacity on routine edits that workers can perform.
+If Astra is unavailable or task-specific continuity favors Sol, Sol may serve the same orchestrator/adjudicator role.
+
+The premium orchestrator should coordinate and adjudicate rather than spend premium capacity on routine edits that bounded workers can complete reliably.
 
 ## 7. Retry economics
 
@@ -76,7 +114,9 @@ Choose the route expected to minimize total verified cost including:
 - human review;
 - remediation.
 
-A cheaper worker that requires many retries can be more expensive than a stronger worker used once.
+A cheaper worker that requires many retries can be more expensive than a stronger worker used once. Conversely, a premium worker on routine, strongly testable work can waste scarce allowance without improving verified completion.
+
+For long work, include the value of context continuity in the routing decision. Preserving useful execution state can be cheaper than switching models and reconstructing the task, but continuity must not override the need for a fresh independent reviewer when independence is required.
 
 ## 8. Recommendation format
 
@@ -88,4 +128,6 @@ Whenever recommending Codex/coding-agent execution, state:
 - existing chat or new chat;
 - why this tier is sufficient;
 - why a higher tier is not currently required;
-- explicit escalation trigger, including work-mode escalation when scope/risk grows.
+- if Astra is selected, what end-to-end/agentic property justifies it;
+- explicit escalation trigger, including work-mode escalation when scope/risk grows;
+- fallback route if the preferred model is unavailable on the user's current product surface.

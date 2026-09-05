@@ -752,15 +752,11 @@ Luna / Medium
 Luna / High หรือ Max
 ```
 
+และอาจใช้ Terra High/Max เมื่องานยัง bounded แต่ต้องใช้ judgment หรือ cross-module synthesis มากขึ้น.
+
 ### STRICT
 
-ไม่จำเป็นต้อง:
-
-```text
-Sol / Max
-```
-
-เสมอไป.
+ไม่ได้แปลว่าต้องใช้ Astra หรือโมเดลแพงที่สุดเสมอ.
 
 ตัวอย่าง:
 
@@ -772,6 +768,31 @@ Codex อาจยังใช้ Luna ได้ถ้า:
 - tests strong;
 - execution mechanical;
 - acceptance/review เข้ม.
+
+### Astra เหมาะเมื่อใด
+
+Astra High เหมาะกับงาน end-to-end ที่ยากและมีหลายส่วนประกอบพร้อมกัน เช่น:
+
+- แก้ code พร้อมรัน terminal/runtime/browser;
+- integration หลาย technology stack;
+- performance / packaging / security evidence เป็นส่วนหนึ่งของงาน;
+- งานยาวหลายขั้นตอนที่ต้องรักษา task state และ follow-through;
+- ต้องปรับตัวตามผล test/runtime ระหว่างทาง;
+- มี adjacent scope ที่ต้องห้ามหลุดไปทำก่อนเวลา.
+
+สำหรับงานแบบนี้ การใช้ Astra High ตั้งแต่ต้นอาจถูกกว่าการ retry Luna/Terra หลายรอบ.
+
+อย่าใช้ Astra เพียงเพราะ:
+
+- งานเป็น STRICT;
+- repo ใหญ่;
+- prompt ยาว;
+- งาน routine แต่เยอะ;
+- packet ยังไม่ชัด.
+
+Astra XHigh/Max ควรสงวนไว้สำหรับงานที่ยากที่สุด เช่น architecture evidence ขัดกัน, major migration, unknown root cause ที่ซับซ้อนมาก หรือ independent adjudication ที่มีความเสี่ยงสูง.
+
+Sol High/Max ยังใช้เป็น fallback ได้ถ้า Astra ยังไม่มีใน account/surface ปัจจุบัน, allowance จำกัด, หรือ continuity ของ Sol context เดิมช่วยลด cost to verified completion.
 
 ---
 

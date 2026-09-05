@@ -4,6 +4,12 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 
 ## [Unreleased]
 
+### Changed
+- Refreshed `MODEL_ROUTING_POLICY.md` to v1.3.0 for GPT-6 Astra availability as of 2026-09-05.
+- Added Astra High as the preferred premium route for difficult end-to-end agentic execution spanning code plus terminal/runtime/browser/computer work, while retaining Luna-first routing for bounded implementation and Terra for bounded higher-judgment work.
+- Replaced the prior linear `Luna -> diagnose -> Terra -> Sol` escalation with failure-class routing; Astra XHigh/Max is reserved for the hardest end-to-end work, while Sol remains a valid fallback/continuity route when Astra is unavailable, constrained, or task-specific evidence favors it.
+- Updated the Thai operational guide with the same Astra-fit and non-default guidance.
+
 ### Pending
 - Collect external feedback after real project adoption.
 - Foundation research for a possible Local Workspace Evidence Bridge completed in `docs/research/local-workspace-evidence-bridge-adoption-review.md`. Concept verdict: `GO WITH CONDITIONS`; direct adoption of pinned `XiaoDuoYa/codex-with-chatgpt` v0.1.1: `NO-GO AT THIS TIME`. No v1.7 workflow contract or candidate installation is introduced by this research-only change.
