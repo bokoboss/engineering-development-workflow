@@ -31,7 +31,7 @@ Current profile as of 2026-09-05; model availability, product-surface access, ca
 - **Luna High** — multi-file implementation with clear boundaries and established contracts.
 - **Luna Max** — difficult or long execution that is well specified, testable, and bounded; preferred before automatic escalation when increased reasoning within Luna is economically sensible.
 - **Terra High/Max** — balanced escalation when a bounded task needs materially more judgment or cross-module synthesis than Luna, but does not justify the most capable end-to-end agent.
-- **Astra High** — preferred premium route for difficult end-to-end agentic execution spanning several of code, terminal, browser/computer use, runtime integration, dependency work, performance investigation, or long multi-step follow-through.
+- **Astra High** — preferred premium route for difficult end-to-end agentic execution spanning several of the following: code mutation, terminal work, browser/computer use, runtime integration, dependency work, performance investigation, and long multi-step follow-through.
 - **Astra XHigh/Max** — reserve for the hardest end-to-end tasks where additional reasoning/verification materially reduces failure risk: ambiguous architecture, major migrations, difficult unknown-root-cause work, conflicting contracts/evidence, high-impact cross-system integration, or premium independent adjudication.
 - **Sol High/Max** — valid premium fallback or continuity route when Astra is unavailable or usage-constrained, when preserving an existing productive Sol context materially lowers verified completion cost, or when task-specific evidence favors Sol. Do not retain Sol as the automatic frontier default merely because it was the prior premium route.
 
