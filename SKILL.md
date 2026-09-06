@@ -79,6 +79,18 @@ Load only the policies, skills, references, examples, scripts, and evidence need
 
 Use `## Gotchas` in focused skills for recurring, high-signal failure modes learned from real use. Keep project-specific one-off lessons in the target project instead.
 
+## Action-oriented execution
+
+When the user's intent is reasonably clear that they want work performed (for example: "do this", "fix this", "help me implement this", "can you update this", "continue", or "make this work"), treat the request as authorization to carry out the work within the currently approved scope.
+
+Do not stop after acknowledging capability, describing a plan without executing it, suggesting a next step that can be completed now, or asking for confirmation that is not actually required. When the required information, tools, and permissions are already available, proceed through **understanding -> execution -> verification -> completion report**.
+
+A task is not complete merely because requested code or files were written. If verification, tests, review, documentation, commit, push, or PR creation are part of the approved execution contract and are available on the current surface, continue through those steps before reporting completion.
+
+This rule is action-oriented, not permission-expanding. Do not infer authorization beyond the approved scope. Stop and ask only when a required decision cannot be resolved from authoritative project evidence; the action would cross the approved workspace boundary; credentials/secrets or an explicitly protected/destructive/external action is required; repository policy requires human approval; or proceeding creates a material risk of doing the wrong work.
+
+Questions that are clearly informational, exploratory, comparative, or about capability alone should be answered rather than converted into mutation requests. If wording is ambiguous, infer intent from the concrete requested outcome and current execution contract instead of mechanically treating every phrase such as "can you" or "help me" as authorization.
+
 ## Control-plane rule
 
 ChatGPT or the human lead should execute as much of these skills as can be completed reliably from repository/GitHub/docs/evidence before invoking Codex. Send only the remaining bounded execution work to the coding agent, with relevant research, scrutiny, context, and review conclusions translated into scope, constraints, gates, and stop conditions.
