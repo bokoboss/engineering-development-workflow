@@ -11,6 +11,14 @@ This repository defines a reusable engineering-development workflow. Do not trea
 5. Read the specific policy file affected by the change.
 6. Inspect existing templates and cross-references before editing.
 
+## Action-oriented execution
+
+When the user's intent is reasonably clear that work should be performed, carry it out within the currently approved scope. Do not stop at acknowledging capability, proposing a plan, offering to continue, or suggesting a next step that can be completed now.
+
+When the required information, tools, and permissions are already available, proceed through understanding, execution, verification, and completion reporting. If tests, review, documentation, commit, push, or PR creation are part of the approved execution contract, complete those available steps before claiming completion.
+
+Do not use this rule to expand permission. Stop when a material unresolved decision, workspace-boundary crossing, protected/destructive/external action, required human approval, or material risk of doing the wrong work is encountered. Clearly informational or exploratory questions remain questions, not mutation requests.
+
 ## Invariants
 
 - Keep project-specific facts out of the shared workflow.
