@@ -8,6 +8,9 @@ The control plane must provide before execution:
 - Target project root / writable boundary
 - External writes approved: normally No
 - Recommended model + reasoning effort + existing/new chat
+- Ultra / multi-agent / product-level parallel mode: normally Off unless explicitly justified
+- Cost / quota / allowance rationale for premium or high-effort execution
+- Premium/high-effort downgrade checkpoint when practical
 - Required local workflow policies/skills
 - Success gates
 
@@ -31,6 +34,9 @@ During execution:
 - Do not perform unrelated refactoring or dependency cleanup.
 - Add regression coverage appropriate to the change.
 - Run each required success gate.
+- Do not spawn parallel workers/subagents unless the packet explicitly authorizes them.
+- If the selected premium/high-effort route reaches its defined downgrade checkpoint and the remaining work is routine/bounded, report or follow the packet's lower-cost handoff instead of continuing premium execution by inertia.
+- If observed quota/allowance burn is materially higher than expected without proportional progress and the packet provides a safe checkpoint, stop there and report for rerouting.
 - If a stop condition is reached, stop and report rather than silently expanding scope.
 - If FAST/STANDARD encounters a higher-risk trigger, stop at a safe checkpoint and escalate the work mode before continuing.
 - If parallel workers are authorized, obey file/module ownership and integration contracts.
@@ -44,6 +50,8 @@ Completion report:
 - unresolved risks/limitations;
 - commit/PR identifiers;
 - work mode used and any escalation;
+- model/effort used and any routing escalation or downgrade;
+- Ultra/multi-agent/parallel mode used, if any;
 - target project root;
 - external writes performed (normally none);
 - global/system changes performed (normally none).
