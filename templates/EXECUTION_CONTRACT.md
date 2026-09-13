@@ -35,10 +35,17 @@
 ## Execution routing
 - Recommended model:
 - Reasoning effort:
+- Ultra / multi-agent / product-level parallel mode: Off / On with justification
 - Existing chat or new chat:
 - Routing rationale:
-- Why a higher model is not required:
-- Escalation trigger:
+- Why this model tier is sufficient:
+- Why a higher model tier is not required:
+- Why this effort is sufficient:
+- Why a higher effort is not required:
+- Cost / quota / allowance rationale:
+- Premium or high-effort downgrade checkpoint:
+- Escalation trigger: effort / model tier / parallelism / work mode
+- Fallback route if preferred model/effort is unavailable or uneconomic:
 
 ## Context strategy
 - Continue current context / fresh context:
@@ -61,6 +68,7 @@
 - Parallelizable workstreams:
 - Worker ownership:
 - Integration dependencies:
+- Explicit subagent/parallel-worker authorization:
 
 ## Independent review
 - Required: Yes / No
@@ -95,6 +103,8 @@ Stop and report rather than expanding scope if:
 ## Final report format
 - work mode used and any escalation;
 - target project root and workspace-safety confirmation;
+- model/effort actually used and any execution-routing escalation;
+- premium/high-effort downgrade checkpoint outcome if applicable;
 - changed files / behavior;
 - validation and gate outcomes;
 - research conditions resolved/unresolved;
