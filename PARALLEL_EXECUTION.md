@@ -45,14 +45,28 @@ Each worker receives:
 
 Do not assume that a worker/subagent should inherit the orchestrator's model tier, reasoning effort, or parallel mode.
 
-Where the execution surface supports per-worker model selection, route each worker independently using `MODEL_ROUTING_POLICY.md` and choose the least expensive model/effort likely to finish that bounded packet correctly.
+Where the execution surface supports per-worker model selection, route each worker independently using `MODEL_ROUTING_POLICY.md` and choose the least expensive model/effort likely to finish that bounded packet correctly. Specify both the worker model and reasoning effort explicitly when the surface allows it; omitted settings may inherit from the parent/orchestrator.
 
 Default worker pattern:
-- **Luna** for repository reconnaissance, targeted code reading, mechanical or patterned edits, fixtures, targeted tests, straightforward documentation, and other well-specified work with strong verification;
-- **Terra** when a bounded worker needs materially more judgment, synthesis, or debugging reliability than Luna;
+- **Luna** for narrow or targeted reconnaissance against known files/symbols, targeted code reading, mechanical or patterned edits, fixtures, targeted tests, straightforward documentation, and other well-specified work with strong verification;
+- **Terra** for broad or initially unknown repository exploration, read-heavy scans across many files, cross-module synthesis, or bounded debugging where materially more judgment/reliability is needed than Luna;
 - **Sol/Astra or another premium model** only when that worker's own task independently meets the premium-routing criteria. Do not use a premium worker merely because the parent/orchestrator is premium.
 
-A premium orchestrator should retain high-leverage reasoning, decomposition, ambiguity resolution, cross-worker coordination, and adjudication while delegating routine execution volume downward when doing so reduces expected cost without increasing material rework risk.
+A premium orchestrator should retain high-leverage reasoning, decomposition, ambiguity resolution, cross-worker coordination, and adjudication while delegating routine execution volume downward only when doing so improves expected verified completion cost, time, quality, or risk.
+
+## Delegation gate
+
+Delegation must justify itself against a credible single-agent baseline. Do not assume that a cheaper worker makes the overall run cheaper.
+
+Before spawning a worker, account for:
+- worker execution cost and allowance burn;
+- duplicated context/read cost;
+- parent/orchestrator coordination and integration cost;
+- verification and review cost;
+- expected retries, regressions, and remediation if the worker is below the reliability threshold;
+- wall-clock benefit from genuinely useful parallelism.
+
+If the expected benefit is unclear and the parent can complete the work reliably, prefer the single-agent path. A cheap worker that causes the parent to reread, repair, or redo substantial work is not a saving.
 
 Do not delegate merely to create activity or parallelism. A worker should have a bounded objective, a useful evidence return, and coordination overhead low enough to justify the delegation.
 
@@ -61,6 +75,8 @@ Minimize context transfer. Send the worker the smallest packet that contains the
 Avoid recursive worker spawning by default. A worker should not create additional workers unless its packet explicitly permits it and the extra fan-out has a concrete cost/time/quality justification.
 
 If the product surface cannot select a cheaper model for workers and would effectively inherit the premium parent route, include that inherited allowance cost in the decision whether to spawn the worker at all.
+
+Where runtime/session evidence exposes the effective worker model or effort, verify it when routing economics materially depend on that setting. Do not infer the actual serving model solely from an agent's natural-language self-identification.
 
 ## Fresh-context reviewers
 
