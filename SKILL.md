@@ -20,7 +20,7 @@ This file is the **router**. The core workflow remains authoritative; focused mo
 7. Apply `MODEL_ROUTING_POLICY.md` before recommending a coding model or reasoning effort.
 8. Route focused situations through the skill modules below.
 9. Apply `UX_UI_WORKFLOW.md` when UX/UI changes are involved.
-10. Apply `PARALLEL_EXECUTION.md` when multiple workers are proposed.
+10. Apply `PARALLEL_EXECUTION.md` when multiple workers/subagents are proposed; route each worker's model/effort independently rather than automatically inheriting the orchestrator's tier.
 11. Define gates using `ACCEPTANCE_AND_EVIDENCE.md` and `templates/ACCEPTANCE_GATE.md`.
 12. Use a compact packet for eligible FAST work; use `templates/EXECUTION_CONTRACT.md` for STANDARD/STRICT or when complexity warrants it.
 13. Do not claim completion without the required evidence, review, and approvals.
