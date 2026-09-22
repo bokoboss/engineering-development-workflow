@@ -119,6 +119,17 @@ Use the full evidence-first workflow with the risk controls justified by the tas
 
 STRICT does not automatically mean the most expensive model.
 
+## Close the task
+
+Review is finite and risk-driven. Classify findings as:
+- **BLOCKER** — mandatory gate failure or material protected/safety/security risk;
+- **REQUIRED** — in-scope defect that leaves a success criterion unmet;
+- **FOLLOW-UP** — useful but non-blocking polish, refactor, adjacent defect, or future improvement.
+
+FAST normally gets one targeted validation/diff-review pass and one focused remediation cycle if needed. STANDARD normally gets one focused review and one remediation pass. Further material failures trigger re-plan/re-scope/escalation rather than an open-ended review loop.
+
+When mandatory gates pass, required CI/review/approval is complete, and no BLOCKER/REQUIRED finding remains, **close the task**. FOLLOW-UP items may be recorded separately.
+
 ## Evidence reuse
 
 Reuse valid evidence when:

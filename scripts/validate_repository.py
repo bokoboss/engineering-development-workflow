@@ -56,7 +56,8 @@ REQUIRED_HEADINGS = {
     'ENGINEERING_DEV_WORKFLOW.md': ['## 3A. Work mode and workspace safety', '## 4. Focused skills', '## 4A. Continuous operations outer layer', '## 5. End-to-end loop'],
     'WORK_MODE_ROUTING.md': [
         '## 1. Common quality floor', '## 2. STRICT triggers', '## 3. FAST eligibility',
-        '## 4. STANDARD mode', '## 5. Dynamic escalation', '## 8. Evidence reuse',
+        '## 4. STANDARD mode', '## 4A. Review intensity and closure budget', '## 5. Dynamic escalation',
+        '## 7A. Phase-level risk adaptation', '## 8. Evidence reuse',
         '## 9. Required routing output', '## 11. Safety override'
     ],
     'SECURITY.md': [
@@ -87,7 +88,7 @@ REQUIRED_HEADINGS = {
         '## 7. Skill progressive disclosure', '## 8. Gotchas as learned context'
     ],
     'PARALLEL_EXECUTION.md': ['## Task-specific workers', '## Fresh-context reviewers', '## Integration'],
-    'ACCEPTANCE_AND_EVIDENCE.md': ['## Evidence reuse', '## Deterministic enforcement', '## Independent review rule'],
+    'ACCEPTANCE_AND_EVIDENCE.md': ['## Sufficiency and closure', '## Evidence reuse', '## Deterministic enforcement', '## Independent review rule'],
     'CONTRIBUTING.md': ['## External inspiration and attribution'],
     'ACKNOWLEDGEMENTS.md': [
         '## Attribution principles', '## Current acknowledgements',
@@ -97,14 +98,14 @@ REQUIRED_HEADINGS = {
     '.github/pull_request_template.md': ['## Research / decision basis', '## Independent review', '## Review checklist'],
     'templates/EXECUTION_CONTRACT.md': [
         '## Work mode', '## Workspace safety', '## Objective', '## Scope', '## Out of scope', '## Research / decision basis',
-        '## Execution routing', '## Context strategy', '## Independent review',
+        '## Execution routing', '## Context strategy', '## Review and closure budget', '## Independent review',
         '## Success gates', '## Evidence reuse', '## Stop conditions', '## Definition of done'
     ],
     'templates/POSTMORTEM.md': ['## Optional workflow-efficiency sample'],
     'templates/EVIDENCE_PACKAGE.md': ['## Optional workflow-efficiency sample'],
     'templates/FAST_EXECUTION_PACKET.md': [
         '## Routing', '## Workspace safety', '## Objective', '## Scope',
-        '## Evidence reusable without rerun', '## Targeted success gates', '## Stop / escalate'
+        '## Evidence reusable without rerun', '## Targeted success gates', '## Review / closure budget', '## Stop / escalate'
     ],
     'templates/ACCEPTANCE_GATE.md': ['## Research conditions', '## Gates', '## Independent review', '## Decision'],
     'templates/LOOP_CONTRACT.md': [
@@ -150,12 +151,15 @@ for skill_file in SKILL_FILES:
 
 REQUIRED_TEXT = {
     'WORK_MODE_ROUTING.md': [
-        'Version: 1.0.1', '**FAST**', '**STANDARD**', '**STRICT**',
+        'Version: 1.1.0', '**FAST**', '**STANDARD**', '**STRICT**',
         'FAST is faster because it omits unnecessary ceremony, not because it accepts weaker work.',
         'at least one concrete proof path exists before mutation',
         '### Looks FAST but is not',
         'How will we prove this exact change is correct?',
-        'Evidence is revision-bound.'
+        'Evidence is revision-bound.',
+        'sufficient evidence for the material risk, not indefinite search for perfection',
+        'Once the closure conditions are met, stop.',
+        'BLOCKER / REQUIRED / FOLLOW-UP'
     ],
     'SECURITY_AND_GOVERNANCE.md': [
         '`WORKSPACE_SAFETY.md` is normative for local filesystem/system boundaries and applies to every work mode.',
@@ -221,7 +225,8 @@ REQUIRED_TEXT = {
     ],
     'templates/CHATGPT_PROJECT_INSTRUCTIONS.md': [
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', '.engineering-workflow.json',
-        'work mode + rationale', 'workspace write boundary'
+        'work mode + rationale', 'workspace write boundary',
+        'Treat verification and review as finite and risk-driven.'
     ],
     '.github/workflows/validate.yml': [
         "cron: '17 4 1 * *'",
@@ -301,7 +306,8 @@ REQUIRED_TEXT = {
         'test_missing_ci_installer_test_command_fails'
     ],
     'docs/CHEAT_SHEET.md': [
-        'FAST', 'STANDARD', 'STRICT', '.engineering-workflow/', 'WORKSPACE_SAFETY.md'
+        'FAST', 'STANDARD', 'STRICT', '.engineering-workflow/', 'WORKSPACE_SAFETY.md',
+        '## Close the task', 'BLOCKER', 'REQUIRED', 'FOLLOW-UP'
     ],
     'docs/quick-start.md': [
         'docs/THAI_USER_GUIDE.md',
@@ -322,7 +328,9 @@ REQUIRED_TEXT = {
         'templates/CHATGPT_PROJECT_INSTRUCTIONS.md',
         '.engineering-workflow/SKILL.md',
         'target project root เท่านั้น',
-        'FAST / STANDARD / STRICT'
+        'FAST / STANDARD / STRICT',
+        'หลักฐานที่เพียงพอต่อความเสี่ยงของงาน',
+        'FOLLOW-UP'
     ],
     'templates/POSTMORTEM.md': ['Do not make this mandatory for routine FAST work.'],
     'templates/EVIDENCE_PACKAGE.md': ['Use for pilots, tuning, or selected postmortems only.'],

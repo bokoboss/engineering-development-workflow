@@ -564,6 +564,8 @@ Work mode ควบคุม:
 - review actual diff;
 - ไม่ประกาศ DONE เมื่อ mandatory gate fail.
 
+เป้าหมายของ workflow คือ **หลักฐานที่เพียงพอต่อความเสี่ยงของงาน ไม่ใช่การตรวจจนไม่เหลือข้อสังเกตใด ๆ** เมื่อ mandatory gates ผ่าน, ไม่มี BLOCKER/REQUIRED ค้าง, และ CI/review/approval ที่จำเป็นครบแล้ว ให้ปิดงานได้เลย ส่วนข้อสังเกตที่เป็น polish, refactor หรือเรื่องข้างเคียงให้แยกเป็น FOLLOW-UP โดยไม่ค้าง project เดิมไว้.
+
 ---
 
 ## 17. FAST
@@ -607,6 +609,8 @@ inspect เฉพาะที่เกี่ยว
 -> required CI
 -> accept
 ```
+
+โดย default FAST ใช้ targeted validation + diff review หนึ่งรอบ และถ้าพบปัญหาที่มีผลจริงให้มี focused fix/retest หนึ่งรอบก่อน หากยังพบ material failure ใหม่อีก ควร reassess scope/mode แทนการวนตรวจ-แก้ไปเรื่อย ๆ.
 
 FAST โดย default ไม่ต้อง:
 
@@ -698,6 +702,8 @@ inspect
 
 STANDARD เป็น default เมื่อ task ไม่ชัดพอสำหรับ FAST แต่ยังไม่มี STRICT trigger.
 
+โดย default ให้มี focused review ตาม scope/gates หนึ่งรอบ และ remediation หนึ่งรอบเมื่อมี material finding. ถ้ายังเกิด material failure ใหม่ต่อเนื่องให้ re-plan/re-scope/escalate แทนการเปิด review loop แบบไม่สิ้นสุด.
+
 ---
 
 ## 20. STRICT
@@ -724,7 +730,16 @@ STANDARD เป็น default เมื่อ task ไม่ชัดพอส�
 
 STRICT ใช้ full evidence-first workflow ตามความเสี่ยง.
 
-ไม่ได้แปลว่าต้องใช้โมเดลแพงที่สุดเสมอ.
+ไม่ได้แปลว่าต้องใช้โมเดลแพงที่สุดเสมอ และไม่ได้แปลว่าทุก phase ต้องตรวจหนักเท่ากันตลอดงาน เมื่อ high-risk decision ถูก verify/freeze แล้ว phase ที่เหลือซึ่งเป็น mechanical สามารถใช้ targeted validation ได้ โดยยังคง mandatory final gates ของ STRICT ไว้.
+
+### หลักปิดงาน
+
+ให้จัดข้อสังเกตเป็น:
+- **BLOCKER** — mandatory gate fail หรือมีความเสี่ยง material/protected;
+- **REQUIRED** — งานใน scope ยังไม่ตรง acceptance criteria;
+- **FOLLOW-UP** — polish/refactor/adjacent improvement ที่ไม่ทำให้ gate เดิม invalid.
+
+เมื่อไม่มี BLOCKER/REQUIRED และ mandatory gates ผ่านแล้ว **ปิดงาน**. FOLLOW-UP ที่มีประโยชน์ให้แยกเป็น issue/task ใหม่ ไม่ใช้เป็นเหตุผลให้โปรเจกต์เดิมค้างอยู่.
 
 ---
 

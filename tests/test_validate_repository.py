@@ -70,6 +70,13 @@ class ValidateRepositoryNegativeTests(unittest.TestCase):
         )
         self.assert_validation_fails("WORKSPACE_SAFETY.md")
 
+    def test_missing_closure_invariant_fails(self):
+        self.replace_required_text(
+            "WORK_MODE_ROUTING.md",
+            "Once the closure conditions are met, stop.",
+        )
+        self.assert_validation_fails("WORK_MODE_ROUTING.md")
+
     def test_missing_ci_validator_command_fails(self):
         self.replace_required_text(
             ".github/workflows/validate.yml",

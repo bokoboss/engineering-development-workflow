@@ -5,6 +5,8 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 ## [Unreleased]
 
 ### Changed
+- Updated `WORK_MODE_ROUTING.md` to v1.1.0 with finite risk-adaptive review budgets, BLOCKER / REQUIRED / FOLLOW-UP finding triage, phase-level process intensity, and an explicit closure rule that stops accepted work from turning into indefinite inspect-fix-review loops.
+- Aligned acceptance policy, core workflow, execution templates, ChatGPT Project Instructions, cheat sheet, and Thai guide so non-blocking polish/adjacent findings become follow-up work rather than keeping the original task open.
 - Refreshed `MODEL_ROUTING_POLICY.md` to v1.3.0 for GPT-6 Astra availability as of 2026-09-05.
 - Added Astra High as the preferred premium route for difficult end-to-end agentic execution spanning code plus terminal/runtime/browser/computer work, while retaining Luna-first routing for bounded implementation and Terra for bounded higher-judgment work.
 - Replaced the prior linear `Luna -> diagnose -> Terra -> Sol` escalation with failure-class routing; Astra XHigh/Max is reserved for the hardest end-to-end work, while Sol remains a valid fallback/continuity route when Astra is unavailable, constrained, or task-specific evidence favors it.
