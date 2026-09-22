@@ -42,7 +42,7 @@ Multiple modules may apply to one work item. Use the smallest set that materiall
 
 `WORK_MODE_ROUTING.md` is the first lightweight router. FAST is permitted only for clear, localized, reversible, non-protected work with strong targeted verification. STRICT triggers include protected engineering/safety/security/legal behavior, destructive or low-reversibility work, architecture/schema/public-contract changes, system/global changes, and similarly high-impact uncertainty. Otherwise use STANDARD.
 
-If execution reveals a higher-risk trigger, stop at a safe checkpoint and escalate the mode before continuing.
+If execution reveals a higher-risk trigger, stop at a safe checkpoint and escalate the mode before continuing. Conversely, once the selected mode's mandatory closure conditions are satisfied, stop the task; do not keep reviewing merely to discover optional improvements. Triage findings as BLOCKER / REQUIRED / FOLLOW-UP so non-blocking observations do not prevent completion.
 
 ## Workspace safety
 

@@ -120,6 +120,8 @@ Reuse valid revision-bound evidence according to `WORK_MODE_ROUTING.md`; do not 
 
 Prefer deterministic enforcement when a rule can be encoded reliably in tests, schemas, validators, settings, branch protection, hooks, or CI. Do not rely on instruction-only compliance for behavior that can be mechanically checked or blocked.
 
+Verification should terminate when the mandatory gate evidence is sufficient for the material risk. Do not keep adding broad checks merely because more checks are available; rerun only what a changed revision, failed gate, or repository policy makes necessary.
+
 ### Stage 6 — Audit and review
 Review the actual diff and evidence against the Issue/contract or compact FAST packet, not merely the executor summary. Check scope containment, behavior, regression risk, documentation, UX, security, protected areas, research conditions, and unresolved assumptions.
 
@@ -128,6 +130,8 @@ Use `skills/technical-status/SKILL.md` when execution evidence is long, fragment
 Use `skills/independent-review/SKILL.md` when risk justifies a second pass. High-risk acceptance should not depend solely on the executor's own narrative or self-review. Independence may be achieved by a fresh context at the same tier, a different model/agent, independent deterministic verification, or a human specialist.
 
 Run the required scrutiny gate again before high-risk merge/acceptance when the implemented result materially differs from the original reviewed plan or when evidence reveals new risk.
+
+Classify audit findings as **BLOCKER**, **REQUIRED**, or **FOLLOW-UP** using `WORK_MODE_ROUTING.md`. BLOCKER/REQUIRED findings must be resolved before acceptance. FOLLOW-UP findings do not expand the current scope or block closure unless they invalidate a mandatory gate or reveal a material regression/protected risk.
 
 ### Stage 7 — Diagnose failures
 A failed attempt is not an automatic reason to use a stronger model.
@@ -143,14 +147,20 @@ Classify the failure:
 
 For defects or unexplained failures, route through `skills/systematic-debug/SKILL.md` before escalating merely on model strength.
 
+Do not let remediation become an unbounded inspect-fix-review loop. FAST and STANDARD should use the default review/remediation budget in `WORK_MODE_ROUTING.md`; if material failures keep appearing after that budget, re-plan, re-scope, or escalate the risk classification instead of repeatedly reopening the same task without a new hypothesis.
+
 ### Stage 8 — Accept, remediate, or block
 Accept only when required gates pass, required independent review (if any) is resolved, research conditions are satisfied, and required approvals exist. Otherwise remediate or mark the work blocked with explicit missing evidence.
+
+When those closure conditions are satisfied and no BLOCKER/REQUIRED finding remains, **close the task**. Do not keep the project open for optional polish, unrelated nearby defects, or another pass over evidence that is already valid. Preserve worthwhile FOLLOW-UP items separately.
 
 For a significant resolved defect/incident whose lesson is likely to prevent recurrence or reduce future diagnosis cost, apply `skills/postmortem/SKILL.md` after the fix is validated.
 
 ## 6. Completion semantics
 
 Implementation exists != work complete.
+
+Completion also does not mean "no possible improvement remains." It means the requested outcome is supported by the mandatory evidence for its risk class, with material blockers resolved and non-blocking follow-up separated from the accepted scope.
 
 A completion claim must identify:
 - work mode used and any escalation;

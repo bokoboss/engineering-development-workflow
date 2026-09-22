@@ -38,6 +38,13 @@ FAST should normally use a single lower-cost worker at the lowest effort expecte
 ## Targeted success gates
 -
 
+## Review / closure budget
+- Review passes: one targeted validation pass + one actual diff review by default.
+- Remediation: one focused fix-and-retest cycle when a material failure is found.
+- Finding triage: BLOCKER / REQUIRED / FOLLOW-UP.
+- Closure: when targeted mandatory gates and required CI pass and no BLOCKER/REQUIRED finding remains, close the task. FOLLOW-UP items do not block FAST completion.
+- If a second new material failure appears, reassess FAST eligibility/scope instead of continuing repeated review cycles.
+
 ## Stop / escalate
 Escalate to STANDARD/STRICT or reroute model/effort before continuing if:
 - scope becomes materially cross-module;

@@ -70,6 +70,15 @@
 - Integration dependencies:
 - Explicit subagent/parallel-worker authorization:
 
+## Review and closure budget
+- Planned review passes:
+- Default remediation cycles before re-plan/escalation:
+- Finding triage: BLOCKER / REQUIRED / FOLLOW-UP
+- Gates to rerun after remediation:
+- Closure rule:
+- Non-blocking FOLLOW-UP handling:
+- Note: this budget does not waive mandatory safety/protected gates; repeated material failures trigger re-plan/escalation rather than blind looping.
+
 ## Independent review
 - Required: Yes / No
 - Risk/rationale:

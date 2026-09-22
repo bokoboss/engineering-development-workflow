@@ -1,6 +1,6 @@
 # Work Mode Routing
 
-Version: 1.0.1
+Version: 1.1.0
 
 ## Principle
 
@@ -17,6 +17,8 @@ Every software task is classified before coding-agent execution as:
 If the mode is uncertain, choose the safer higher mode until evidence supports a lower one.
 
 Do not downgrade a task merely to save time or model quota.
+
+Completion target is **sufficient evidence for the material risk, not indefinite search for perfection**. Once the task's required gates pass and no material blocker remains, stop the task; useful non-blocking improvements become follow-up work rather than reasons to keep the original task open.
 
 ## 1. Common quality floor
 
@@ -118,6 +120,31 @@ STANDARD flow:
 
 Use focused skills only when their trigger materially applies.
 
+## 4A. Review intensity and closure budget
+
+Verification and review must be finite and risk-driven.
+
+Classify findings before deciding whether to continue:
+- **BLOCKER** — safety/security/data-loss/protected-behavior risk or a mandatory gate failure; must be resolved before acceptance;
+- **REQUIRED** — an in-scope correctness, regression, contract, or usability defect that makes a stated success criterion unmet; must be resolved before acceptance;
+- **FOLLOW-UP** — polish, optional refactor, speculative hardening, adjacent improvement, or unrelated defect that does not invalidate the required gates; record it when useful, but it does not block closure.
+
+Default review budget:
+- **FAST** — one targeted validation pass plus actual diff review. If a material failure is found, one focused remediation/retest cycle is normal. A second new material failure means reassess mode/scope rather than continuing blind review loops.
+- **STANDARD** — one focused implementation review against scope/gates plus relevant regression/CI. If material findings exist, perform one focused remediation pass and rerun the affected gates. Further cycles require a specific unresolved material risk or an explicit re-plan/escalation decision.
+- **STRICT** — no arbitrary numeric cap for mandatory high-risk evidence, but every additional pass must map to an unresolved material risk, failed mandatory gate, required independent-review finding, changed revision, or explicit human-approval condition. Do not repeat a full review merely "to be safe."
+
+A review finding does not automatically expand scope. Adjacent issues become FOLLOW-UP unless they invalidate a mandatory gate, reveal a material regression caused by the change, or trigger protected/safety/security conditions.
+
+Closure conditions:
+- mandatory gates for the selected mode/task are PASS;
+- no unresolved BLOCKER or REQUIRED finding remains;
+- required CI, independent review, and human approval are complete when applicable;
+- actual diff and scope containment are acceptable;
+- useful FOLLOW-UP items are recorded separately when worth preserving.
+
+**Once the closure conditions are met, stop.** Do not reopen the task for hypothetical polish, repeated confirmation of already-valid evidence, or unrelated nearby defects.
+
 ## 5. Dynamic escalation
 
 Work mode is a live risk classification.
@@ -134,6 +161,8 @@ When mode escalates:
 5. continue only after the new mode is adequately bounded.
 
 Do not silently continue under the old mode.
+
+A FOLLOW-UP finding by itself is not a reason to escalate the work mode or reopen the original scope.
 
 ## 6. De-escalation
 
@@ -161,6 +190,16 @@ Examples:
 Do not route every STRICT task to Sol automatically.
 
 Use `MODEL_ROUTING_POLICY.md` after the work mode is known.
+
+## 7A. Phase-level risk adaptation
+
+The selected work mode is the task-level risk ceiling; it does not require every phase to use the same process intensity.
+
+A STRICT task may require strict research/scrutiny for a protected decision, then use a narrowly bounded mechanical implementation with targeted tests after that decision is verified and frozen. The task remains STRICT and its mandatory final gates remain intact, but already-retired risks do not justify repeating broad review on every phase.
+
+Likewise, STANDARD work should not acquire independent review, full-regression reruns, or repeated architecture scrutiny after the relevant risk has already been resolved unless new evidence reopens that risk.
+
+Reduce process intensity around **retired risks**, not around unresolved mandatory gates.
 
 ## 8. Evidence reuse
 
@@ -217,6 +256,10 @@ If mode confidence is low, do not choose FAST.
 - Reuse valid evidence rather than rerunning it mechanically.
 - Keep independent review targeted to material risk.
 - Stop early on no-op/already-correct findings.
+- Triage findings as BLOCKER / REQUIRED / FOLLOW-UP before starting another remediation cycle.
+- Prefer rerunning only the gates affected by a remediation instead of restarting the entire validation matrix.
+- If repeated review cycles keep finding different material failures, re-plan the scope/root cause instead of continuing an open-ended inspect-fix-review loop.
+- Close the task as soon as the closure conditions are satisfied; quality means justified confidence in the requested outcome, not zero possible future improvements.
 
 ## 11. Safety override
 

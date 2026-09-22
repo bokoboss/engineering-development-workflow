@@ -42,6 +42,21 @@ A change is accepted only when all mandatory gates are PASS, required independen
 
 For high-risk work, executor self-report alone is not sufficient evidence even when the executor also ran tests. Independence can come from a fresh-context reviewer, a different model/agent, a human specialist, or deterministic verification that genuinely exercises or recomputes the material behavior.
 
+## Sufficiency and closure
+
+Evidence should be **sufficient for the material risk**, not exhaustive for every imaginable defect or future improvement.
+
+Triage findings before deciding whether they block acceptance:
+- **BLOCKER** — mandatory gate failure or material protected/safety/security/data-loss risk;
+- **REQUIRED** — in-scope defect that leaves an acceptance criterion unmet;
+- **FOLLOW-UP** — useful but non-blocking polish, refactor, adjacent defect, speculative hardening, or future improvement.
+
+A new observation reopens acceptance only when it invalidates previously relied-on evidence, causes a mandatory gate to fail, proves the requested acceptance criteria are not met, reveals a material regression caused by the change, or exposes a protected risk that the current gate set did not cover.
+
+Once all mandatory gates are PASS and no unresolved BLOCKER or REQUIRED finding remains, the change is acceptable from the evidence perspective. FOLLOW-UP items may be recorded separately but do not keep the original task open.
+
+Additional review passes must target an unresolved material risk, a changed revision, or a failed gate. Do not repeat broad audits simply to search for more possible findings after the acceptance case is already sufficient.
+
 ## Evidence reuse
 
 Evidence is revision-bound. Reuse valid prior evidence when the relevant code/input/revision and environment have not materially changed and the evidence still covers the risk. Do not rerun broad suites or reviews solely because another workflow stage started. Re-run when evidence is stale, incomplete, invalidated by a change/failure, or explicitly required by repository pre-merge/CI policy.
