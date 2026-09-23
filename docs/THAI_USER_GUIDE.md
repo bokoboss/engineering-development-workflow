@@ -747,55 +747,62 @@ STRICT ใช้ full evidence-first workflow ตามความเสี่�
 
 ## 21. Work mode ไม่เท่ากับ model tier
 
-ตัวอย่าง:
+ข้อมูล model routing ด้านล่างอัปเดตตาม GPT-6 Sol / GPT-6 Luna ที่ OpenAI ประกาศเมื่อ 22 กันยายน 2026 และตรวจเอกสารทางการล่าสุดเมื่อ 23 กันยายน 2026. หลักเดิมยังเหมือนเดิมคือ **เลือกโมเดลที่ถูกที่สุดซึ่งมีโอกาสสูงพอที่จะทำงาน bounded นั้นให้จบและผ่าน verification** ไม่ใช่เลือกโมเดลใหม่หรือแพงที่สุดอัตโนมัติ.
 
 ### FAST
 
-มักเหมาะกับ:
+มักเริ่มที่:
 
 ```text
-Luna / Medium
+GPT-6 Luna / Medium
 ```
 
-หรือ High ถ้าซับซ้อนขึ้นเล็กน้อย.
+ขยับเป็น High เมื่อ task กว้างขึ้นเล็กน้อยแต่ยังชัด, reversible และตรวจได้ตรงจุด.
 
 ### STANDARD
 
-มักเหมาะกับ:
+มักเริ่มที่:
 
 ```text
-Luna / High หรือ Max
+GPT-6 Luna / High หรือ Max
 ```
 
-และอาจใช้ Terra High/Max เมื่องานยัง bounded แต่ต้องใช้ judgment หรือ cross-module synthesis มากขึ้น.
+ถ้างานต้องใช้ broad repo reasoning, cross-module debugging/integration, coding judgment หรือ agentic follow-through มากจน Luna เริ่มต่ำกว่า reliability threshold ให้พิจารณา **GPT-6 Sol Medium/High** เป็นตัว escalation หลัก.
+
+GPT-5.6 Terra ยังอาจใช้ได้ในบาง surface ถ้าราคาหรือ allowance ปัจจุบันทำให้คุ้มกว่าและ capability เพียงพอ แต่ไม่ควรยึด Terra เป็นขั้นกลางแบบตายตัวเพียงเพราะเคยอยู่ตรงนั้นในรุ่น GPT-5.6.
 
 ### STRICT
 
-ไม่ได้แปลว่าต้องใช้ Astra หรือโมเดลแพงที่สุดเสมอ.
+ไม่ได้แปลว่าต้องใช้ GPT-6 Sol หรือ GPT-6 Astra เสมอ.
 
-ตัวอย่าง:
-
-ChatGPT อาจทำ engineering reasoning ที่ยากเสร็จแล้ว และสร้าง implementation packet ที่ mechanical มาก.
-
-Codex อาจยังใช้ Luna ได้ถ้า:
+ตัวอย่าง: ChatGPT อาจทำ engineering reasoning ที่ยากเสร็จแล้วและ freeze decision สำคัญไว้ จากนั้น implementation packet ที่เหลือเป็นงาน mechanical มาก. Codex ยังใช้ GPT-6 Luna ได้ถ้า:
 
 - scope ชัด;
 - tests strong;
 - execution mechanical;
 - acceptance/review เข้ม.
 
-### Astra เหมาะเมื่อใด
+### GPT-6 Sol เหมาะเมื่อใด
 
-Astra High เหมาะกับงาน end-to-end ที่ยากและมีหลายส่วนประกอบพร้อมกัน เช่น:
+GPT-6 Sol เป็น **stronger workhorse** สำหรับ coding/agentic work ไม่ใช่ fallback อย่างเดียวอีกต่อไป. เหมาะเมื่อ:
 
-- แก้ code พร้อมรัน terminal/runtime/browser;
-- integration หลาย technology stack;
-- performance / packaging / security evidence เป็นส่วนหนึ่งของงาน;
-- งานยาวหลายขั้นตอนที่ต้องรักษา task state และ follow-through;
-- ต้องปรับตัวตามผล test/runtime ระหว่างทาง;
-- มี adjacent scope ที่ต้องห้ามหลุดไปทำก่อนเวลา.
+- ต้องอ่านและเชื่อมหลาย module;
+- root cause/debugging ไม่ตรงไปตรงมาแต่ยังเป็นปัญหา software engineering ที่ bounded ได้;
+- integration หลายส่วนต้องใช้ judgment ต่อเนื่อง;
+- implementation ต้องปรับตัวตามผล test/runtime หลายรอบ;
+- Luna มีแนวโน้มต้อง retry เพราะ capability/reasoning threshold ไม่พอจริง ๆ ไม่ใช่เพราะ prompt หรือ environment ยังไม่ชัด.
 
-สำหรับงานแบบนี้ การใช้ Astra High ตั้งแต่ต้นอาจถูกกว่าการ retry Luna/Terra หลายรอบ.
+ถ้า Sol น่าจะมี capability พอ แต่ reasoning ยังไม่ลึกพอ ให้เพิ่ม effort ของ Sol ก่อนกระโดดไป Astra เมื่อมีเหตุผลรองรับ.
+
+### GPT-6 Astra เหมาะเมื่อใด
+
+GPT-6 Astra ควรเก็บไว้กับงานที่ยากที่สุดแบบ end-to-end เช่น:
+
+- architecture หรือ evidence ขัดกันและการตัดสินใจผิดทำให้เกิด rework กว้าง;
+- major migration หรือ cross-system integration ที่มี dependency ซับซ้อน;
+- unknown root cause ที่ยังคลุมหลาย subsystem แม้มี evidence แล้ว;
+- งานยาวหลายเครื่องมือที่ต้องรักษา state/constraint ให้ coherent;
+- premium independent adjudication สำหรับ decision ที่ impact สูง.
 
 อย่าใช้ Astra เพียงเพราะ:
 
@@ -803,11 +810,26 @@ Astra High เหมาะกับงาน end-to-end ที่ยากแล
 - repo ใหญ่;
 - prompt ยาว;
 - งาน routine แต่เยอะ;
-- packet ยังไม่ชัด.
+- packet ยังไม่ชัด;
+- ต้องการให้ “ชัวร์ขึ้นนิดหน่อย” ทั้งที่ GPT-6 Sol หรือ GPT-6 Luna มี deterministic tests รองรับอยู่แล้ว.
 
-Astra XHigh/Max ควรสงวนไว้สำหรับงานที่ยากที่สุด เช่น architecture evidence ขัดกัน, major migration, unknown root cause ที่ซับซ้อนมาก หรือ independent adjudication ที่มีความเสี่ยงสูง.
+Astra High เป็นจุดเริ่มต้นที่เหมาะสำหรับงาน Astra-fit จำนวนมาก; XHigh/Max สงวนไว้เมื่อ reasoning/verification เพิ่มเติมมีมูลค่าชัดเจน.
 
-Sol High/Max ยังใช้เป็น fallback ได้ถ้า Astra ยังไม่มีใน account/surface ปัจจุบัน, allowance จำกัด, หรือ continuity ของ Sol context เดิมช่วยลด cost to verified completion.
+### เรื่องราคาและ quota
+
+ราคา API กับ allowance/credit ของ Codex **ไม่ใช่สิ่งเดียวกัน**. ณ 23 กันยายน 2026 เอกสาร API ระบุ short-context Standard โดยประมาณว่า GPT-6 Luna $0.10/$0.50, GPT-6 Sol $2/$10 และ GPT-6 Astra $10/$50 ต่อ 1M input/output tokens ตามลำดับ. แต่เวลาตัดสินใจใน Codex ต้องดู rate card / Settings > Usage ของ surface ปัจจุบันด้วย ไม่ควรเอาตารางเครดิต GPT-5.6 เดิมมาใช้กับ GPT-6 Sol/Luna โดยตรง.
+
+ดังนั้น routing ที่ควรนึกภาพตอนนี้คือ:
+
+```text
+GPT-6 Luna
+   ↓ เมื่อ capability/reliability ไม่พอจริง
+GPT-6 Sol
+   ↓ เมื่อ task มี Astra-fit จริง
+GPT-6 Astra
+```
+
+GPT-5.6 Terra เป็น optional economic branch ไม่ใช่ขั้นบังคับของ ladder และ escalation ทุกครั้งยังต้องวินิจฉัยก่อนว่าเป็นปัญหา specification, environment, effort, model capability หรือ parallelism.
 
 ---
 
@@ -836,7 +858,7 @@ Required local workflow/skills:
 - systematic-debug
 
 Model:
-Luna
+GPT-6 Luna
 
 Reasoning effort:
 High

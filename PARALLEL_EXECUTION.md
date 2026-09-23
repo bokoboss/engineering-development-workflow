@@ -48,11 +48,12 @@ Do not assume that a worker/subagent should inherit the orchestrator's model tie
 Where the execution surface supports per-worker model selection, route each worker independently using `MODEL_ROUTING_POLICY.md` and choose the least expensive model/effort likely to finish that bounded packet correctly. Specify both the worker model and reasoning effort explicitly when the surface allows it; omitted settings may inherit from the parent/orchestrator.
 
 Default worker pattern:
-- **Luna** for narrow or targeted reconnaissance against known files/symbols, targeted code reading, mechanical or patterned edits, fixtures, targeted tests, straightforward documentation, and other well-specified work with strong verification;
-- **Terra** for broad or initially unknown repository exploration, read-heavy scans across many files, cross-module synthesis, or bounded debugging where materially more judgment/reliability is needed than Luna;
-- **Sol/Astra or another premium model** only when that worker's own task independently meets the premium-routing criteria. Do not use a premium worker merely because the parent/orchestrator is premium.
+- **GPT-6 Luna** for narrow or targeted reconnaissance against known files/symbols, targeted code reading, mechanical or patterned edits, fixtures, targeted tests, straightforward documentation, and other well-specified work with strong verification;
+- **GPT-6 Sol** for broad repository reasoning, cross-module synthesis, nontrivial debugging/integration, or bounded worker tasks whose reliability threshold materially exceeds GPT-6 Luna;
+- **GPT-5.6 Terra, where available** only as an optional intermediate when the current execution surface makes it more economical than GPT-6 Sol for a task it can still complete reliably;
+- **GPT-6 Astra** only when that worker's own task independently meets Astra-fit criteria. Do not use Astra merely because the parent/orchestrator is Astra, and do not make every worker Sol merely because the parent is Sol.
 
-A premium orchestrator should retain high-leverage reasoning, decomposition, ambiguity resolution, cross-worker coordination, and adjudication while delegating routine execution volume downward only when doing so improves expected verified completion cost, time, quality, or risk.
+A GPT-6 Sol or GPT-6 Astra orchestrator should retain high-leverage reasoning, decomposition, ambiguity resolution, cross-worker coordination, and adjudication while delegating routine execution volume to GPT-6 Luna when doing so improves expected verified completion cost, time, quality, or risk. Astra should not be retained for work that has become Sol-fit or Luna-fit.
 
 ## Delegation gate
 

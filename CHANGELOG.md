@@ -7,10 +7,12 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 ### Changed
 - Updated `WORK_MODE_ROUTING.md` to v1.1.0 with finite risk-adaptive review budgets, BLOCKER / REQUIRED / FOLLOW-UP finding triage, phase-level process intensity, and an explicit closure rule that stops accepted work from turning into indefinite inspect-fix-review loops.
 - Aligned acceptance policy, core workflow, execution templates, ChatGPT Project Instructions, cheat sheet, and Thai guide so non-blocking polish/adjacent findings become follow-up work rather than keeping the original task open.
-- Refreshed `MODEL_ROUTING_POLICY.md` to v1.3.0 for GPT-6 Astra availability as of 2026-09-05.
-- Added Astra High as the preferred premium route for difficult end-to-end agentic execution spanning code plus terminal/runtime/browser/computer work, while retaining Luna-first routing for bounded implementation and Terra for bounded higher-judgment work.
-- Replaced the prior linear `Luna -> diagnose -> Terra -> Sol` escalation with failure-class routing; Astra XHigh/Max is reserved for the hardest end-to-end work, while Sol remains a valid fallback/continuity route when Astra is unavailable, constrained, or task-specific evidence favors it.
-- Updated the Thai operational guide with the same Astra-fit and non-default guidance.
+- Refreshed `MODEL_ROUTING_POLICY.md` to v1.5.0 for the 2026-09-22 GPT-6 Sol / GPT-6 Luna release and re-verified the current model profile on 2026-09-23.
+- Made GPT-6 Luna the default bounded/high-volume executor and GPT-6 Sol the primary stronger workhorse for complex coding and agentic workflows; GPT-6 Astra remains reserved for independently Astra-fit hardest end-to-end work.
+- Recast GPT-5.6 Terra as an optional economic middle route where the current execution surface still makes it preferable, rather than a mandatory escalation rung.
+- Replaced the stale GPT-5.6-era cost comparison with a dated official API price snapshot, explicitly separating API token pricing from Codex subscription allowance/credit accounting and warning not to map the old 2026-09-05 credit table onto GPT-6 Sol/Luna.
+- Updated parallel worker routing, work-mode examples, ChatGPT Project Instructions, README, and the Thai operational guide to use the GPT-6 Luna -> GPT-6 Sol -> GPT-6 Astra decision shape without turning it into an automatic linear escalation ladder.
+- Documented cost-aware per-worker model selection so workers do not automatically inherit a premium parent tier and routine execution can return to GPT-6 Luna after high-leverage reasoning.
 
 ### Pending
 - Collect external feedback after real project adoption.

@@ -161,6 +161,14 @@ REQUIRED_TEXT = {
         'Once the closure conditions are met, stop.',
         'BLOCKER / REQUIRED / FOLLOW-UP'
     ],
+    'MODEL_ROUTING_POLICY.md': [
+        'Version: 1.5.0',
+        'GPT-6 Luna',
+        'GPT-6 Sol',
+        'GPT-6 Astra',
+        'These are **API prices, not Codex subscription allowance/credit prices**.',
+        'do not map those old GPT-5.6 credit rates onto GPT-6 Luna or GPT-6 Sol'
+    ],
     'SECURITY_AND_GOVERNANCE.md': [
         '`WORKSPACE_SAFETY.md` is normative for local filesystem/system boundaries and applies to every work mode.',
         'Never commit credentials, tokens, personal secrets, production private data, or temporary debug artifacts containing them.',

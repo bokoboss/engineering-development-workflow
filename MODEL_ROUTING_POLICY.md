@@ -1,6 +1,6 @@
 # Model Routing Policy
 
-Version: 1.4.0
+Version: 1.5.0
 
 ## 1. Objective
 
@@ -23,50 +23,67 @@ The control plane should reduce ambiguity before buying more model capability, m
 Apply `WORK_MODE_ROUTING.md` before model selection.
 
 Work mode and execution resources are separate axes:
-- FAST often fits Luna Medium, or Luna High for a slightly broader but still low-risk bounded change;
-- STANDARD often fits Luna High/Max, with Terra when materially more judgment is needed;
-- STRICT does not automatically require Astra, Max, Ultra, or another premium route. After ChatGPT has completed high-risk reasoning and bounded the implementation, a lower-cost executor may still be appropriate if the execution itself is mechanical and strongly testable.
+- FAST often fits GPT-6 Luna Medium, or GPT-6 Luna High for a slightly broader but still low-risk bounded change;
+- STANDARD often fits GPT-6 Luna High/Max. Escalate to GPT-6 Sol when the bounded task materially needs stronger coding judgment, cross-module reasoning, debugging reliability, or agentic follow-through. GPT-5.6 Terra may remain an economical middle route where it is exposed and current product-surface economics favor it;
+- STRICT does not automatically require GPT-6 Astra, GPT-6 Sol, Max, Ultra, or another premium route. After ChatGPT has completed high-risk reasoning and bounded the implementation, a lower-cost executor may still be appropriate if the execution itself is mechanical and strongly testable.
 
 Do not use a stronger model, higher effort, or multi-agent execution as a substitute for scrutiny, evidence, workspace safety, or a clear packet.
 
 ## 3. Default routing
 
-Current profile as of 2026-09-13; model availability, effort names, product-surface access, allowance accounting, capability, and economics can change and should be re-verified periodically.
+Current profile as of 2026-09-23. OpenAI announced GPT-6 Sol and GPT-6 Luna on 2026-09-22; both are rolling out in Codex and are available in the API. Model availability, effort names, product-surface access, allowance accounting, capability, and economics can change and should be re-verified periodically.
 
-- **Luna Medium** — small, direct, patterned work with strong tests and low ambiguity.
-- **Luna High** — primary default for multi-file implementation with clear boundaries and established contracts.
-- **Luna Max** — difficult or long execution that is well specified, testable, and bounded; use when deeper reasoning within Luna is likely to cross the reliability threshold without paying for a higher model tier.
-- **Terra High/Max** — balanced escalation when a bounded task needs materially more judgment or cross-module synthesis than Luna, but does not justify the most capable premium route.
-- **Astra Low/Medium, where available** — use when Astra-level capability is materially useful but the task does not require deep reasoning effort. This can be preferable to combining a premium model with unnecessarily high effort.
-- **Astra High** — premium route for difficult end-to-end agentic execution spanning several of the following: code mutation, terminal work, browser/computer use, runtime integration, dependency work, performance investigation, and long multi-step follow-through.
-- **Astra XHigh/Max** — reserve for the hardest end-to-end tasks where additional reasoning/verification materially reduces failure risk: ambiguous architecture, major migrations, difficult unknown-root-cause work, conflicting contracts/evidence, high-impact cross-system integration, or premium independent adjudication.
-- **Sol** — valid premium fallback or continuity route when Astra is unavailable or usage-constrained, when preserving an existing productive Sol context materially lowers verified completion cost, or when task-specific evidence favors Sol. Choose Sol effort independently rather than automatically pairing a premium tier with Max.
+- **GPT-6 Luna Medium** — default for small, direct, patterned work with strong tests and low ambiguity.
+- **GPT-6 Luna High** — primary default for multi-file implementation with clear boundaries and established contracts.
+- **GPT-6 Luna Max** — difficult or long execution that is still well specified, testable, and bounded; use when deeper reasoning within Luna is likely to cross the reliability threshold without paying for a stronger model tier.
+- **GPT-5.6 Terra High/Max, where available** — optional intermediate route when current product-surface pricing/allowance makes it economically attractive and the task needs more judgment than Luna. Do not prefer Terra merely because it occupied the historical middle tier.
+- **GPT-6 Sol Medium/High** — primary stronger workhorse for complex coding and agentic workflows: broad repository reasoning, cross-module debugging, nontrivial integration, or implementation that materially exceeds Luna's reliability threshold but does not independently require Astra.
+- **GPT-6 Sol XHigh/Max** — use for difficult or high-impact coding/agentic work when Sol likely has the required capability but deeper reasoning or verification is justified. Prefer this before Astra when the remaining problem is still predominantly coding/agentic rather than the hardest ambiguous end-to-end work.
+- **GPT-6 Astra Low/Medium, where available** — use when Astra-level capability is materially useful but the task does not require deep reasoning effort.
+- **GPT-6 Astra High** — premium route for the hardest end-to-end agentic execution spanning several of the following: code mutation, terminal work, browser/computer use, runtime integration, dependency work, performance investigation, research, and long multi-step follow-through.
+- **GPT-6 Astra XHigh/Max** — reserve for the hardest work where additional reasoning/verification materially reduces failure risk: ambiguous architecture, major migrations, difficult unknown-root-cause work, conflicting contracts/evidence, high-impact cross-system integration, or premium independent adjudication.
 
-Astra is not the default for routine implementation. Its higher capability is most valuable when the task shape actually uses its end-to-end strengths.
+OpenAI's current model docs list `none`, `low`, `medium`, `high`, `xhigh`, and `max` for GPT-6 Luna and GPT-6 Sol, with Medium as the API default. GPT-6 Astra supports `low` through `max`.
+
+GPT-6 Sol is no longer merely a fallback/continuity route. It is the default stronger workhorse between GPT-6 Luna and GPT-6 Astra when the current execution surface makes it available and economically reasonable.
+
+GPT-6 Astra is not the default for routine implementation. Its higher capability is most valuable when the task shape actually uses its hardest end-to-end strengths.
 
 Do not assume that a higher model tier with lower effort is automatically better or worse than a lower tier with higher effort. Evaluate model tier, effort, context-reuse value, verification burden, likely retry cost, and allowance burn together.
 
 ## 3A. Dated economic guardrail
 
-A user-supplied Codex credit schedule dated 2026-09-05 reported these per-1M-token rates:
+As checked against official OpenAI model documentation on 2026-09-23, Standard API short-context token pricing per 1M tokens is:
 
 | Model | Input | Cached input | Output |
 | --- | ---: | ---: | ---: |
-| GPT-5.6 Luna | 5 credits | 0.5 credits | 30 credits |
-| GPT-5.6 Terra | 50 credits | 5 credits | 300 credits |
-| GPT-5.6 Sol | 100 credits | 10 credits | 500 credits |
-| GPT-6 Astra | 250 credits | 25 credits | 1,250 credits |
+| GPT-6 Luna | $0.10 | $0.01 | $0.50 |
+| GPT-5.6 Terra | $2.00 | $0.20 | $12.00 |
+| GPT-6 Sol | $2.00 | $0.20 | $10.00 |
+| GPT-6 Astra | $10.00 | $1.00 | $50.00 |
 
-Treat this table as a **dated economic snapshot, not timeless pricing**. Re-check the user's current product-surface pricing before making a cost-sensitive routing decision when rates may have changed.
+These are **API prices, not Codex subscription allowance/credit prices**. Do not translate them directly into Plus/Pro/Business Work or Codex quota consumption.
 
-Under this snapshot, relative to Luna:
-- Terra is approximately 10x on input, cached input, and output;
-- Sol is approximately 20x on input/cached input and 16.7x on output;
-- Astra is approximately 50x on input/cached input and 41.7x on output.
+Relative to GPT-6 Luna under this API snapshot:
+- GPT-5.6 Terra is approximately 20x on input/cached input and 24x on output;
+- GPT-6 Sol is approximately 20x on input, cached input, and output;
+- GPT-6 Astra is approximately 100x on input, cached input, and output;
+- GPT-6 Astra is approximately 5x GPT-6 Sol on those token-price dimensions.
 
-Therefore, fewer retries alone do not justify a premium-model escalation. A premium route should be selected only when its expected capability advantage is large enough to change feasibility, materially reduce expensive rework, protect a high-impact decision, or avoid a failure mode that lower-cost routes are unlikely to overcome economically.
+The earlier user-supplied Codex credit schedule dated 2026-09-05 applied to GPT-5.6 Luna/Terra/Sol and GPT-6 Astra. It is historical evidence only; **do not map those old GPT-5.6 credit rates onto GPT-6 Luna or GPT-6 Sol**. OpenAI's 2026-09-22 announcement states that GPT-6 Sol and GPT-6 Luna have 50% lower API prices than their GPT-5.6 promotional counterparts, but that statement does not by itself define current subscription allowance burn. Re-check the current product rate card / usage surface before a cost-sensitive Codex recommendation.
 
-Do not reason as if two or three avoided Luna retries automatically justify Astra. With a large price ratio, many lower-cost attempts can still be cheaper in raw credits; the real decision must consider whether those attempts are likely to add useful evidence or merely repeat a capability-limited failure.
+Long-context pricing can also change economics materially. Current GPT-6 Luna/Sol/Astra model pages apply higher rates when prompts exceed 272K input tokens, so lean-context policy remains a cost control rather than merely a latency optimization.
+
+Sources checked 2026-09-23:
+- https://developers.openai.com/api/docs/models/gpt-6-luna
+- https://developers.openai.com/api/docs/models/gpt-6-sol
+- https://developers.openai.com/api/docs/models/gpt-6-astra
+- https://developers.openai.com/api/docs/models/gpt-5.6-terra
+- https://community.openai.com/t/announcing-gpt-6-sol-and-gpt-6-luna/1399925
+
+Therefore, fewer retries alone do not justify a stronger-model escalation. Select GPT-6 Sol or GPT-6 Astra only when the expected capability advantage is large enough to change feasibility, materially reduce expensive rework, protect a high-impact decision, or avoid a failure mode that cheaper routes are unlikely to overcome economically.
+
+Do not reason as if two or three avoided GPT-6 Luna retries automatically justify GPT-6 Astra. The real decision must consider whether lower-cost attempts are likely to add useful evidence or merely repeat a capability-limited failure, and must use the current execution surface's actual allowance economics rather than stale model-price assumptions.
 
 ## 3B. Effort and Ultra guardrail
 
@@ -76,7 +93,7 @@ Use the **lowest available effort that is still likely to complete the bounded t
 
 Do not escalate model tier and reasoning effort simultaneously unless both changes have separate task-specific justification. In particular, avoid jumps such as `Luna High -> Astra Max` merely because the task feels difficult.
 
-As checked against OpenAI's GPT-5.6 product documentation on 2026-09-13, **Ultra is not just another ordinary single-agent reasoning notch**: it is described as a highest-capability mode that coordinates multiple agents in parallel by default and trades higher token use for stronger results and faster time-to-result on demanding tasks. Treat Ultra or any equivalent multi-agent premium mode as a separate parallelism multiplier, not as the routine successor to Max. Product behavior and availability may change; re-check the current surface before relying on this description.
+Treat **Ultra or any equivalent product-level multi-agent premium mode** as a separate parallelism multiplier, not as a model tier or the routine successor to Max. Product behavior, worker inheritance, and allowance accounting can change; re-check the current Codex surface before relying on a specific implementation.
 
 Default rule for Ultra/multi-agent premium modes: **off unless explicitly justified**.
 
@@ -93,17 +110,17 @@ Do not use Ultra for:
 - merely obtaining a slightly more polished answer;
 - FAST work. If FAST appears to need Ultra, reassess the work-mode classification first.
 
-## 4. Luna-first principle
+## 4. GPT-6 Luna-first principle
 
-For bounded implementation, refactoring with preserved contracts, test creation/repair, UI implementation against a clear UX specification, and debugging with a reliable reproducer, consider Luna first.
+For bounded implementation, refactoring with preserved contracts, test creation/repair, UI implementation against a clear UX specification, and debugging with a reliable reproducer, consider GPT-6 Luna first.
 
 The strongest default pattern is often:
 
-`ChatGPT plans -> Luna executes -> tests/CI produce evidence -> ChatGPT reviews`
+`ChatGPT plans -> GPT-6 Luna executes -> tests/CI produce evidence -> ChatGPT reviews`
 
-Use Terra when the bounded work mainly needs more judgment. Use Astra when the work is materially end-to-end/agentic rather than simply difficult.
+Use GPT-6 Sol when the bounded work materially needs stronger coding judgment, broad repository reasoning, cross-module debugging, or agentic follow-through than Luna. GPT-5.6 Terra remains an optional middle route only where current product-surface economics and task evidence make it preferable. Use GPT-6 Astra when the task independently meets Astra-fit criteria rather than merely being difficult.
 
-For high-volume implementation such as routine code edits, test generation, repetitive refactoring, documentation boilerplate, fixture creation, and iterative UI adjustments, prefer Luna or Terra unless there is task-specific evidence that a premium model is necessary.
+For high-volume implementation such as routine code edits, test generation, repetitive refactoring, documentation boilerplate, fixture creation, and iterative UI adjustments, prefer GPT-6 Luna. Escalate to GPT-6 Sol only when the task's reliability threshold requires it.
 
 ## 4A. Astra-fit principle
 
@@ -121,10 +138,10 @@ Do not use Astra merely because:
 - the repository is large;
 - the prompt is long;
 - the task is routine but tedious;
-- Luna has not yet been given a clear bounded packet;
+- GPT-6 Luna has not yet been given a clear bounded packet;
 - Astra is expected to be somewhat better or somewhat faster on the same strongly testable implementation task.
 
-When Astra is selected, choose its effort independently. Start at the lowest effort expected to finish reliably; use High/XHigh/Max only when the task specifically benefits from deeper reasoning or verification.
+When GPT-6 Astra is selected, choose its effort independently. Start at the lowest effort expected to finish reliably; use High/XHigh/Max only when the task specifically benefits from deeper reasoning or verification. When the hard part is still mainly coding/agentic execution, test GPT-6 Sol fit before paying Astra's substantially higher current API price.
 
 ## 4B. Premium-model leverage pattern
 
@@ -132,7 +149,7 @@ When the premium model is valuable for only part of the task, use it surgically 
 
 Preferred pattern:
 
-`ChatGPT control plane -> premium diagnosis/architecture/orchestration -> bounded Luna/Terra execution -> tests/CI -> ChatGPT review`
+`ChatGPT control plane -> premium diagnosis/architecture/orchestration -> bounded GPT-6 Luna/GPT-6 Sol execution -> tests/CI -> ChatGPT review`
 
 Examples of high-leverage premium work:
 - resolving contradictory architecture constraints before implementation;
@@ -141,7 +158,7 @@ Examples of high-leverage premium work:
 - coordinating a long cross-tool integration where state coherence is itself the hard part;
 - independently adjudicating a high-impact design or remediation decision.
 
-Examples of work that should normally return to Luna/Terra after the premium reasoning step:
+Examples of work that should normally return to GPT-6 Sol or GPT-6 Luna after the Astra-level reasoning step:
 - routine edits across already-identified files;
 - bulk test or fixture implementation;
 - repetitive API/client/schema updates with a fixed contract;
@@ -158,7 +175,7 @@ At that checkpoint, ask:
 1. Has the hard reasoning/uncertainty been resolved?
 2. Is the remaining work mostly mechanical, repetitive, or strongly testable?
 3. Is observed quota/allowance burn materially higher than the value of continuing at the current setting?
-4. Can the remaining execution be handed to Luna/Terra without losing critical context or correctness?
+4. Can the remaining execution be handed down to GPT-6 Sol or GPT-6 Luna (or GPT-5.6 Terra where it is economically preferable) without losing critical context or correctness?
 
 If yes, downgrade model tier, effort, parallelism, or a combination of them for the remaining work.
 
@@ -174,15 +191,16 @@ After a lower-tier failure, diagnose the failure class first:
 - environment/tooling failure -> repair the environment/tooling;
 - missing research/dependency evidence -> return to the research gate;
 - same model likely sufficient but reasoning depth inadequate -> raise effort one justified step;
-- bounded task needs materially more judgment -> consider Terra;
-- long cross-tool/end-to-end agentic task exceeds Luna/Terra reliability -> consider Astra at the lowest sufficient effort;
-- architecture/evidence remains materially contradictory or the hardest end-to-end reasoning is required -> consider Astra High/XHigh/Max and/or independent review;
+- bounded task exceeds GPT-6 Luna's reliability threshold -> consider GPT-6 Sol; GPT-5.6 Terra is an optional intermediate only when current surface economics and task evidence favor it;
+- difficult coding/agentic work likely remains within GPT-6 Sol capability -> raise Sol effort before jumping to Astra when justified;
+- long, ambiguous, cross-tool/end-to-end work exceeds GPT-6 Sol reliability or independently matches Astra-fit criteria -> consider GPT-6 Astra at the lowest sufficient effort;
+- architecture/evidence remains materially contradictory or the hardest end-to-end reasoning is required -> consider GPT-6 Astra High/XHigh/Max and/or independent review;
 - parallel exploration itself is the bottleneck -> consider Ultra/multi-agent mode only with explicit cost justification;
-- Astra unavailable, quota-constrained, economically unjustified, or task-specific evidence favors prior-model continuity -> consider Sol or return to a lower-cost bounded route.
+- GPT-6 Astra is unavailable, quota-constrained, or economically unjustified -> remain on GPT-6 Sol or return to a lower-cost bounded route rather than treating a prior-generation model as an automatic fallback.
 
 Do **not** use:
 
-`Luna failed -> Astra Max/Ultra`
+`GPT-6 Luna failed -> GPT-6 Astra Max/Ultra`
 
 as an automatic rule.
 
@@ -196,9 +214,9 @@ Use a premium orchestrator only when in-repository coordination itself is comple
 
 A useful pattern for large parallelizable work is:
 
-`ChatGPT control plane -> premium technical orchestrator -> bounded Luna/Terra workers -> premium integration verification only when justified -> CI/evidence -> ChatGPT final review`
+`ChatGPT control plane -> GPT-6 Sol technical orchestrator when justified -> bounded GPT-6 Luna workers -> GPT-6 Astra only for independently Astra-fit orchestration/adjudication -> CI/evidence -> ChatGPT final review`
 
-If Astra is unavailable or task-specific continuity favors Sol, Sol may serve the same orchestrator/adjudicator role.
+Use GPT-6 Sol as the normal stronger orchestrator before GPT-6 Astra when coordination is complex but still primarily software-engineering work. Use GPT-6 Astra as orchestrator/adjudicator only when the coordination problem itself meets Astra-fit criteria.
 
 The premium orchestrator should coordinate and adjudicate rather than spend premium capacity on routine edits that bounded workers can complete reliably.
 
@@ -226,13 +244,13 @@ A cheaper worker that requires many retries can be more expensive than a stronge
 For long work, include the value of context continuity in the routing decision. Preserving useful execution state can be cheaper than switching models and reconstructing the task, but continuity must not override the need for a fresh independent reviewer when independence is required.
 
 Use the following decision order:
-1. Can ChatGPT/control-plane work reduce ambiguity enough for Luna?
+1. Can ChatGPT/control-plane work reduce ambiguity enough for GPT-6 Luna?
 2. What is the cheapest model tier likely to cross the capability threshold?
 3. Within that tier, what is the lowest effort likely to finish reliably?
 4. Does parallelism add real value, or would a single agent be sufficient?
 5. What is the expected quota/allowance burn relative to the importance and duration of the task?
 6. If a premium/high-effort route is justified, where is the earliest safe downgrade checkpoint?
-7. After the high-leverage step, can Luna/Terra perform the bulk execution?
+7. After the high-leverage step, can GPT-6 Sol or GPT-6 Luna perform the bulk execution?
 
 ## 8. Recommendation format
 

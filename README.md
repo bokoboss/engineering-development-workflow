@@ -60,7 +60,7 @@ See [`WORK_MODE_ROUTING.md`](WORK_MODE_ROUTING.md).
 
 All modes share the same quality floor: inspect before modify, bounded scope, no unrelated changes, appropriate validation, actual diff review, required CI, and no completion claim with failed mandatory gates.
 
-Work mode is separate from model tier. STRICT does not automatically mean Sol.
+Work mode is separate from model tier. STRICT does not automatically mean GPT-6 Sol or GPT-6 Astra.
 
 ## Workspace safety
 
