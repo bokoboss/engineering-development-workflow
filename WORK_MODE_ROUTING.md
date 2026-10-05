@@ -182,14 +182,12 @@ Mode determines **process intensity**.
 
 Model/effort determine **execution capability/cost**.
 
-Examples:
-- FAST often maps to GPT-6 Luna Medium;
-- STANDARD often maps to GPT-6 Luna High/Max, with GPT-6 Sol when the coding/agentic reliability threshold materially exceeds Luna;
-- STRICT may still use GPT-6 Luna for a mechanically bounded implementation after ChatGPT has completed the difficult reasoning, while scrutiny/review uses a stronger or fresh reviewer where justified.
+Typical mapping is intentionally generic:
+- FAST often fits the current low-cost/default executor at modest effort;
+- STANDARD often fits the current default executor at higher effort, or the current stronger workhorse when the bounded task materially needs more reasoning/reliability;
+- STRICT may still use the low-cost executor for a mechanical, strongly testable implementation phase after the difficult decision has been resolved.
 
-Do not route every STRICT task to GPT-6 Sol or GPT-6 Astra automatically.
-
-Use `MODEL_ROUTING_POLICY.md` after the work mode is known.
+Do not route every STRICT task to the strongest or most expensive model automatically. Read the dated current model profile in `MODEL_ROUTING_POLICY.md` after the work mode is known; do not duplicate the current model catalog here.
 
 ## 7A. Phase-level risk adaptation
 
