@@ -3,6 +3,8 @@
 This ChatGPT Project uses the Engineering Development Workflow maintained at:
 https://github.com/bokoboss/engineering-development-workflow
 
+These instructions also serve a Claude Project control plane: read "ChatGPT" as the control-plane assistant and "Codex" as the selected coding agent (Codex or Claude Code). See upstream `docs/platform-adapters.md`.
+
 Treat that repository as the shared workflow source of truth. Treat the target project's GitHub repository, including `PROJECT_PROFILE.md`, `AGENTS.md`, Issues, PRs, commits, CI, and project documentation, as the project source of truth.
 
 ## Control-plane role

@@ -45,6 +45,8 @@ A fresh install creates, when absent:
 
 - `AGENTS.md` — project-owned starter instructions;
 - `PROJECT_PROFILE.md` — project-owned profile template;
+- `CLAUDE.md` — project-owned Claude Code entry file that imports `AGENTS.md` (see `docs/platform-adapters.md`);
+- `.claude/skills/<name>/SKILL.md` — installer-managed Claude Code wrappers pointing to the pinned focused skills;
 - `.engineering-workflow.json` — installer manifest;
 - `.engineering-workflow/` — installer-managed pinned workflow snapshot containing `SKILL.md`, FAST/STANDARD/STRICT routing, workspace safety, core policies/templates, and focused `skills/*/SKILL.md` modules;
 - `docs/development/ENGINEERING_WORKFLOW.md` — local workflow reference;
@@ -62,7 +64,7 @@ It does not perform network access or arbitrary recursive deletion. It never use
 
 ### Ownership rule
 
-`AGENTS.md` and `PROJECT_PROFILE.md` become **project-owned**. The installer never overwrites them after creation.
+`AGENTS.md`, `PROJECT_PROFILE.md`, and `CLAUDE.md` become **project-owned**. The installer never overwrites them after creation. If a pre-existing `CLAUDE.md` does not contain the line `@AGENTS.md`, the installer warns but does not edit it; add the import yourself so Claude Code loads the workflow instructions.
 
 Files recorded in `.engineering-workflow.json` are **installer-managed**. Their hashes are tracked so an upgrade can distinguish an untouched managed file from a project-local modification.
 

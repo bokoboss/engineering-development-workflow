@@ -289,6 +289,73 @@ class SetupProjectTests(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertIn("target must not be a symlink/junction", result.stderr)
 
+    def test_install_creates_claude_adapter(self):
+        target = self.make_target()
+        result = run_cli("install", target)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        claude_md = (target / "CLAUDE.md").read_text(encoding="utf-8")
+        self.assertEqual(claude_md.splitlines()[0], "@AGENTS.md")
+        self.assertNotIn("WARNING", result.stderr)
+
+        manifest = json.loads((target / MANIFEST).read_text(encoding="utf-8"))
+        self.assertIn("CLAUDE.md", manifest["project_owned_created"])
+        source_skills = sorted(p.parent.name for p in (ROOT / "skills").glob("*/SKILL.md"))
+        wrapper_root = target / ".claude/skills"
+        self.assertEqual(sorted(p.parent.name for p in wrapper_root.glob("*/SKILL.md")), source_skills)
+        for name in source_skills:
+            rel = f".claude/skills/{name}/SKILL.md"
+            text = (target / rel).read_text(encoding="utf-8")
+            self.assertTrue(text.startswith(f"---\nname: {name}\ndescription: "), rel)
+            self.assertIn(f".engineering-workflow/skills/{name}/SKILL.md", text)
+            self.assertTrue((target / f".engineering-workflow/skills/{name}/SKILL.md").is_file())
+            self.assertEqual(manifest["managed"][rel], sha(text))
+
+    def test_existing_claude_md_is_preserved_with_warning(self):
+        target = self.make_target()
+        custom = "# Our Claude notes\n"
+        (target / "CLAUDE.md").write_text(custom, encoding="utf-8")
+        result = run_cli("install", target)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual((target / "CLAUDE.md").read_text(encoding="utf-8"), custom)
+        self.assertIn("does not import AGENTS.md", result.stderr)
+        inspected = run_cli("inspect", target)
+        self.assertIn("does not import AGENTS.md", inspected.stdout)
+
+        (target / "CLAUDE.md").write_text("@AGENTS.md\n" + custom, encoding="utf-8")
+        valid = run_cli("validate", target)
+        self.assertEqual(valid.returncode, 0, valid.stderr)
+        self.assertNotIn("WARNING", valid.stderr)
+
+    def test_unmanaged_claude_skill_blocks_install(self):
+        target = self.make_target()
+        existing = target / ".claude/skills/scrutinize/SKILL.md"
+        existing.parent.mkdir(parents=True)
+        existing.write_text("project-owned skill\n", encoding="utf-8")
+        result = run_cli("install", target)
+        self.assertEqual(result.returncode, 2)
+        self.assertIn(".claude/skills/scrutinize/SKILL.md", result.stderr)
+        self.assertEqual(existing.read_text(encoding="utf-8"), "project-owned skill\n")
+        self.assertFalse((target / MANIFEST).exists())
+
+    def test_upgrade_adds_claude_adapter_to_prior_install(self):
+        target = self.make_target()
+        self.assertEqual(run_cli("install", target).returncode, 0)
+        # Simulate an installation made before the Claude adapter existed.
+        manifest_path = target / MANIFEST
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        for rel in [r for r in manifest["managed"] if r.startswith(".claude/")]:
+            del manifest["managed"][rel]
+            (target / rel).unlink()
+        manifest["project_owned_created"].remove("CLAUDE.md")
+        (target / "CLAUDE.md").unlink()
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+        self.assertEqual(run_cli("validate", target).returncode, 1)
+        result = run_cli("upgrade", target)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue((target / "CLAUDE.md").is_file())
+        self.assertTrue((target / ".claude/skills/scrutinize/SKILL.md").is_file())
+
 
 if __name__ == "__main__":
     unittest.main()

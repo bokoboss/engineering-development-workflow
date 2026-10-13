@@ -64,7 +64,21 @@ engineering/security/safety/human-approval requirements.
 - Fill this section from verified repository facts.
 """,
     "PROJECT_PROFILE.md": None,
+    "CLAUDE.md": """@AGENTS.md
+
+# Claude Code
+
+The import above loads this project's `AGENTS.md`, which is the single source of agent
+instructions shared with Codex and other coding agents. Keep shared rules there; add only
+Claude-specific notes below.
+
+Focused workflow skills are exposed under `.claude/skills/` as thin installer-managed wrappers.
+Each wrapper points to its canonical procedure in `.engineering-workflow/skills/`.
+""",
 }
+
+CLAUDE_SKILLS_DIR = ".claude/skills"
+CLAUDE_IMPORT_LINE = "@AGENTS.md"
 
 BASE_MANAGED_SOURCES = {
     "docs/development/ENGINEERING_WORKFLOW.md": None,
@@ -248,7 +262,73 @@ def desired_project_owned() -> Dict[str, str]:
     return {
         "AGENTS.md": PROJECT_OWNED["AGENTS.md"],
         "PROJECT_PROFILE.md": profile,
+        "CLAUDE.md": PROJECT_OWNED["CLAUDE.md"],
     }
+
+
+def skill_frontmatter(text: str, source: str) -> Dict[str, str]:
+    """Parse the minimal `name`/`description` frontmatter used by focused skills."""
+    lines = text.splitlines()
+    if not lines or lines[0].strip() != "---":
+        raise RuntimeError(f"skill has no frontmatter: {source}")
+    fields: Dict[str, str] = {}
+    for line in lines[1:]:
+        if line.strip() == "---":
+            break
+        key, sep, value = line.partition(":")
+        if sep:
+            fields[key.strip()] = value.strip()
+    else:
+        raise RuntimeError(f"skill frontmatter is not closed: {source}")
+    for required in ("name", "description"):
+        if not fields.get(required):
+            raise RuntimeError(f"skill frontmatter missing {required}: {source}")
+    return fields
+
+
+def claude_skill_wrapper(name: str, description: str) -> str:
+    canonical = f"{LOCAL_WORKFLOW_DIR}/skills/{name}/SKILL.md"
+    return f"""---
+name: {name}
+description: {description}
+---
+
+# {name}
+
+Installer-managed Claude Code wrapper. Do not edit; the canonical procedure lives in the
+project-local pinned workflow.
+
+Read and follow `{canonical}`. Apply it together with `{LOCAL_WORKFLOW_DIR}/SKILL.md`,
+`{LOCAL_WORKFLOW_DIR}/WORK_MODE_ROUTING.md`, and `{LOCAL_WORKFLOW_DIR}/WORKSPACE_SAFETY.md`.
+"""
+
+
+def claude_skill_wrappers() -> Dict[str, str]:
+    result: Dict[str, str] = {}
+    for source_path in sorted((SOURCE_ROOT / "skills").glob("*/SKILL.md")):
+        source = source_path.relative_to(SOURCE_ROOT).as_posix()
+        fields = skill_frontmatter(read_text(source_path), source)
+        name = fields["name"]
+        if name != source_path.parent.name:
+            raise RuntimeError(f"skill name does not match its directory: {source}")
+        result[f"{CLAUDE_SKILLS_DIR}/{name}/SKILL.md"] = claude_skill_wrapper(
+            name, fields["description"]
+        )
+    return result
+
+
+def claude_md_warning(target: Path) -> str | None:
+    """Warn when a CLAUDE.md exists but would hide AGENTS.md from Claude Code."""
+    path = safe_destination(target, "CLAUDE.md")
+    if not path.is_file():
+        return None
+    lines = [line.strip() for line in read_text(path).splitlines()]
+    if CLAUDE_IMPORT_LINE in lines:
+        return None
+    return (
+        "CLAUDE.md does not import AGENTS.md; Claude Code reads CLAUDE.md instead of "
+        f"AGENTS.md when both exist. Add a line `{CLAUDE_IMPORT_LINE}` to CLAUDE.md."
+    )
 
 
 def local_workflow_sources() -> Dict[str, str]:
@@ -270,6 +350,7 @@ def desired_managed() -> Dict[str, str]:
     result: Dict[str, str] = {}
     for dest, source in sources.items():
         result[dest] = workflow_reference() if source is None else read_text(SOURCE_ROOT / source)
+    result.update(claude_skill_wrappers())
     return result
 
 
@@ -383,6 +464,10 @@ def inspect(target: Path) -> int:
         else:
             status = "modified-preserve/conflict"
         print(f"RETIRED {rel}: {status}")
+
+    warning = claude_md_warning(target)
+    if warning:
+        print(f"WARNING {warning}")
     return 0
 
 
@@ -505,6 +590,10 @@ def validate(target: Path) -> int:
         errors.append("manifest workflow_version mismatch")
     if manifest.get("local_workflow_dir") != LOCAL_WORKFLOW_DIR:
         errors.append("manifest local_workflow_dir mismatch")
+
+    warning = claude_md_warning(target)
+    if warning:
+        print(f"WARNING: {warning}", file=sys.stderr)
 
     if errors:
         print("VALIDATION FAILED", file=sys.stderr)
