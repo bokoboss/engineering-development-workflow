@@ -4,6 +4,11 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 
 ## [Unreleased]
 
+### Pending
+- Collect external feedback after real project adoption.
+
+## [1.8.0] - 2026-10-13
+
 ### Added
 - Claude / Claude Code platform adapter (`docs/platform-adapters.md`). The installer now creates a project-owned `CLAUDE.md` that imports `AGENTS.md` (one instruction source for all coding agents) and installs hash-tracked `.claude/skills/<name>/SKILL.md` wrappers that point to the canonical pinned skills instead of duplicating them.
 - `inspect`, `install`, `upgrade`, and `validate` warn when an existing `CLAUDE.md` does not import `AGENTS.md`, because Claude Code would otherwise not load the workflow instructions. Existing `CLAUDE.md` files are never edited.
@@ -24,8 +29,7 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 - Updated parallel worker routing, work-mode examples, ChatGPT Project Instructions, README, and the Thai operational guide to use the GPT-6 Luna -> GPT-6 Sol -> GPT-6 Astra decision shape without turning it into an automatic linear escalation ladder.
 - Documented cost-aware per-worker model selection so workers do not automatically inherit a premium parent tier and routine execution can return to GPT-6 Luna after high-leverage reasoning.
 
-### Pending
-- Collect external feedback after real project adoption.
+### Research
 - Foundation research for a possible Local Workspace Evidence Bridge completed in `docs/research/local-workspace-evidence-bridge-adoption-review.md`. Concept verdict: `GO WITH CONDITIONS`; direct adoption of pinned `XiaoDuoYa/codex-with-chatgpt` v0.1.1: `NO-GO AT THIS TIME`. No v1.7 workflow contract or candidate installation is introduced by this research-only change.
 
 ## [1.7.4] - 2026-09-02

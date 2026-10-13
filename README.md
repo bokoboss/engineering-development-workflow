@@ -2,7 +2,7 @@
 
 A reusable, evidence-first workflow for developing and safely operating engineering software with humans, ChatGPT, coding agents, GitHub, explicit success gates, focused reasoning skills, lean context, independent review, cost-aware model routing, and bounded continuous operations.
 
-Current workflow version: **v1.7.4 baseline**.
+Current workflow version: **v1.8.0 baseline**.
 
 License: **Apache-2.0**.
 
