@@ -58,7 +58,7 @@ class SetupProjectTests(unittest.TestCase):
         self.assertFalse((target / ".engineering-workflow/DEBUGGING_PROTOCOL.md").exists())
         self.assertFalse((target / ".engineering-workflow/REVIEW_AND_SCRUTINY.md").exists())
         manifest = json.loads((target / MANIFEST).read_text(encoding="utf-8"))
-        self.assertEqual(manifest["workflow_version"], "1.7.4")
+        self.assertEqual(manifest["workflow_version"], "1.8.0")
         self.assertEqual(manifest["local_workflow_dir"], ".engineering-workflow")
         self.assertIn("VALIDATION PASS", result.stdout)
         valid = run_cli("validate", target)
@@ -164,7 +164,7 @@ class SetupProjectTests(unittest.TestCase):
             self.assertFalse((target / rel).exists(), rel)
 
         updated = json.loads(manifest_path.read_text(encoding="utf-8"))
-        self.assertEqual(updated["workflow_version"], "1.7.4")
+        self.assertEqual(updated["workflow_version"], "1.8.0")
         for rel in obsolete:
             self.assertNotIn(rel, updated["managed"])
 

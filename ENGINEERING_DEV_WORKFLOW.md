@@ -1,6 +1,6 @@
 # Engineering Development Workflow
 
-Version: 1.7.4
+Version: 1.8.0
 
 ## 1. Purpose
 

@@ -182,7 +182,7 @@ REQUIRED_TEXT = {
         'Prefer a harness-enforced boundary over prompt-only compliance.'
     ],
     'README.md': [
-        'Current workflow version: **v1.7.4 baseline**.', 'License: **Apache-2.0**.',
+        'Current workflow version: **v1.8.0 baseline**.', 'License: **Apache-2.0**.',
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'CONTEXT_MANAGEMENT.md', 'skills/research-gate/SKILL.md',
         'skills/independent-review/SKILL.md', 'skills/loop-readiness/SKILL.md',
         'CONTINUOUS_OPERATIONS.md', 'patterns/pr-ci-watcher.md', 'ACKNOWLEDGEMENTS.md',
@@ -190,12 +190,12 @@ REQUIRED_TEXT = {
         'Apache License, Version 2.0'
     ],
     'ENGINEERING_DEV_WORKFLOW.md': [
-        'Version: 1.7.4', 'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'skills/research-gate/SKILL.md',
+        'Version: 1.8.0', 'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'skills/research-gate/SKILL.md',
         'skills/scrutinize/SKILL.md', 'skills/independent-review/SKILL.md',
         'CONTEXT_MANAGEMENT.md', 'CONTINUOUS_OPERATIONS.md', 'skills/loop-readiness/SKILL.md'
     ],
     'scripts/setup_project.py': [
-        'WORKFLOW_VERSION = "1.7.4"', 'LOCAL_WORKFLOW_DIR = ".engineering-workflow"',
+        'WORKFLOW_VERSION = "1.8.0"', 'LOCAL_WORKFLOW_DIR = ".engineering-workflow"',
         'WORK_MODE_ROUTING.md', 'WORKSPACE_SAFETY.md', 'templates/FAST_EXECUTION_PACKET.md',
         'def resolve_safe_target', 'def safe_destination', 'def retirement_conflicts',
         'def retire_managed_files', 'RETIRED_MANAGED_PATHS',
