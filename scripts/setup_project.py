@@ -319,7 +319,11 @@ def claude_skill_wrappers() -> Dict[str, str]:
 
 def claude_md_warning(target: Path) -> str | None:
     """Warn when a CLAUDE.md exists but would hide AGENTS.md from Claude Code."""
-    path = safe_destination(target, "CLAUDE.md")
+    try:
+        path = safe_destination(target, "CLAUDE.md")
+    except RuntimeError:
+        # Unsafe paths are reported as preflight conflicts or validation errors.
+        return None
     if not path.is_file():
         return None
     lines = [line.strip() for line in read_text(path).splitlines()]
@@ -475,6 +479,20 @@ def preflight(target: Path, mode: str, manifest: dict | None, managed: Dict[str,
     conflicts: list[str] = []
     if mode == "upgrade" and manifest is None:
         return [f"{MANIFEST_NAME} is missing; run install first"]
+
+    # Project-owned destinations are checked before any mutation so an unsafe
+    # path (for example a symlinked CLAUDE.md) cannot leave a partial install.
+    for rel in desired_project_owned():
+        try:
+            path = safe_destination(target, rel)
+        except RuntimeError as exc:
+            conflicts.append(
+                f"{rel}: {exc}; replace it with a regular file "
+                "(for CLAUDE.md, a file containing the line @AGENTS.md)"
+            )
+            continue
+        if path.exists() and not path.is_file():
+            conflicts.append(f"{rel}: exists but is not a regular file")
 
     previous = (manifest or {}).get("managed", {})
     for rel, desired in managed.items():

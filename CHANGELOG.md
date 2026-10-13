@@ -7,6 +7,7 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 ### Added
 - Claude / Claude Code platform adapter (`docs/platform-adapters.md`). The installer now creates a project-owned `CLAUDE.md` that imports `AGENTS.md` (one instruction source for all coding agents) and installs hash-tracked `.claude/skills/<name>/SKILL.md` wrappers that point to the canonical pinned skills instead of duplicating them.
 - `inspect`, `install`, `upgrade`, and `validate` warn when an existing `CLAUDE.md` does not import `AGENTS.md`, because Claude Code would otherwise not load the workflow instructions. Existing `CLAUDE.md` files are never edited.
+- Installer preflight now checks project-owned destinations (`AGENTS.md`, `PROJECT_PROFILE.md`, `CLAUDE.md`) before any mutation, so an unsafe path such as a symlinked `CLAUDE.md` blocks installation without a partial write.
 - Dated Anthropic model profile in `MODEL_ROUTING_POLICY.md` §3C mapping Claude Haiku / Sonnet / Opus / Fable to the existing routing roles without changing the decision rules.
 - `templates/CHATGPT_PROJECT_INSTRUCTIONS.md` notes that it also serves a Claude Project control plane.
 

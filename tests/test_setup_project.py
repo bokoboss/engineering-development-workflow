@@ -337,6 +337,32 @@ class SetupProjectTests(unittest.TestCase):
         self.assertEqual(existing.read_text(encoding="utf-8"), "project-owned skill\n")
         self.assertFalse((target / MANIFEST).exists())
 
+    def test_symlinked_project_owned_file_blocks_install_without_partial_writes(self):
+        outside_temp = tempfile.TemporaryDirectory()
+        self.addCleanup(outside_temp.cleanup)
+        outside_file = Path(outside_temp.name) / "outside.md"
+        outside_file.write_text("outside\n", encoding="utf-8")
+
+        for link_target in (outside_file, Path("AGENTS.md")):
+            with self.subTest(link_target=str(link_target)):
+                target = self.make_target()
+                try:
+                    (target / "CLAUDE.md").symlink_to(link_target)
+                except (OSError, NotImplementedError):
+                    self.skipTest("symlink creation unavailable on this platform")
+                before = sorted(p.name for p in target.iterdir())
+
+                result = run_cli("install", target)
+                self.assertEqual(result.returncode, 2)
+                self.assertIn("CLAUDE.md", result.stderr)
+                self.assertIn("symlink/junction", result.stderr)
+                self.assertEqual(sorted(p.name for p in target.iterdir()), before)
+                self.assertEqual(outside_file.read_text(encoding="utf-8"), "outside\n")
+
+                valid = run_cli("validate", target)
+                self.assertEqual(valid.returncode, 1)
+                self.assertNotIn("Traceback", valid.stderr)
+
     def test_upgrade_adds_claude_adapter_to_prior_install(self):
         target = self.make_target()
         self.assertEqual(run_cli("install", target).returncode, 0)
