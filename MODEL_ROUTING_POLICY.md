@@ -86,6 +86,19 @@ Treat parallelism and service tiers as separate axes:
 
 Do not add product-specific parallel/service modes to the core workflow unless they change the actual routing or safety contract.
 
+## 3C. Anthropic profile (Claude Code executor)
+
+Current profile as of 2026-10-13, from Anthropic product information. Re-verify against the official model documentation before a cost-sensitive recommendation; no Anthropic prices are recorded here yet.
+
+The decision rules in §1–§2A and §4–§8 apply unchanged. The tier roles map as:
+
+- **Claude Haiku 5.5** — low-cost executor for focused, bounded, high-volume work with clear contracts and strong verification (the Luna-equivalent role).
+- **Claude Sonnet 5.5** — default workhorse for ordinary coding, debugging, and agentic execution in Claude Code.
+- **Claude Opus 5.5** — stronger route for complex debugging, broad repository reasoning, difficult integration, and premium adjudication (the role between Sol and Astra).
+- **Claude Fable 5.1** — Mythos-tier route reserved for the hardest end-to-end work with a credible top-tier reason, under the same Astra-fit criteria in §3. It carries additional safeguards for biology, cybersecurity, and LLM R&D work, which may limit some security-adjacent tasks.
+
+As with §3, this is not an automatic ladder: start bounded work at the lowest tier likely to finish reliably, and escalate by diagnosis under §5. Claude Code subagents are workers under §6 and `PARALLEL_EXECUTION.md`; route each one independently rather than inheriting the parent model.
+
 ## 4. Default execution pattern
 
 For bounded implementation, refactoring with preserved contracts, test creation/repair, straightforward UI implementation, and debugging with a reliable reproducer, prefer the current low-cost/default executor.

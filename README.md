@@ -44,6 +44,8 @@ The intended operating model is:
 
 **ChatGPT is the control plane. GitHub is the shared state/source of truth. Codex is the execution plane when local code, runtime, browser, or environment work is actually required.**
 
+These are roles, not product requirements: a Claude Project can act as the control plane and Claude Code as the executor, in any pairing. See [`docs/platform-adapters.md`](docs/platform-adapters.md).
+
 v1.7 adds risk-based process routing: **FAST / STANDARD / STRICT**. The selected mode controls ceremony and verification depth, not the quality floor. It also makes the explicit target project root the default writable filesystem boundary for coding agents.
 
 Installing this workflow into a target repository does **not** install anything into ChatGPT. A complete adoption therefore has two sides: set up the ChatGPT Project control plane and bootstrap the target repository.
@@ -158,7 +160,7 @@ python scripts/setup_project.py install /path/to/target-repo
 python scripts/setup_project.py validate /path/to/target-repo
 ```
 
-The installer is stdlib-only and performs no network access. It preserves project-owned `AGENTS.md` and `PROJECT_PROFILE.md`, tracks installer-managed files with SHA-256 hashes, and refuses to overwrite locally modified managed files during upgrades.
+The installer is stdlib-only and performs no network access. It preserves project-owned `AGENTS.md`, `PROJECT_PROFILE.md`, and `CLAUDE.md`, installs thin Claude Code skill wrappers under `.claude/skills/`, tracks installer-managed files with SHA-256 hashes, and refuses to overwrite locally modified managed files during upgrades.
 
 The installer installs both the project scaffold and a pinned **project-local workflow/skill snapshot** under `.engineering-workflow/`. ChatGPT uses current upstream policy to route and prepare work; Codex begins from `.engineering-workflow/SKILL.md` and reads only the local policies/skills required by the selected mode/task.
 
@@ -187,6 +189,7 @@ Ask ChatGPT to inspect the shared workflow and project repository, verify the pr
 - `scripts/setup_project.py` — safe bootstrap/upgrade/validation installer for target repositories.
 - `templates/CHATGPT_PROJECT_INSTRUCTIONS.md` — reusable ChatGPT Project control-plane instructions.
 - `templates/` — reusable project, execution, acceptance, evidence, handoff, and postmortem contracts.
+- `docs/platform-adapters.md` — control-plane/executor role mapping for ChatGPT/Codex and Claude/Claude Code, including the installed `CLAUDE.md` and `.claude/skills/` adapter.
 - `docs/CHEAT_SHEET.md` — one-page FAST/STANDARD/STRICT onboarding and safe Codex handoff.
 - `docs/THAI_USER_GUIDE.md` — detailed Thai-language guide for ChatGPT Project setup, workflow installation/upgrade, Codex handoff, work modes, evidence, GitHub, and workspace safety.
 - `docs/` — philosophy, ChatGPT setup, installation, quick start, skills, and examples.

@@ -4,6 +4,16 @@ All notable changes to the workflow contract are documented here. Semantic Versi
 
 ## [Unreleased]
 
+### Added
+- Claude / Claude Code platform adapter (`docs/platform-adapters.md`). The installer now creates a project-owned `CLAUDE.md` that imports `AGENTS.md` (one instruction source for all coding agents) and installs hash-tracked `.claude/skills/<name>/SKILL.md` wrappers that point to the canonical pinned skills instead of duplicating them.
+- `inspect`, `install`, `upgrade`, and `validate` warn when an existing `CLAUDE.md` does not import `AGENTS.md`, because Claude Code would otherwise not load the workflow instructions. Existing `CLAUDE.md` files are never edited.
+- Installer preflight now checks project-owned destinations (`AGENTS.md`, `PROJECT_PROFILE.md`, `CLAUDE.md`) before any mutation, so an unsafe path such as a symlinked `CLAUDE.md` blocks installation without a partial write.
+- Dated Anthropic model profile in `MODEL_ROUTING_POLICY.md` §3C mapping Claude Haiku / Sonnet / Opus / Fable to the existing routing roles without changing the decision rules.
+- `templates/CHATGPT_PROJECT_INSTRUCTIONS.md` notes that it also serves a Claude Project control plane.
+
+### Upgrade note
+- Existing installations fail `validate` until `upgrade` is run once, because `CLAUDE.md` is a new project-owned file and the skill wrappers are new managed files. An unmanaged file already at a `.claude/skills/<name>/SKILL.md` path blocks the upgrade without mutation.
+
 ### Changed
 - Updated `WORK_MODE_ROUTING.md` to v1.1.0 with finite risk-adaptive review budgets, BLOCKER / REQUIRED / FOLLOW-UP finding triage, phase-level process intensity, and an explicit closure rule that stops accepted work from turning into indefinite inspect-fix-review loops.
 - Aligned acceptance policy, core workflow, execution templates, ChatGPT Project Instructions, cheat sheet, and Thai guide so non-blocking polish/adjacent findings become follow-up work rather than keeping the original task open.

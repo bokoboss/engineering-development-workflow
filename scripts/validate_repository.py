@@ -25,7 +25,7 @@ REQUIRED_FILES = [
     'templates/ACCEPTANCE_GATE.md', 'templates/EVIDENCE_PACKAGE.md',
     'templates/HANDOFF.md', 'templates/POSTMORTEM.md', 'templates/CODEX_PROMPT.md',
     'templates/FAST_EXECUTION_PACKET.md', 'templates/LOOP_CONTRACT.md',
-    'templates/CHATGPT_PROJECT_INSTRUCTIONS.md',
+    'templates/CHATGPT_PROJECT_INSTRUCTIONS.md', 'docs/platform-adapters.md',
     '.github/pull_request_template.md', '.github/CODEOWNERS',
     '.github/workflows/validate.yml', '.github/workflows/release.yml',
     'scripts/setup_project.py', 'scripts/release_metadata.py', 'docs/installation.md', 'docs/quick-start.md',
